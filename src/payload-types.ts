@@ -69,6 +69,9 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    locations: Location;
+    recipes: Recipe;
+    pages: Page;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,17 +81,24 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    locations: LocationsSelect<false> | LocationsSelect<true>;
+    recipes: RecipesSelect<false> | RecipesSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'header-menu': HeaderMenu;
+  };
+  globalsSelect: {
+    'header-menu': HeaderMenuSelect<false> | HeaderMenuSelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -121,7 +131,7 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
+  id: number;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -145,7 +155,7 @@ export interface User {
  * via the `definition` "media".
  */
 export interface Media {
-  id: string;
+  id: number;
   alt: string;
   updatedAt: string;
   createdAt: string;
@@ -161,10 +171,204 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "locations".
+ */
+export interface Location {
+  id: number;
+  name: string;
+  /**
+   * Η εικόνα που θα εμφανίζεται στην εξερεύνηση περιοχών.
+   */
+  image?: (number | null) | Media;
+  level: '1' | '2' | '3';
+  parent?: (number | null) | Location;
+  /**
+   * Εδώ θα μπαίνουν οι συντεταγμένες για να "ζωγραφίζεται" η περιοχή στον χάρτη.
+   */
+  geoJSON?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "recipes".
+ */
+export interface Recipe {
+  id: number;
+  title: string;
+  recipeCategory: 'orektika' | 'kyrios' | 'thalassina' | 'glyka' | 'pites' | 'salates';
+  prepTime?: number | null;
+  cookTime?: number | null;
+  servings?: number | null;
+  tags?: ('vegan' | 'vegetarian' | 'gluten-free' | 'keto')[] | null;
+  allergens?: ('nuts' | 'gluten' | 'lactose' | 'eggs' | 'fish')[] | null;
+  location: number | Location;
+  image: number | Media;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  ingredients?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  instructions?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  tips?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  seo?: {
+    metaTitle?: string | null;
+    metaDesc?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  title: string;
+  slug: string;
+  layout?:
+    | (
+        | {
+            title: string;
+            subtitle?: string | null;
+            backgroundImage?: (number | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hero';
+          }
+        | {
+            title?: string | null;
+            videoType?: ('youtube' | 'file') | null;
+            youtubeID?: string | null;
+            videoFile?: (number | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'videoBlock';
+          }
+        | {
+            heading?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'mapBlock';
+          }
+        | {
+            title?: string | null;
+            limit?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'recipesBlock';
+          }
+        | {
+            title: string;
+            content: string;
+            image: number | Media;
+            imageSide?: ('left' | 'right') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'storyBlock';
+          }
+        | {
+            tagline?: string | null;
+            title?: string | null;
+            features?:
+              | {
+                  icon?: ('Heart' | 'Globe' | 'Award') | null;
+                  featureTitle: string;
+                  featureDescription: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'featuresBlock';
+          }
+        | {
+            title: string;
+            buttonText: string;
+            link: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaBlock';
+          }
+        | {
+            quote: string;
+            author?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'quoteBlock';
+          }
+      )[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
-  id: string;
+  id: number;
   key: string;
   data:
     | {
@@ -181,20 +385,32 @@ export interface PayloadKv {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: number;
   document?:
     | ({
         relationTo: 'users';
-        value: string | User;
+        value: number | User;
       } | null)
     | ({
         relationTo: 'media';
-        value: string | Media;
+        value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'locations';
+        value: number | Location;
+      } | null)
+    | ({
+        relationTo: 'recipes';
+        value: number | Recipe;
+      } | null)
+    | ({
+        relationTo: 'pages';
+        value: number | Page;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -204,10 +420,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   key?: string | null;
   value?:
@@ -227,7 +443,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -275,6 +491,137 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "locations_select".
+ */
+export interface LocationsSelect<T extends boolean = true> {
+  name?: T;
+  image?: T;
+  level?: T;
+  parent?: T;
+  geoJSON?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "recipes_select".
+ */
+export interface RecipesSelect<T extends boolean = true> {
+  title?: T;
+  recipeCategory?: T;
+  prepTime?: T;
+  cookTime?: T;
+  servings?: T;
+  tags?: T;
+  allergens?: T;
+  location?: T;
+  image?: T;
+  description?: T;
+  ingredients?: T;
+  instructions?: T;
+  tips?: T;
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDesc?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  layout?:
+    | T
+    | {
+        hero?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        videoBlock?:
+          | T
+          | {
+              title?: T;
+              videoType?: T;
+              youtubeID?: T;
+              videoFile?: T;
+              id?: T;
+              blockName?: T;
+            };
+        mapBlock?:
+          | T
+          | {
+              heading?: T;
+              id?: T;
+              blockName?: T;
+            };
+        recipesBlock?:
+          | T
+          | {
+              title?: T;
+              limit?: T;
+              id?: T;
+              blockName?: T;
+            };
+        storyBlock?:
+          | T
+          | {
+              title?: T;
+              content?: T;
+              image?: T;
+              imageSide?: T;
+              id?: T;
+              blockName?: T;
+            };
+        featuresBlock?:
+          | T
+          | {
+              tagline?: T;
+              title?: T;
+              features?:
+                | T
+                | {
+                    icon?: T;
+                    featureTitle?: T;
+                    featureDescription?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        ctaBlock?:
+          | T
+          | {
+              title?: T;
+              buttonText?: T;
+              link?: T;
+              id?: T;
+              blockName?: T;
+            };
+        quoteBlock?:
+          | T
+          | {
+              quote?: T;
+              author?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -312,6 +659,38 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header-menu".
+ */
+export interface HeaderMenu {
+  id: number;
+  navLinks?:
+    | {
+        label: string;
+        link: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header-menu_select".
+ */
+export interface HeaderMenuSelect<T extends boolean = true> {
+  navLinks?:
+    | T
+    | {
+        label?: T;
+        link?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

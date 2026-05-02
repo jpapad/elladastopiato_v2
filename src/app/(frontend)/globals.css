@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+:root {
+  --background: #050505;
+  --foreground: #ffffff;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- 2026 MODERN LIST STYLES --- */
+
+/* Υλικά (Custom Bullets) */
+.prose ul {
+  list-style-type: none !important;
+  padding-left: 0 !important;
+  margin: 2rem 0 !important;
+}
+
+.prose ul li {
+  position: relative;
+  padding-left: 1.8rem !important;
+  margin-bottom: 1rem !important;
+  display: block !important;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.05rem;
+  transition: all 0.3s ease;
+}
+
+/* Το μοντέρνο Πορτοκαλί Dash αντί για βούλα */
+.prose ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.75rem;
+  width: 12px;
+  height: 2px;
+  background: #f97316;
+  border-radius: 4px;
+  box-shadow: 0 0 8px rgba(249, 115, 22, 0.6);
+}
+
+.prose ul li:hover {
+  color: #ffffff;
+  transform: translateX(4px);
+}
+
+/* Εκτέλεση (Custom Modern Numbering) */
+.prose ol {
+  list-style-type: none !important;
+  padding-left: 0 !important;
+  counter-reset: recipe-step;
+  margin: 2rem 0 !important;
+}
+
+.prose ol li {
+  position: relative;
+  padding-left: 3.5rem !important;
+  margin-bottom: 2.5rem !important;
+  display: block !important;
+  counter-increment: recipe-step;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Ο αριθμός σε στυλ 01, 02, 03 */
+.prose ol li::before {
+  content: counter(recipe-step, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: -0.2rem;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 1.3rem;
+  color: #f97316;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -0.02em;
+  opacity: 1;
+}
+
+/* --- PRINT STYLES --- */
+@media print {
+  header, footer, .no-print, button, .share-buttons, a[href^="/regions"] {
+    display: none !important;
+  }
+  body { background: white !important; color: black !important; }
+  .prose ul li::before { background: #f97316 !important; box-shadow: none !important; }
+  .prose ol li::before { color: #f97316 !important; }
+  .text-white, .text-white\/70, .text-white\/80 { color: black !important; }
+}
+
+/* --- CUSTOM SCROLLBAR --- */
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #f97316; border-radius: 10px; }
