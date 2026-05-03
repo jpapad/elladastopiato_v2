@@ -11,9 +11,9 @@ const IconMap: any = { Heart, Globe, Award }
 export const VideoBlock = ({ videoType, youtubeID, videoFile, title }: any) => (
   <section className="max-w-7xl mx-auto px-6 py-20 no-print">
     {title && <h2 className="text-3xl font-black uppercase italic mb-8 tracking-tighter">{title}</h2>}
-    <div className="aspect-video w-full rounded-[3rem] overflow-hidden border border-white/10 bg-black shadow-2xl">
+    <div className="aspect-video w-full rounded-[3rem] overflow-hidden border border-black/10 dark:border-white/10 bg-black shadow-2xl">
       {videoType === 'youtube' ? (
-        <iframe 
+        <iframe
           className="w-full h-full"
           src={`https://www.youtube.com/embed/${youtubeID}`}
           title={title || "YouTube video"}
@@ -27,7 +27,7 @@ export const VideoBlock = ({ videoType, youtubeID, videoFile, title }: any) => (
   </section>
 )
 
-// --- Features Block (Τα Κουτάκια) ---
+// --- Features Block ---
 export const FeaturesBlock = ({ tagline, title, features }: any) => (
   <section className="max-w-7xl mx-auto px-6 py-32 text-center no-print">
     {tagline && (
@@ -40,12 +40,12 @@ export const FeaturesBlock = ({ tagline, title, features }: any) => (
       {features?.map((f: any, i: number) => {
         const Icon = IconMap[f.icon] || Award
         return (
-          <div key={i} className="bg-white/[0.03] border border-white/5 p-10 rounded-[2.5rem] hover:bg-white/[0.05] transition-all group">
+          <div key={i} className="bg-black/[0.03] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 p-10 rounded-[2.5rem] hover:bg-black/[0.05] dark:hover:bg-white/[0.05] transition-all group">
             <div className="w-12 h-12 bg-orange-500/10 rounded-2xl flex items-center justify-center text-orange-500 mb-8 group-hover:bg-orange-500 group-hover:text-black transition-colors">
               <Icon size={24} />
             </div>
             <h3 className="text-xl font-black uppercase italic mb-4 tracking-tight">{f.featureTitle}</h3>
-            <p className="text-white/40 text-sm leading-relaxed font-light italic">{f.featureDescription}</p>
+            <p className="text-black/40 dark:text-white/40 text-sm leading-relaxed font-light italic">{f.featureDescription}</p>
           </div>
         )
       })}
@@ -53,7 +53,7 @@ export const FeaturesBlock = ({ tagline, title, features }: any) => (
   </section>
 )
 
-// --- CTA Block (Πορτοκαλί Button) ---
+// --- CTA Block ---
 export const CtaBlock = ({ title, buttonText, link }: any) => (
   <section className="max-w-7xl mx-auto px-6 py-20 no-print">
     <div className="bg-orange-500 rounded-[3rem] p-12 md:p-20 flex flex-col md:flex-row items-center justify-between gap-10">
@@ -73,10 +73,10 @@ export const CategoriesBlock = ({ title, items }: any) => (
     <h2 className="text-3xl font-black uppercase italic mb-12 tracking-tighter">{title}</h2>
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
       {items?.map((item: any, i: number) => (
-        <Link key={i} href={item.link} className="group relative h-64 rounded-3xl overflow-hidden border border-white/5">
+        <Link key={i} href={item.link} className="group relative h-64 rounded-3xl overflow-hidden border border-black/5 dark:border-white/5">
           <Image src={item.image.url} alt={item.label} fill className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" />
           <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-            <span className="text-sm font-black uppercase tracking-widest">{item.label}</span>
+            <span className="text-sm font-black uppercase tracking-widest text-white">{item.label}</span>
           </div>
         </Link>
       ))}
@@ -90,9 +90,9 @@ export const StoryBlock = ({ title, content, image, imageSide }: any) => (
     <div className={`flex flex-col ${imageSide === 'left' ? 'md:flex-row-reverse' : 'md:flex-row'} gap-20 items-center`}>
       <div className="flex-1">
         <h2 className="text-5xl font-black uppercase italic tracking-tighter mb-8 leading-tight">{title}</h2>
-        <p className="text-white/40 text-lg leading-loose font-light">{content}</p>
+        <p className="text-black/40 dark:text-white/40 text-lg leading-loose font-light">{content}</p>
       </div>
-      <div className="flex-1 w-full aspect-square relative rounded-[4rem] overflow-hidden border border-white/10 no-print">
+      <div className="flex-1 w-full aspect-square relative rounded-[4rem] overflow-hidden border border-black/10 dark:border-white/10 no-print">
         {image?.url && <Image src={image.url} alt={title} fill className="object-cover" />}
       </div>
     </div>

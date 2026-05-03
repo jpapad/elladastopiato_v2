@@ -1,52 +1,85 @@
 'use client'
-import React, { useState, useEffect, useRef } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Search, X, Utensils, ArrowRight } from 'lucide-react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
+import { Search, X, MapPin, Clock, ArrowRight, Loader2 } from 'lucide-react'
 import Link from 'next/link'
-import { Recipe } from '@/payload-types'
+import Image from 'next/image'
+import { motion, AnimatePresence } from 'framer-motion'
+import { getCategoryLabel } from '@/lib/categories'
 
-interface SearchOverlayProps {
+interface SearchResult {
+  id: string
+  title: string
+  slug: string
+  image?: { url: string }
+  recipeCategory?: string
+  prepTime?: number
+  cookTime?: number
+  location?: { name: string; slug: string }
+}
+
+interface Props {
   isOpen: boolean
   onClose: () => void
 }
 
-export const SearchOverlay = ({ isOpen, onClose }: SearchOverlayProps) => {
-  const [query, setQuery] = useState('')
-  const [results, setResults] = useState<Recipe[]>([])
-  const [loading, setLoading] = useState(false)
-  const inputRef = useRef<HTMLInputElement>(null)
+function useDebounce<T>(value: T, delay: number): T {
+  const [debounced, setDebounced] = useState(value)
+  useEffect(() => {
+    const t = setTimeout(() => setDebounced(value), delay)
+    return () => clearTimeout(t)
+  }, [value, delay])
+  return debounced
+}
 
-  // Focus στο input όταν ανοίγει το overlay
+export const SearchOverlay = ({ isOpen, onClose }: Props) => {
+  const [query, setQuery] = useState('')
+  const [results, setResults] = useState<SearchResult[]>([])
+  const [loading, setLoading] = useState(false)
+  const [searched, setSearched] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null)
+  const debouncedQuery = useDebounce(query, 300)
+
   useEffect(() => {
     if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 100)
-    } else {
+      setTimeout(() => inputRef.current?.focus(), 50)
       setQuery('')
       setResults([])
+      setSearched(false)
     }
   }, [isOpen])
 
-  // Αναζήτηση στο API του Payload
   useEffect(() => {
-    const searchRecipes = async () => {
-      if (query.length < 2) {
-        setResults([])
-        return
-      }
-      setLoading(true)
-      try {
-        const res = await fetch(`/api/recipes?where[title][contains]=${query}&limit=5&depth=1`)
-        const data = await res.json()
-        setResults(data.docs || [])
-      } catch (error) {
-        console.error("Search error:", error)
-      }
-      setLoading(false)
-    }
+    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [onClose])
 
-    const timer = setTimeout(searchRecipes, 300) // Debounce
-    return () => clearTimeout(timer)
-  }, [query])
+  useEffect(() => {
+    if (debouncedQuery.length < 2) {
+      setResults([])
+      setSearched(false)
+      return
+    }
+    let cancelled = false
+    setLoading(true)
+    fetch(`/api/search?q=${encodeURIComponent(debouncedQuery)}`)
+      .then(r => r.json())
+      .then(data => {
+        if (!cancelled) {
+          setResults(data.docs ?? [])
+          setSearched(true)
+          setLoading(false)
+        }
+      })
+      .catch(() => { if (!cancelled) setLoading(false) })
+    return () => { cancelled = true }
+  }, [debouncedQuery])
+
+  const handleResultClick = useCallback(() => {
+    onClose()
+    setQuery('')
+    setResults([])
+  }, [onClose])
 
   return (
     <AnimatePresence>
@@ -55,70 +88,137 @@ export const SearchOverlay = ({ isOpen, onClose }: SearchOverlayProps) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[150] bg-[#050505]/95 backdrop-blur-2xl flex flex-col items-center pt-32 px-6"
+          transition={{ duration: 0.2 }}
+          className="fixed inset-0 z-[150] bg-black/85 backdrop-blur-2xl flex flex-col items-center pt-24 px-4"
+          onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
         >
-          <button 
-            onClick={onClose}
-            className="absolute top-10 right-10 p-4 text-white/20 hover:text-white transition-colors"
+          <motion.div
+            initial={{ opacity: 0, y: -20, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="w-full max-w-2xl"
           >
-            <X size={32} />
-          </button>
-
-          <div className="w-full max-w-3xl">
-            <div className="relative mb-12">
-              <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-orange-500" size={24} />
+            {/* Search input */}
+            <div className="relative flex items-center bg-white/10 border border-white/20 rounded-2xl overflow-hidden shadow-2xl">
+              <div className="pl-6 pr-3 text-white/40">
+                {loading
+                  ? <Loader2 size={20} className="animate-spin text-orange-500" />
+                  : <Search size={20} />
+                }
+              </div>
               <input
                 ref={inputRef}
                 type="text"
-                placeholder="Αναζήτηση συνταγής, υλικού..."
-                className="w-full bg-white/5 border border-white/10 rounded-3xl py-8 pl-16 pr-8 text-2xl font-light focus:outline-none focus:border-orange-500/50 transition-all"
                 value={query}
-                onChange={(e) => setQuery(e.target.value)}
+                onChange={e => setQuery(e.target.value)}
+                placeholder="Αναζήτηση συνταγής..."
+                className="flex-1 bg-transparent py-5 pr-4 text-white text-lg placeholder:text-white/30 focus:outline-none font-medium"
               />
-              {loading && (
-                <div className="absolute right-6 top-1/2 -translate-y-1/2">
-                  <div className="w-6 h-6 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
-                </div>
-              )}
+              <button
+                onClick={onClose}
+                className="px-5 py-5 text-white/40 hover:text-white transition-colors"
+              >
+                <X size={20} />
+              </button>
             </div>
 
-            <div className="space-y-4">
-              {results.length > 0 ? (
-                results.map((recipe) => (
-                  <motion.div
-                    key={recipe.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                  >
-                    <Link 
-                      href={`/recipes/${recipe.id}`}
-                      onClick={onClose}
-                      className="group flex items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-2xl hover:bg-white/[0.05] hover:border-orange-500/30 transition-all"
+            {/* Results */}
+            <AnimatePresence mode="wait">
+              {results.length > 0 && (
+                <motion.div
+                  key="results"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="mt-3 bg-[#111]/95 border border-white/10 rounded-2xl overflow-hidden shadow-2xl"
+                >
+                  {results.map((recipe, i) => (
+                    <Link
+                      key={recipe.id}
+                      href={`/recipes/${recipe.slug || recipe.id}`}
+                      onClick={handleResultClick}
+                      className={`flex items-center gap-4 px-5 py-4 hover:bg-white/5 transition-colors group ${
+                        i !== 0 ? 'border-t border-white/5' : ''
+                      }`}
                     >
-                      <div className="flex items-center gap-6">
-                        <div className="w-16 h-16 rounded-xl overflow-hidden bg-white/5">
-                          {typeof recipe.image === 'object' && recipe.image?.url && (
-                            <img src={recipe.image.url} alt="" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                      {/* Thumbnail */}
+                      <div className="relative w-14 h-14 rounded-xl overflow-hidden flex-shrink-0 bg-white/5">
+                        {recipe.image?.url ? (
+                          <Image
+                            src={recipe.image.url}
+                            alt={recipe.title}
+                            fill
+                            sizes="56px"
+                            className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-orange-500/10 flex items-center justify-center">
+                            <Search size={14} className="text-orange-500/40" />
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Info */}
+                      <div className="flex-1 min-w-0">
+                        <p className="text-white font-black uppercase italic tracking-tight truncate group-hover:text-orange-500 transition-colors">
+                          {recipe.title}
+                        </p>
+                        <div className="flex items-center gap-3 mt-1 flex-wrap">
+                          {recipe.location?.name && (
+                            <span className="flex items-center gap-1 text-white/30 text-[10px] font-bold uppercase tracking-wider">
+                              <MapPin size={9} /> {recipe.location.name}
+                            </span>
+                          )}
+                          {(recipe.prepTime || recipe.cookTime) && (
+                            <span className="flex items-center gap-1 text-white/30 text-[10px] font-bold uppercase tracking-wider">
+                              <Clock size={9} /> {(recipe.prepTime || 0) + (recipe.cookTime || 0)}'
+                            </span>
+                          )}
+                          {recipe.recipeCategory && (
+                            <span className="text-orange-500/60 text-[10px] font-black uppercase tracking-wider">
+                              {getCategoryLabel(recipe.recipeCategory)}
+                            </span>
                           )}
                         </div>
-                        <div>
-                          <h4 className="text-xl font-bold uppercase italic tracking-tight group-hover:text-orange-500 transition-colors">
-                            {recipe.title}
-                          </h4>
-                          <span className="text-[10px] font-black uppercase tracking-widest text-white/30">
-                            {recipe.category || 'Συνταγή'}
-                          </span>
-                        </div>
                       </div>
-                      <ArrowRight className="text-white/20 group-hover:text-orange-500 group-hover:translate-x-2 transition-all" />
+
+                      <ArrowRight size={14} className="text-white/20 group-hover:text-orange-500 group-hover:translate-x-1 transition-all flex-shrink-0" />
                     </Link>
-                  </motion.div>
-                ))
-              ) : query.length > 1 && !loading ? (
-                <p className="text-center text-white/20 italic tracking-widest uppercase text-xs">Δεν βρέθηκαν αποτελέσματα</p>
-              ) : null}
-            </div>
-          </div>
+                  ))}
+
+                  {/* View all */}
+                  <Link
+                    href={`/recipes`}
+                    onClick={handleResultClick}
+                    className="flex items-center justify-center gap-2 px-5 py-3 bg-orange-500/10 hover:bg-orange-500/20 border-t border-orange-500/20 text-orange-500 text-[10px] font-black uppercase tracking-widest transition-colors"
+                  >
+                    Δες όλες τις συνταγές <ArrowRight size={12} />
+                  </Link>
+                </motion.div>
+              )}
+
+              {searched && results.length === 0 && !loading && (
+                <motion.div
+                  key="empty"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="mt-3 bg-[#111]/95 border border-white/10 rounded-2xl px-6 py-10 text-center shadow-2xl"
+                >
+                  <p className="text-white/20 text-xs uppercase tracking-widest font-black italic">
+                    Δεν βρέθηκαν αποτελέσματα για «{query}»
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {!searched && query.length < 2 && (
+              <p className="text-center text-white/20 text-[10px] uppercase tracking-widest font-bold mt-6">
+                Πληκτρολόγησε τουλάχιστον 2 χαρακτήρες
+              </p>
+            )}
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>

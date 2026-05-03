@@ -11,7 +11,9 @@ import { Media } from './collections/Media'
 import Locations from './collections/Locations'
 import Recipes from './collections/Recipes'
 import Pages from './collections/Pages'
+import Subscribers from './collections/Subscribers'
 import HeaderMenu from './globals/HeaderMenu'
+import SiteSettings from './globals/SiteSettings'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -22,9 +24,18 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    components: {
+      afterDashboard: ['@/components/admin/DashboardStats'],
+      views: {
+        importRecipe: {
+          Component: '@/components/admin/ImportRecipePage',
+          path: '/import-recipe',
+        },
+      },
+    },
   },
-  collections: [Users, Media, Locations, Recipes, Pages],
-  globals: [HeaderMenu],
+  collections: [Users, Media, Locations, Recipes, Pages, Subscribers],
+  globals: [HeaderMenu, SiteSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

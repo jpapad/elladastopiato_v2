@@ -72,6 +72,7 @@ export interface Config {
     locations: Location;
     recipes: Recipe;
     pages: Page;
+    subscribers: Subscriber;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -84,6 +85,7 @@ export interface Config {
     locations: LocationsSelect<false> | LocationsSelect<true>;
     recipes: RecipesSelect<false> | RecipesSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
+    subscribers: SubscribersSelect<false> | SubscribersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -95,9 +97,11 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     'header-menu': HeaderMenu;
+    'site-settings': SiteSetting;
   };
   globalsSelect: {
     'header-menu': HeaderMenuSelect<false> | HeaderMenuSelect<true>;
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -170,21 +174,34 @@ export interface Media {
   focalY?: number | null;
 }
 /**
+ * Διαχείριση γεωγραφικών περιοχών (Περιφέρειες → Νομοί → Δήμοι)
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "locations".
  */
 export interface Location {
   id: number;
+  /**
+   * π.χ. Κρήτη, Χανιά, Σφακιά
+   */
   name: string;
   /**
-   * Η εικόνα που θα εμφανίζεται στην εξερεύνηση περιοχών.
+   * Αυτόματα από το όνομα. π.χ. "kriti"
    */
-  image?: (number | null) | Media;
+  slug?: string | null;
+  /**
+   * Επιλέξτε σε ποιο επίπεδο ανήκει η τοποθεσία.
+   */
   level: '1' | '2' | '3';
+  /**
+   * Επιλέξτε την ανώτερη περιοχή στην οποία ανήκει.
+   */
   parent?: (number | null) | Location;
   /**
-   * Εδώ θα μπαίνουν οι συντεταγμένες για να "ζωγραφίζεται" η περιοχή στον χάρτη.
+   * Εικόνα που εμφανίζεται στις κάρτες εξερεύνησης.
    */
+  image?: (number | null) | Media;
+  description?: string | null;
   geoJSON?:
     | {
         [k: string]: unknown;
@@ -198,20 +215,30 @@ export interface Location {
   createdAt: string;
 }
 /**
+ * Διαχείριση συνταγών. Μόνο οι "Δημοσιευμένες" εμφανίζονται στην ιστοσελίδα.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "recipes".
  */
 export interface Recipe {
   id: number;
+  /**
+   * Μόνο οι δημοσιευμένες εμφανίζονται στην ιστοσελίδα.
+   */
+  status: 'published' | 'draft';
   title: string;
+  /**
+   * π.χ. "ntakos-kritis" → /recipes/ntakos-kritis. Αυτόματα από τον τίτλο.
+   */
+  slug?: string | null;
   recipeCategory: 'orektika' | 'kyrios' | 'thalassina' | 'glyka' | 'pites' | 'salates';
+  location: number | Location;
+  image?: (number | null) | Media;
   prepTime?: number | null;
   cookTime?: number | null;
   servings?: number | null;
   tags?: ('vegan' | 'vegetarian' | 'gluten-free' | 'keto')[] | null;
   allergens?: ('nuts' | 'gluten' | 'lactose' | 'eggs' | 'fish')[] | null;
-  location: number | Location;
-  image: number | Media;
   description?: {
     root: {
       type: string;
@@ -272,52 +299,89 @@ export interface Recipe {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * Προαιρετικά. Αν αφεθούν κενά χρησιμοποιείται ο τίτλος και η φωτογραφία.
+   */
   seo?: {
     metaTitle?: string | null;
     metaDesc?: string | null;
+    ogImage?: (number | null) | Media;
   };
   updatedAt: string;
   createdAt: string;
 }
 /**
+ * Δημιουργία και διαχείριση σελίδων με τον page builder.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
  */
 export interface Page {
   id: number;
+  /**
+   * Μόνο οι δημοσιευμένες σελίδες είναι ορατές στους επισκέπτες.
+   */
+  status: 'published' | 'draft';
   title: string;
+  /**
+   * π.χ. "about" → elladastopiato.gr/about
+   */
   slug: string;
+  /**
+   * Προαιρετικό. Αν αφεθεί κενό χρησιμοποιείται ο τίτλος.
+   */
+  seo?: {
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+    ogImage?: (number | null) | Media;
+  };
   layout?:
     | (
         | {
             title: string;
             subtitle?: string | null;
             backgroundImage?: (number | null) | Media;
+            cta?: {
+              label?: string | null;
+              href?: string | null;
+            };
             id?: string | null;
             blockName?: string | null;
             blockType: 'hero';
           }
         | {
-            title?: string | null;
-            videoType?: ('youtube' | 'file') | null;
-            youtubeID?: string | null;
-            videoFile?: (number | null) | Media;
+            content: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
             id?: string | null;
             blockName?: string | null;
-            blockType: 'videoBlock';
+            blockType: 'richTextBlock';
+          }
+        | {
+            title?: string | null;
+            limit?: number | null;
+            filterByCategory?: ('' | 'orektika' | 'kyrios' | 'thalassina' | 'glyka' | 'pites' | 'salates') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'recipesBlock';
           }
         | {
             heading?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'mapBlock';
-          }
-        | {
-            title?: string | null;
-            limit?: number | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'recipesBlock';
           }
         | {
             title: string;
@@ -333,7 +397,7 @@ export interface Page {
             title?: string | null;
             features?:
               | {
-                  icon?: ('Heart' | 'Globe' | 'Award') | null;
+                  icon?: ('Heart' | 'Globe' | 'Award' | 'UtensilsCrossed' | 'MapPin' | 'Zap') | null;
                   featureTitle: string;
                   featureDescription: string;
                   id?: string | null;
@@ -358,8 +422,46 @@ export interface Page {
             blockName?: string | null;
             blockType: 'quoteBlock';
           }
+        | {
+            title?: string | null;
+            videoType?: ('youtube' | 'file') | null;
+            /**
+             * Το ID μετά το ?v= στο URL
+             */
+            youtubeID?: string | null;
+            videoFile?: (number | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'videoBlock';
+          }
+        | {
+            title?: string | null;
+            description?: string | null;
+            buttonText?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'newsletterBlock';
+          }
       )[]
     | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Εγγεγραμμένοι χρήστες για το newsletter.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscribers".
+ */
+export interface Subscriber {
+  id: number;
+  email: string;
+  name?: string | null;
+  /**
+   * Αποεπιλέξτε για διαγραφή από λίστα χωρίς να σβήσετε την εγγραφή.
+   */
+  active?: boolean | null;
+  source?: ('website' | 'admin') | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -406,6 +508,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'pages';
         value: number | Page;
+      } | null)
+    | ({
+        relationTo: 'subscribers';
+        value: number | Subscriber;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -495,9 +601,11 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface LocationsSelect<T extends boolean = true> {
   name?: T;
-  image?: T;
+  slug?: T;
   level?: T;
   parent?: T;
+  image?: T;
+  description?: T;
   geoJSON?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -507,15 +615,17 @@ export interface LocationsSelect<T extends boolean = true> {
  * via the `definition` "recipes_select".
  */
 export interface RecipesSelect<T extends boolean = true> {
+  status?: T;
   title?: T;
+  slug?: T;
   recipeCategory?: T;
+  location?: T;
+  image?: T;
   prepTime?: T;
   cookTime?: T;
   servings?: T;
   tags?: T;
   allergens?: T;
-  location?: T;
-  image?: T;
   description?: T;
   ingredients?: T;
   instructions?: T;
@@ -525,6 +635,7 @@ export interface RecipesSelect<T extends boolean = true> {
     | {
         metaTitle?: T;
         metaDesc?: T;
+        ogImage?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -534,8 +645,16 @@ export interface RecipesSelect<T extends boolean = true> {
  * via the `definition` "pages_select".
  */
 export interface PagesSelect<T extends boolean = true> {
+  status?: T;
   title?: T;
   slug?: T;
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        ogImage?: T;
+      };
   layout?:
     | T
     | {
@@ -545,23 +664,19 @@ export interface PagesSelect<T extends boolean = true> {
               title?: T;
               subtitle?: T;
               backgroundImage?: T;
+              cta?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                  };
               id?: T;
               blockName?: T;
             };
-        videoBlock?:
+        richTextBlock?:
           | T
           | {
-              title?: T;
-              videoType?: T;
-              youtubeID?: T;
-              videoFile?: T;
-              id?: T;
-              blockName?: T;
-            };
-        mapBlock?:
-          | T
-          | {
-              heading?: T;
+              content?: T;
               id?: T;
               blockName?: T;
             };
@@ -570,6 +685,14 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               title?: T;
               limit?: T;
+              filterByCategory?: T;
+              id?: T;
+              blockName?: T;
+            };
+        mapBlock?:
+          | T
+          | {
+              heading?: T;
               id?: T;
               blockName?: T;
             };
@@ -616,7 +739,38 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        videoBlock?:
+          | T
+          | {
+              title?: T;
+              videoType?: T;
+              youtubeID?: T;
+              videoFile?: T;
+              id?: T;
+              blockName?: T;
+            };
+        newsletterBlock?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              buttonText?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscribers_select".
+ */
+export interface SubscribersSelect<T extends boolean = true> {
+  email?: T;
+  name?: T;
+  active?: T;
+  source?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -677,6 +831,40 @@ export interface HeaderMenu {
   createdAt?: string | null;
 }
 /**
+ * Γενικές ρυθμίσεις της ιστοσελίδας — τίτλος, περιγραφή, social media, SEO.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: number;
+  siteName?: string | null;
+  tagline?: string | null;
+  /**
+   * Χρησιμοποιείται ως default meta description.
+   */
+  description?: string | null;
+  logo?: (number | null) | Media;
+  favicon?: (number | null) | Media;
+  /**
+   * Εμφανίζεται όταν μοιράζεστε τη σελίδα στα social media (1200×630px).
+   */
+  defaultOgImage?: (number | null) | Media;
+  /**
+   * Το content του meta tag verification.
+   */
+  googleVerification?: string | null;
+  instagram?: string | null;
+  facebook?: string | null;
+  youtube?: string | null;
+  tiktok?: string | null;
+  footerTagline?: string | null;
+  footerCopyright?: string | null;
+  contactEmail?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header-menu_select".
  */
@@ -688,6 +876,29 @@ export interface HeaderMenuSelect<T extends boolean = true> {
         link?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  siteName?: T;
+  tagline?: T;
+  description?: T;
+  logo?: T;
+  favicon?: T;
+  defaultOgImage?: T;
+  googleVerification?: T;
+  instagram?: T;
+  facebook?: T;
+  youtube?: T;
+  tiktok?: T;
+  footerTagline?: T;
+  footerCopyright?: T;
+  contactEmail?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

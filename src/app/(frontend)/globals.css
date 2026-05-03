@@ -1,20 +1,26 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #050505;
-  --foreground: #ffffff;
+  --prose-li:        rgba(10, 10, 10, 0.65);
+  --prose-li-hover:  #0a0a0a;
+  --prose-step:      rgba(10, 10, 10, 0.75);
+  --scrollbar-track: rgba(0, 0, 0, 0.03);
+}
+
+.dark {
+  --prose-li:        rgba(255, 255, 255, 0.7);
+  --prose-li-hover:  #ffffff;
+  --prose-step:      rgba(255, 255, 255, 0.8);
+  --scrollbar-track: rgba(255, 255, 255, 0.02);
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
-/* --- 2026 MODERN LIST STYLES --- */
+/* --- LIST STYLES (recipe ingredients & instructions) --- */
 
-/* Υλικά (Custom Bullets) */
 .prose ul {
   list-style-type: none !important;
   padding-left: 0 !important;
@@ -26,12 +32,11 @@ body {
   padding-left: 1.8rem !important;
   margin-bottom: 1rem !important;
   display: block !important;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--prose-li);
   font-size: 1.05rem;
   transition: all 0.3s ease;
 }
 
-/* Το μοντέρνο Πορτοκαλί Dash αντί για βούλα */
 .prose ul li::before {
   content: "";
   position: absolute;
@@ -45,11 +50,10 @@ body {
 }
 
 .prose ul li:hover {
-  color: #ffffff;
+  color: var(--prose-li-hover);
   transform: translateX(4px);
 }
 
-/* Εκτέλεση (Custom Modern Numbering) */
 .prose ol {
   list-style-type: none !important;
   padding-left: 0 !important;
@@ -64,10 +68,9 @@ body {
   display: block !important;
   counter-increment: recipe-step;
   line-height: 1.8;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--prose-step);
 }
 
-/* Ο αριθμός σε στυλ 01, 02, 03 */
 .prose ol li::before {
   content: counter(recipe-step, decimal-leading-zero);
   position: absolute;
@@ -90,10 +93,9 @@ body {
   body { background: white !important; color: black !important; }
   .prose ul li::before { background: #f97316 !important; box-shadow: none !important; }
   .prose ol li::before { color: #f97316 !important; }
-  .text-white, .text-white\/70, .text-white\/80 { color: black !important; }
 }
 
 /* --- CUSTOM SCROLLBAR --- */
 .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-.custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); }
+.custom-scrollbar::-webkit-scrollbar-track { background: var(--scrollbar-track); }
 .custom-scrollbar::-webkit-scrollbar-thumb { background: #f97316; border-radius: 10px; }
