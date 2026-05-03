@@ -73,6 +73,7 @@ export interface Config {
     recipes: Recipe;
     pages: Page;
     subscribers: Subscriber;
+    collections: Collection;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -86,6 +87,7 @@ export interface Config {
     recipes: RecipesSelect<false> | RecipesSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     subscribers: SubscribersSelect<false> | SubscribersSelect<true>;
+    collections: CollectionsSelect<false> | CollectionsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -467,6 +469,43 @@ export interface Subscriber {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "collections".
+ */
+export interface Collection {
+  id: number;
+  title: string;
+  /**
+   * π.χ. pasxa, xristougenna, kalokairi
+   */
+  slug: string;
+  theme?: ('spring' | 'summer' | 'autumn' | 'winter' | 'easter' | 'christmas' | 'fasting' | 'general') | null;
+  /**
+   * π.χ. 🌸 🌊 🎄
+   */
+  emoji?: string | null;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  image?: (number | null) | Media;
+  recipes?: (number | Recipe)[] | null;
+  active?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -512,6 +551,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'subscribers';
         value: number | Subscriber;
+      } | null)
+    | ({
+        relationTo: 'collections';
+        value: number | Collection;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -771,6 +814,22 @@ export interface SubscribersSelect<T extends boolean = true> {
   name?: T;
   active?: T;
   source?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "collections_select".
+ */
+export interface CollectionsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  theme?: T;
+  emoji?: T;
+  description?: T;
+  image?: T;
+  recipes?: T;
+  active?: T;
   updatedAt?: T;
   createdAt?: T;
 }

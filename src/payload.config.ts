@@ -12,6 +12,7 @@ import Locations from './collections/Locations'
 import Recipes from './collections/Recipes'
 import Pages from './collections/Pages'
 import Subscribers from './collections/Subscribers'
+import { Collections } from './collections/Collections'
 import HeaderMenu from './globals/HeaderMenu'
 import SiteSettings from './globals/SiteSettings'
 
@@ -34,7 +35,7 @@ export default buildConfig({
       },
     },
   },
-  collections: [Users, Media, Locations, Recipes, Pages, Subscribers],
+  collections: [Users, Media, Locations, Recipes, Pages, Subscribers, Collections],
   globals: [HeaderMenu, SiteSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

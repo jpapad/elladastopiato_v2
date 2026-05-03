@@ -87,12 +87,46 @@ body {
 
 /* --- PRINT STYLES --- */
 @media print {
-  header, footer, .no-print, button, .share-buttons, a[href^="/regions"] {
+  nav, footer, .no-print, .share-btn, [data-no-print] {
     display: none !important;
   }
-  body { background: white !important; color: black !important; }
+
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  html, body {
+    background: white !important;
+    color: #111 !important;
+    font-size: 12pt;
+  }
+
+  .print-recipe-title {
+    font-size: 28pt !important;
+    color: #111 !important;
+    margin-bottom: 8pt !important;
+  }
+
+  .print-meta {
+    display: flex !important;
+    gap: 16pt;
+    margin-bottom: 16pt;
+    padding-bottom: 8pt;
+    border-bottom: 1pt solid #e5e5e5;
+  }
+
   .prose ul li::before { background: #f97316 !important; box-shadow: none !important; }
   .prose ol li::before { color: #f97316 !important; }
+
+  .prose ul li, .prose ol li { color: #222 !important; }
+
+  /* Avoid page breaks inside sections */
+  section { page-break-inside: avoid; }
+  h2, h3 { page-break-after: avoid; }
+
+  /* Hide image in print to save ink — remove this if you want the image */
+  .print-hide-image { display: none !important; }
+
+  /* Bring back hidden dark backgrounds */
+  .dark\:bg-\[\#050505\] { background: white !important; }
 }
 
 /* --- CUSTOM SCROLLBAR --- */

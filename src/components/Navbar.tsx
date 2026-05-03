@@ -40,6 +40,9 @@ export default function Navbar() {
             {[
               { label: 'Περιοχές', href: '/regions' },
               { label: 'Συνταγές', href: '/recipes' },
+              { label: 'Κατηγορίες', href: '/categories' },
+              { label: 'Συλλογές', href: '/collections' },
+              { label: 'Αποθηκευμένα', href: '/saved' },
             ].map((item) => (
               <Link
                 key={item.href}
@@ -73,6 +76,9 @@ export default function Navbar() {
           {[
             { label: 'Περιοχές', href: '/regions' },
             { label: 'Συνταγές', href: '/recipes' },
+            { label: 'Κατηγορίες', href: '/categories' },
+            { label: 'Συλλογές', href: '/collections' },
+            { label: 'Αποθηκευμένα', href: '/saved' },
           ].map((item) => (
             <Link
               key={item.href}

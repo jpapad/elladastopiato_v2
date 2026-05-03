@@ -8,6 +8,11 @@ import { ChevronLeft, MapPin, Zap, AlertTriangle } from 'lucide-react'
 import type { Metadata } from 'next'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import ShareButton from '@/components/ShareButton'
+import PrintButton from '@/components/PrintButton'
+import FavoriteButton from '@/components/FavoriteButton'
+import CookingModeButton from '@/components/CookingModeButton'
+import ShoppingList from '@/components/ShoppingList'
+import IngredientsWithScaling from '@/components/IngredientsWithScaling'
 import RecipeCard from '@/components/RecipeCard'
 import { getCategoryLabel } from '@/lib/categories'
 
@@ -73,7 +78,29 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
           <Link href="/recipes" className="inline-flex items-center gap-2 text-black/40 dark:text-white/40 hover:text-orange-500 transition-all uppercase text-[10px] font-black tracking-[0.3em] group">
             <ChevronLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> Πίσω στις Συνταγές
           </Link>
-          <ShareButton recipeTitle={recipe.title} />
+          <div className="flex items-center gap-3 no-print flex-wrap">
+            {recipe.instructions && (
+              <CookingModeButton
+                instructions={recipe.instructions}
+                title={recipe.title}
+                totalTime={((recipe as any).prepTime || 0) + ((recipe as any).cookTime || 0)}
+              />
+            )}
+            {recipe.ingredients && (
+              <ShoppingList ingredients={recipe.ingredients} recipeTitle={recipe.title} />
+            )}
+            <PrintButton />
+            <FavoriteButton recipe={{
+              id: String(recipe.id),
+              title: recipe.title,
+              slug: (recipe as any).slug || String(recipe.id),
+              imageUrl: (recipe.image as any)?.url,
+              location: (recipe.location as any)?.name,
+              recipeCategory: (recipe as any).recipeCategory,
+              totalTime: ((recipe as any).prepTime || 0) + ((recipe as any).cookTime || 0),
+            }} />
+            <ShareButton recipeTitle={recipe.title} />
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
@@ -177,9 +204,10 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
                   <h3 className="text-2xl font-black uppercase italic mb-8 flex items-center gap-4">
                     <span className="w-8 h-[2px] bg-orange-500" /> Υλικά
                   </h3>
-                  <div className="prose dark:prose-invert max-w-none leading-relaxed">
-                    <RichText data={recipe.ingredients} />
-                  </div>
+                  <IngredientsWithScaling
+                    data={recipe.ingredients}
+                    defaultServings={(recipe as any).servings || 4}
+                  />
                 </section>
               )}
               {recipe.instructions && (
