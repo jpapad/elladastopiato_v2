@@ -16,6 +16,8 @@ import IngredientsWithScaling from '@/components/IngredientsWithScaling'
 import RecipeCard from '@/components/RecipeCard'
 import { getCategoryLabel } from '@/lib/categories'
 
+export const dynamic = 'force-dynamic'
+
 async function getRecipe(slugOrId: string) {
   const payload = await getPayload({ config: configPromise })
   const bySlug = await payload.find({

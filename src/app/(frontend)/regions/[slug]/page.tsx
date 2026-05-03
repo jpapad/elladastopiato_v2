@@ -7,6 +7,8 @@ import Link from 'next/link'
 import RecipeCard from '@/components/RecipeCard'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 async function getLocation(slugOrId: string) {
   const payload = await getPayload({ config: configPromise })
   const bySlug = await payload.find({

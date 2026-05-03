@@ -6,6 +6,8 @@ import { ArrowRight } from 'lucide-react'
 import type { Metadata } from 'next'
 import { CATEGORY_OPTIONS } from '@/lib/categories'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Κατηγορίες Συνταγών | Ελλάδα στο Πιάτο',
   description: 'Εξερεύνησε τις κατηγορίες παραδοσιακών ελληνικών συνταγών.',

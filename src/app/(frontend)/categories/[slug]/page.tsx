@@ -8,9 +8,7 @@ import RecipeCard from '@/components/RecipeCard'
 import { CATEGORY_OPTIONS, getCategoryLabel } from '@/lib/categories'
 import type { Metadata } from 'next'
 
-export async function generateStaticParams() {
-  return CATEGORY_OPTIONS.map((c) => ({ slug: c.value }))
-}
+export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params

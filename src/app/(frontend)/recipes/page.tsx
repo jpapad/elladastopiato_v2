@@ -4,6 +4,8 @@ import configPromise from '@payload-config'
 import type { Metadata } from 'next'
 import RecipesClient from '@/components/RecipesClient'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Συνταγές | Ελλάδα στο Πιάτο',
   description: 'Εξερεύνησε εκατοντάδες αυθεντικές ελληνικές συνταγές από κάθε γωνιά της χώρας.',

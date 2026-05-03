@@ -6,6 +6,8 @@ import Image from 'next/image'
 import { ArrowRight, MapPin } from 'lucide-react'
 import MapWrapper from '@/components/MapWrapper'
 
+export const dynamic = 'force-dynamic'
+
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
 

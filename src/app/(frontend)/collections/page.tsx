@@ -6,6 +6,8 @@ import Image from 'next/image'
 import { ArrowRight, Sparkles } from 'lucide-react'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Συλλογές | Ελλάδα στο Πιάτο',
   description: 'Εποχιακές και θεματικές συλλογές παραδοσιακών ελληνικών συνταγών.',
