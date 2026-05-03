@@ -2,9 +2,12 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import type { MetadataRoute } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 const BASE = process.env.NEXT_PUBLIC_SERVER_URL || 'https://elladastopiato.gr'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  try {
   const payload = await getPayload({ config: configPromise })
 
   const [recipes, locations, pages] = await Promise.all([
@@ -46,4 +49,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...locationUrls,
     ...pageUrls,
   ]
+  } catch {
+    return [
+      { url: BASE, lastModified: new Date(), changeFrequency: 'weekly', priority: 1.0 },
+      { url: `${BASE}/recipes`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },
+      { url: `${BASE}/regions`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+    ]
+  }
 }
