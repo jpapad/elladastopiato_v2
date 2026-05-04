@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google'
 import { cookies } from 'next/headers'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
+import { unstable_cache } from 'next/cache'
 import Navbar from '@/components/Navbar'
 import { Footer } from '@/components/Footer'
 import { PageWrapper } from '@/components/PageWrapper'
@@ -11,6 +12,20 @@ import { ThemeProvider } from '@/components/ThemeProvider'
 import MaintenancePage from '@/components/MaintenancePage'
 
 export const dynamic = 'force-dynamic'
+
+const getMaintenanceSettings = unstable_cache(
+  async () => {
+    try {
+      const payload = await getPayload({ config: configPromise })
+      const s = await payload.findGlobal({ slug: 'site-settings' }) as any
+      return { maintenanceMode: s?.maintenanceMode ?? false, title: s?.maintenanceTitle, message: s?.maintenanceMessage, estimate: s?.maintenanceEstimate }
+    } catch {
+      return { maintenanceMode: false }
+    }
+  },
+  ['maintenance-settings'],
+  { revalidate: 30 }
+)
 
 const inter = Inter({
   subsets: ['latin', 'greek'],
@@ -26,30 +41,27 @@ export const metadata = {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  // Maintenance mode check
+  // Maintenance mode check (cached 30s)
   let maintenance = false
   let maintenanceData: any = {}
-  try {
-    const payload = await getPayload({ config: configPromise })
-    const settings = await payload.findGlobal({ slug: 'site-settings' }) as any
-    if (settings?.maintenanceMode) {
-      const cookieStore = await cookies()
-      const hasAdminSession = cookieStore.has('payload-token')
-      if (!hasAdminSession) {
-        maintenance = true
-        maintenanceData = settings
-      }
+  const settings = await getMaintenanceSettings()
+  if (settings.maintenanceMode) {
+    const cookieStore = await cookies()
+    const hasAdminSession = cookieStore.has('payload-token')
+    if (!hasAdminSession) {
+      maintenance = true
+      maintenanceData = settings
     }
-  } catch {}
+  }
 
   if (maintenance) {
     return (
       <html lang="el" suppressHydrationWarning>
         <body>
           <MaintenancePage
-            title={maintenanceData.maintenanceTitle}
-            message={maintenanceData.maintenanceMessage}
-            estimate={maintenanceData.maintenanceEstimate}
+            title={maintenanceData.title}
+            message={maintenanceData.message}
+            estimate={maintenanceData.estimate}
           />
         </body>
       </html>
