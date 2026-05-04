@@ -1,7 +1,5 @@
 import type { CollectionConfig } from 'payload'
 import { S3Client, DeleteObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3'
-import fs from 'fs'
-import path from 'path'
 
 const BUCKET = process.env.SUPABASE_S3_BUCKET || 'media'
 const PROJECT_REF = 'rarfpfqxbeajcsnhawyu'
@@ -18,49 +16,30 @@ const getS3 = () =>
     forcePathStyle: true,
   })
 
-async function uploadToSupabase(filename: string, buffer: Buffer, mimeType: string) {
-  if (!process.env.SUPABASE_S3_ENDPOINT) return
-  await getS3().send(
-    new PutObjectCommand({
-      Bucket: BUCKET,
-      Key: filename,
-      Body: buffer,
-      ContentType: mimeType,
-    }),
-  )
-}
-
-async function deleteFromSupabase(filename: string) {
-  if (!process.env.SUPABASE_S3_ENDPOINT) return
-  await getS3().send(new DeleteObjectCommand({ Bucket: BUCKET, Key: filename }))
-}
-
 export const Media: CollectionConfig = {
   slug: 'media',
   access: { read: () => true },
-  upload: true,
+  upload: {
+    disableLocalStorage: true,
+  },
   hooks: {
     afterChange: [
       async ({ doc, req, operation }) => {
         if (!process.env.SUPABASE_S3_ENDPOINT) return doc
         if (operation !== 'create' && operation !== 'update') return doc
         try {
-          let buffer: Buffer | undefined
-
-          // Try req.file first (in-memory)
-          if (req.file) {
-            const ab = await (req.file as unknown as File).arrayBuffer()
-            buffer = Buffer.from(ab)
-          } else if (doc.filename) {
-            // Fallback: read from local disk (Vercel ephemeral fs)
-            const localPath = path.join(process.cwd(), 'media', doc.filename)
-            if (fs.existsSync(localPath)) {
-              buffer = fs.readFileSync(localPath)
-            }
-          }
+          const file = req.file as any
+          const buffer: Buffer | undefined = file?.data
 
           if (buffer && doc.filename) {
-            await uploadToSupabase(doc.filename, buffer, doc.mimeType || 'application/octet-stream')
+            await getS3().send(
+              new PutObjectCommand({
+                Bucket: BUCKET,
+                Key: doc.filename,
+                Body: buffer,
+                ContentType: doc.mimeType || 'application/octet-stream',
+              }),
+            )
           }
         } catch (err) {
           req.payload.logger.error({ err }, 'Supabase upload failed')
@@ -72,7 +51,7 @@ export const Media: CollectionConfig = {
       ({ doc }) => {
         if (!process.env.SUPABASE_S3_ENDPOINT) return doc
         if (doc?.filename) {
-          doc.url = `${PUBLIC_BASE}/${doc.filename}`
+          return { ...doc, url: `${PUBLIC_BASE}/${doc.filename}` }
         }
         return doc
       },
@@ -81,7 +60,9 @@ export const Media: CollectionConfig = {
       async ({ doc, req }) => {
         if (!process.env.SUPABASE_S3_ENDPOINT) return doc
         try {
-          if (doc?.filename) await deleteFromSupabase(doc.filename)
+          if (doc?.filename) {
+            await getS3().send(new DeleteObjectCommand({ Bucket: BUCKET, Key: doc.filename }))
+          }
         } catch (err) {
           req.payload.logger.error({ err }, 'Supabase delete failed')
         }
