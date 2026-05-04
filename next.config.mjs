@@ -15,7 +15,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: '*.public.blob.vercel-storage.com',
+        hostname: '*.supabase.co',
       },
     ],
     // Σύγχρονα formats για μέγιστη ταχύτητα και μικρότερο μέγεθος αρχείου
