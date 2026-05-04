@@ -15,6 +15,7 @@ import Subscribers from './collections/Subscribers'
 import { Collections } from './collections/Collections'
 import HeaderMenu from './globals/HeaderMenu'
 import SiteSettings from './globals/SiteSettings'
+import Homepage from './globals/Homepage'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -36,7 +37,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Locations, Recipes, Pages, Subscribers, Collections],
-  globals: [HeaderMenu, SiteSettings],
+  globals: [HeaderMenu, SiteSettings, Homepage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

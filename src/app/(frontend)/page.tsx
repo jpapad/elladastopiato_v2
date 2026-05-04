@@ -1,6 +1,12 @@
 import React from 'react'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
+import { HeroBlockComponent } from '@/components/blocks/HeroBlockComponent'
+import { TextSectionBlockComponent } from '@/components/blocks/TextSectionBlockComponent'
+import { RecipesSectionBlockComponent } from '@/components/blocks/RecipesSectionBlockComponent'
+import { MapSectionBlockComponent } from '@/components/blocks/MapSectionBlockComponent'
+import { CtaSectionBlockComponent } from '@/components/blocks/CtaSectionBlockComponent'
+// Keep old imports for fallback
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, MapPin } from 'lucide-react'
@@ -11,15 +17,48 @@ export const dynamic = 'force-dynamic'
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
 
-  const latestRecipes = await payload.find({
-    collection: 'recipes',
-    limit: 3,
-    sort: '-createdAt',
-  })
+  const [homepageData, latestRecipes] = await Promise.all([
+    payload.findGlobal({ slug: 'homepage' as any, depth: 2 }).catch(() => null),
+    payload.find({ collection: 'recipes', limit: 3, sort: '-createdAt' }),
+  ])
 
+  const blocks = (homepageData as any)?.blocks
+
+  // If blocks are configured, render them
+  if (blocks && blocks.length > 0) {
+    return (
+      <main className="min-h-screen bg-white dark:bg-[#050505]">
+        {blocks.map(async (block: any, i: number) => {
+          if (block.blockType === 'hero') {
+            return <HeroBlockComponent key={i} block={block} />
+          }
+          if (block.blockType === 'textSection') {
+            return <TextSectionBlockComponent key={i} block={block} />
+          }
+          if (block.blockType === 'mapSection') {
+            return <MapSectionBlockComponent key={i} block={block} />
+          }
+          if (block.blockType === 'ctaSection') {
+            return <CtaSectionBlockComponent key={i} block={block} />
+          }
+          if (block.blockType === 'recipesSection') {
+            const recipes = await payload.find({
+              collection: 'recipes',
+              limit: block.limit || 3,
+              sort: '-createdAt',
+            })
+            return <RecipesSectionBlockComponent key={i} block={block} recipes={recipes.docs} />
+          }
+          return null
+        })}
+      </main>
+    )
+  }
+
+  // Fallback: hardcoded homepage (same as before)
   return (
     <main className="min-h-screen bg-white dark:bg-[#050505]">
-      {/* HERO SECTION — always dark (has image) */}
+      {/* HERO SECTION */}
       <section className="relative h-screen flex items-center overflow-hidden -mt-28">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent z-10" />
@@ -32,7 +71,6 @@ export default async function HomePage() {
             className="object-cover opacity-50 scale-110"
           />
         </div>
-
         <div className="max-w-7xl mx-auto px-6 relative z-20 w-full">
           <div className="max-w-3xl">
             <span className="inline-block px-4 py-1 rounded-full border border-orange-500/30 text-orange-500 text-[10px] font-black uppercase tracking-[0.3em] mb-6">
@@ -67,7 +105,6 @@ export default async function HomePage() {
             Δες Ολες τις συνταγες
           </Link>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {latestRecipes.docs.map((recipe: any) => (
             <Link key={recipe.id} href={`/recipes/${recipe.id}`} className="group">
@@ -76,7 +113,7 @@ export default async function HomePage() {
                   src={recipe.image?.url}
                   alt={recipe.title}
                   fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
