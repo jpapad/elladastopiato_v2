@@ -11,7 +11,11 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'elladastopiato.gr', // Άλλαξέ το στο δικό σου domain όταν βγεις live
+        hostname: 'elladastopiato.gr',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.public.blob.vercel-storage.com',
       },
     ],
     // Σύγχρονα formats για μέγιστη ταχύτητα και μικρότερο μέγεθος αρχείου
