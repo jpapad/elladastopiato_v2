@@ -38,7 +38,7 @@ export default async function HomePage() {
             <span className="inline-block px-4 py-1 rounded-full border border-orange-500/30 text-orange-500 text-[10px] font-black uppercase tracking-[0.3em] mb-6">
               Αυθεντικες Ελληνικες Γευσεις
             </span>
-            <h1 className="text-7xl md:text-[10rem] font-black uppercase italic tracking-tighter leading-[0.8] mb-8 text-white">
+            <h1 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter leading-[0.85] mb-8 text-white">
               Η Ελλαδα <br /> <span className="text-orange-500">στο Πιατο</span> σου.
             </h1>
             <p className="text-lg text-white/60 mb-12 max-w-xl leading-relaxed">
