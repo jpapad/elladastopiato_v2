@@ -77,6 +77,39 @@ const SiteSettings: GlobalConfig = {
           ],
         },
         {
+          label: 'Maintenance',
+          fields: [
+            {
+              name: 'maintenanceMode',
+              type: 'checkbox',
+              label: '🔧 Ενεργοποίηση Maintenance Mode',
+              defaultValue: false,
+              admin: {
+                description: 'Όταν είναι ενεργό, η ιστοσελίδα εμφανίζει σελίδα "Υπό Ανανέωση" σε όλους εκτός από εσένα (admin).',
+              },
+            },
+            {
+              name: 'maintenanceTitle',
+              type: 'text',
+              label: 'Τίτλος Σελίδας',
+              defaultValue: 'Υπό Ανανέωση',
+            },
+            {
+              name: 'maintenanceMessage',
+              type: 'textarea',
+              label: 'Μήνυμα',
+              defaultValue: 'Κάνουμε κάποιες βελτιώσεις. Σύντομα θα είμαστε πάλι εδώ!',
+            },
+            {
+              name: 'maintenanceEstimate',
+              type: 'text',
+              label: 'Εκτιμώμενη Επιστροφή',
+              defaultValue: 'Επιστρέφουμε σύντομα',
+              admin: { description: 'π.χ. "Επιστρέφουμε στις 15:00"' },
+            },
+          ],
+        },
+        {
           label: 'Footer',
           fields: [
             {

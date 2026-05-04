@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { UtensilsCrossed, Menu, X, Search } from 'lucide-react'
 import { ThemeToggle } from './ThemeToggle'
 import { SearchOverlay } from './SearchOverlay'
+import UserMenu from './UserMenu'
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -60,6 +61,7 @@ export default function Navbar() {
               <Search size={16} />
             </button>
             <ThemeToggle />
+            <UserMenu />
           </div>
 
           {/* Mobile Toggle */}
@@ -95,7 +97,10 @@ export default function Navbar() {
           >
             <Search size={16} /> Αναζήτηση
           </button>
-          <ThemeToggle />
+          <div className="flex items-center gap-4">
+            <ThemeToggle />
+            <UserMenu />
+          </div>
         </div>
       )}
 

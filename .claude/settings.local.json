@@ -1,7 +1,24 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git remote *)"
+      "Bash(git remote *)",
+      "Bash(grep -E \"\\\\.tsx$\")",
+      "Bash(node -e \"const fs=require\\('fs'\\); const d=JSON.parse\\(fs.readFileSync\\('c:/elladastopiato-v2/public/regions_simplified_0.01deg.geojson','utf8'\\)\\); console.log\\('Features count:', d.features.length\\); console.log\\('First feature props:', JSON.stringify\\(d.features[0].properties\\)\\); console.log\\('Sample names:', d.features.slice\\(0,5\\).map\\(f=>f.properties.name||f.properties.NAME_1||f.properties.NAME||Object.values\\(f.properties\\)[0]\\)\\)\")",
+      "Bash(node -e ' *)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:data.humdata.org)",
+      "WebFetch(domain:geodata.gov.gr)",
+      "WebFetch(domain:gadm.org)",
+      "WebFetch(domain:www.geoboundaries.org)",
+      "WebFetch(domain:simplemaps.com)",
+      "WebFetch(domain:media.githubusercontent.com)",
+      "WebFetch(domain:geodata.ucdavis.edu)",
+      "Bash(curl -s \"https://raw.githubusercontent.com/codeforgermany/click_that_hood/main/public/data/greece-regions.geojson\" -o \"c:/elladastopiato-v2/public/greece-regions.geojson\")",
+      "Bash(curl -s --max-time 30 -L \"https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_GRC_2.json.zip\" -o /tmp/gadm41_GRC_2.zip)",
+      "Read(//tmp/**)",
+      "Bash(curl -s --max-time 30 -L \"https://raw.githubusercontent.com/peterdsp/greece-prefectures-and-units/main/greecePrefecturesUnits.geojson\" -o /tmp/greecePrefecturesUnits.geojson)",
+      "Bash(python3 -c ' *)",
+      "Bash(unzip -o gadm41_GRC_2.zip -d gadm41_GRC_2)"
     ]
   }
 }

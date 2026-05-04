@@ -133,11 +133,20 @@ export interface UserAuthOperations {
   };
 }
 /**
+ * Διαχείριση χρηστών της πλατφόρμας.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
   id: number;
+  name?: string | null;
+  role: 'admin' | 'user';
+  avatar?: (number | null) | Media;
+  /**
+   * Λίγα λόγια για σένα.
+   */
+  bio?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -227,7 +236,7 @@ export interface Recipe {
   /**
    * Μόνο οι δημοσιευμένες εμφανίζονται στην ιστοσελίδα.
    */
-  status: 'published' | 'draft';
+  status: 'published' | 'draft' | 'pending' | 'rejected';
   title: string;
   /**
    * π.χ. "ntakos-kritis" → /recipes/ntakos-kritis. Αυτόματα από τον τίτλο.
@@ -301,6 +310,10 @@ export interface Recipe {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * Συμπληρώνεται αυτόματα όταν υποβάλλεται από χρήστη.
+   */
+  submittedBy?: (number | null) | User;
   /**
    * Προαιρετικά. Αν αφεθούν κενά χρησιμοποιείται ο τίτλος και η φωτογραφία.
    */
@@ -603,6 +616,10 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
+  avatar?: T;
+  bio?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -673,6 +690,7 @@ export interface RecipesSelect<T extends boolean = true> {
   ingredients?: T;
   instructions?: T;
   tips?: T;
+  submittedBy?: T;
   seo?:
     | T
     | {
@@ -917,6 +935,16 @@ export interface SiteSetting {
   facebook?: string | null;
   youtube?: string | null;
   tiktok?: string | null;
+  /**
+   * Όταν είναι ενεργό, η ιστοσελίδα εμφανίζει σελίδα "Υπό Ανανέωση" σε όλους εκτός από εσένα (admin).
+   */
+  maintenanceMode?: boolean | null;
+  maintenanceTitle?: string | null;
+  maintenanceMessage?: string | null;
+  /**
+   * π.χ. "Επιστρέφουμε στις 15:00"
+   */
+  maintenanceEstimate?: string | null;
   footerTagline?: string | null;
   footerCopyright?: string | null;
   contactEmail?: string | null;
@@ -955,6 +983,10 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   facebook?: T;
   youtube?: T;
   tiktok?: T;
+  maintenanceMode?: T;
+  maintenanceTitle?: T;
+  maintenanceMessage?: T;
+  maintenanceEstimate?: T;
   footerTagline?: T;
   footerCopyright?: T;
   contactEmail?: T;

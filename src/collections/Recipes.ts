@@ -62,6 +62,8 @@ const Recipes: CollectionConfig = {
       options: [
         { label: '✅ Δημοσιευμένη', value: 'published' },
         { label: '📝 Προσχέδιο',    value: 'draft' },
+        { label: '⏳ Αναμονή Έγκρισης', value: 'pending' },
+        { label: '❌ Απορρίφθηκε',  value: 'rejected' },
       ],
       admin: {
         position: 'sidebar',
@@ -150,6 +152,17 @@ const Recipes: CollectionConfig = {
     { name: 'ingredients',  type: 'richText', label: 'Υλικά' },
     { name: 'instructions', type: 'richText', label: 'Εκτέλεση' },
     { name: 'tips',         type: 'richText', label: 'Μυστικά Επιτυχίας' },
+    {
+      name: 'submittedBy',
+      type: 'relationship',
+      relationTo: 'users',
+      label: 'Υποβλήθηκε από',
+      admin: {
+        position: 'sidebar',
+        readOnly: true,
+        description: 'Συμπληρώνεται αυτόματα όταν υποβάλλεται από χρήστη.',
+      },
+    },
     {
       name: 'seo',
       type: 'group',
