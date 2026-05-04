@@ -1,4 +1,5 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
+import { s3Storage } from '@payloadcms/storage-s3'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
@@ -49,5 +50,20 @@ export default buildConfig({
     },
   }),
   sharp,
-  plugins: [],
+  plugins: [
+    s3Storage({
+      collections: { media: true },
+      bucket: process.env.SUPABASE_S3_BUCKET || 'media',
+      config: {
+        credentials: {
+          accessKeyId: process.env.SUPABASE_S3_ACCESS_KEY_ID || '',
+          secretAccessKey: process.env.SUPABASE_S3_SECRET_ACCESS_KEY || '',
+        },
+        region: process.env.SUPABASE_S3_REGION || 'eu-west-1',
+        endpoint: process.env.SUPABASE_S3_ENDPOINT,
+        forcePathStyle: true,
+      },
+      // clientUploads not set → no client-side component added to admin
+    }),
+  ],
 })
