@@ -100,15 +100,18 @@ export interface Config {
   globals: {
     'header-menu': HeaderMenu;
     'site-settings': SiteSetting;
+    homepage: Homepage;
   };
   globalsSelect: {
     'header-menu': HeaderMenuSelect<false> | HeaderMenuSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    homepage: HomepageSelect<false> | HomepageSelect<true>;
   };
   locale: null;
-  user: User & {
-    collection: 'users';
+  widgets: {
+    collections: CollectionsWidget;
   };
+  user: User;
   jobs: {
     tasks: unknown;
     workflows: unknown;
@@ -164,6 +167,7 @@ export interface User {
       }[]
     | null;
   password?: string | null;
+  collection: 'users';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -953,6 +957,65 @@ export interface SiteSetting {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage".
+ */
+export interface Homepage {
+  id: number;
+  blocks?:
+    | (
+        | {
+            badge?: string | null;
+            titlePrefix?: string | null;
+            titleHighlight?: string | null;
+            titleSuffix?: string | null;
+            subtitle?: string | null;
+            buttonText?: string | null;
+            buttonLink?: string | null;
+            backgroundImage?: (number | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hero';
+          }
+        | {
+            titlePrefix?: string | null;
+            titleHighlight?: string | null;
+            content?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textSection';
+          }
+        | {
+            titlePrefix?: string | null;
+            titleHighlight?: string | null;
+            limit?: number | null;
+            showViewAll?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'recipesSection';
+          }
+        | {
+            titlePrefix?: string | null;
+            titleHighlight?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'mapSection';
+          }
+        | {
+            title: string;
+            subtitle?: string | null;
+            buttonText: string;
+            buttonLink: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaSection';
+          }
+      )[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header-menu_select".
  */
 export interface HeaderMenuSelect<T extends boolean = true> {
@@ -993,6 +1056,80 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage_select".
+ */
+export interface HomepageSelect<T extends boolean = true> {
+  blocks?:
+    | T
+    | {
+        hero?:
+          | T
+          | {
+              badge?: T;
+              titlePrefix?: T;
+              titleHighlight?: T;
+              titleSuffix?: T;
+              subtitle?: T;
+              buttonText?: T;
+              buttonLink?: T;
+              backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        textSection?:
+          | T
+          | {
+              titlePrefix?: T;
+              titleHighlight?: T;
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        recipesSection?:
+          | T
+          | {
+              titlePrefix?: T;
+              titleHighlight?: T;
+              limit?: T;
+              showViewAll?: T;
+              id?: T;
+              blockName?: T;
+            };
+        mapSection?:
+          | T
+          | {
+              titlePrefix?: T;
+              titleHighlight?: T;
+              id?: T;
+              blockName?: T;
+            };
+        ctaSection?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              buttonText?: T;
+              buttonLink?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "collections_widget".
+ */
+export interface CollectionsWidget {
+  data?: {
+    [k: string]: unknown;
+  };
+  width: 'full';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

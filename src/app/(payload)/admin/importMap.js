@@ -23,6 +23,7 @@ import { BoldFeatureClient as BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864
 import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { default as default_ad85c2f33e124782fd39d61cc2c79a61 } from '@/components/admin/ImportButton'
 import { default as default_7b57228c6f06a06348e4c53967f631ca } from '@/components/admin/DashboardStats'
+import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 import { default as default_201025af5426532463a19e929f57bc59 } from '@/components/admin/ImportRecipePage'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
@@ -52,6 +53,7 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#ItalicFeatureClient": ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@/components/admin/ImportButton#default": default_ad85c2f33e124782fd39d61cc2c79a61,
   "@/components/admin/DashboardStats#default": default_7b57228c6f06a06348e4c53967f631ca,
+  "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24,
   "@/components/admin/ImportRecipePage#default": default_201025af5426532463a19e929f57bc59,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }
