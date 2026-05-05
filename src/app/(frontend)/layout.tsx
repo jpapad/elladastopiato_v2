@@ -17,10 +17,17 @@ const getMaintenanceSettings = unstable_cache(
   async () => {
     try {
       const payload = await getPayload({ config: configPromise })
-      const s = await payload.findGlobal({ slug: 'site-settings' }) as any
-      return { maintenanceMode: s?.maintenanceMode ?? false, title: s?.maintenanceTitle, message: s?.maintenanceMessage, estimate: s?.maintenanceEstimate }
+      const s = await payload.findGlobal({ slug: 'site-settings', depth: 1 }) as any
+      return {
+        maintenanceMode: s?.maintenanceMode ?? false,
+        title: s?.maintenanceTitle,
+        message: s?.maintenanceMessage,
+        estimate: s?.maintenanceEstimate,
+        logo: s?.logo?.url ? { url: s.logo.url as string, alt: (s.logo.alt as string) || '' } : null,
+        logoHeight: s?.logoHeight ? parseInt(s.logoHeight as string) : 40,
+      }
     } catch {
-      return { maintenanceMode: false }
+      return { maintenanceMode: false, logo: null, logoHeight: 40 }
     }
   },
   ['maintenance-settings'],
@@ -72,7 +79,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="el" className="scroll-smooth" suppressHydrationWarning>
       <body className={`${inter.className} bg-white dark:bg-[#050505] text-gray-900 dark:text-white antialiased selection:bg-orange-500 selection:text-black`}>
         <ThemeProvider>
-          <Navbar />
+          <Navbar logo={settings.logo ?? null} logoHeight={settings.logoHeight ?? 40} />
           <div className="flex flex-col min-h-screen">
             <main className="flex-grow pt-28">
               <PageWrapper>

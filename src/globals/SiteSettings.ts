@@ -38,6 +38,20 @@ const SiteSettings: GlobalConfig = {
               type: 'upload',
               relationTo: 'media',
               label: 'Λογότυπο',
+              admin: { description: 'Ανέβασε το λογότυπο (SVG ή PNG). Συνιστάται διαφανές background.' },
+            },
+            {
+              name: 'logoHeight',
+              type: 'select',
+              label: 'Μέγεθος Λογοτύπου',
+              defaultValue: '40',
+              options: [
+                { label: 'Μικρό (32px)', value: '32' },
+                { label: 'Κανονικό (40px)', value: '40' },
+                { label: 'Μεγάλο (48px)', value: '48' },
+                { label: 'Πολύ Μεγάλο (56px)', value: '56' },
+              ],
+              admin: { description: 'Ύψος εμφάνισης στο navbar. Το πλάτος ρυθμίζεται αυτόματα.' },
             },
             {
               name: 'favicon',

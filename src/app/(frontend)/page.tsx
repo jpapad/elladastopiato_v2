@@ -2,6 +2,7 @@ import React from 'react'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { HeroBlockComponent } from '@/components/blocks/HeroBlockComponent'
+import { HeroSliderBlockComponent } from '@/components/blocks/HeroSliderBlockComponent'
 import { TextSectionBlockComponent } from '@/components/blocks/TextSectionBlockComponent'
 import { RecipesSectionBlockComponent } from '@/components/blocks/RecipesSectionBlockComponent'
 import { MapSectionBlockComponent } from '@/components/blocks/MapSectionBlockComponent'
@@ -31,6 +32,9 @@ export default async function HomePage() {
         {blocks.map(async (block: any, i: number) => {
           if (block.blockType === 'hero') {
             return <HeroBlockComponent key={i} block={block} />
+          }
+          if (block.blockType === 'heroSlider') {
+            return <HeroSliderBlockComponent key={i} block={block} />
           }
           if (block.blockType === 'textSection') {
             return <TextSectionBlockComponent key={i} block={block} />

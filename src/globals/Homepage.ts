@@ -1,5 +1,6 @@
 import type { GlobalConfig } from 'payload'
 import { HeroBlock } from '../blocks/HeroBlock'
+import { HeroSliderBlock } from '../blocks/HeroSliderBlock'
 import { TextSectionBlock } from '../blocks/TextSectionBlock'
 import { RecipesSectionBlock } from '../blocks/RecipesSectionBlock'
 import { MapSectionBlock } from '../blocks/MapSectionBlock'
@@ -14,7 +15,7 @@ const Homepage: GlobalConfig = {
       name: 'blocks',
       type: 'blocks',
       label: 'Ενότητες',
-      blocks: [HeroBlock, TextSectionBlock, RecipesSectionBlock, MapSectionBlock, CtaSectionBlock],
+      blocks: [HeroBlock, HeroSliderBlock, TextSectionBlock, RecipesSectionBlock, MapSectionBlock, CtaSectionBlock],
     },
   ],
 }

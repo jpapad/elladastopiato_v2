@@ -6,7 +6,12 @@ import { ThemeToggle } from './ThemeToggle'
 import { SearchOverlay } from './SearchOverlay'
 import UserMenu from './UserMenu'
 
-export default function Navbar() {
+interface NavbarProps {
+  logo?: { url: string; alt: string } | null
+  logoHeight?: number
+}
+
+export default function Navbar({ logo, logoHeight = 40 }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
@@ -28,12 +33,23 @@ export default function Navbar() {
 
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center group-hover:rotate-12 transition-transform">
-              <UtensilsCrossed size={20} className="text-black" />
-            </div>
-            <span className="font-black uppercase italic tracking-tighter text-xl">
-              Ελλαδα <span className="text-orange-500">στο Πιατο</span>
-            </span>
+            {logo ? (
+              <img
+                src={logo.url}
+                alt={logo.alt || 'Logo'}
+                style={{ height: logoHeight, width: 'auto', maxHeight: logoHeight }}
+                className="object-contain"
+              />
+            ) : (
+              <>
+                <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center group-hover:rotate-12 transition-transform">
+                  <UtensilsCrossed size={20} className="text-black" />
+                </div>
+                <span className="font-black uppercase italic tracking-tighter text-xl">
+                  Ελλαδα <span className="text-orange-500">στο Πιατο</span>
+                </span>
+              </>
+            )}
           </Link>
 
           {/* Desktop Menu */}

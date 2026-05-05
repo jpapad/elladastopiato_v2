@@ -100,6 +100,69 @@ const Locations: CollectionConfig = {
       admin: { placeholder: 'Μερικές γραμμές για την περιοχή...' },
     },
     {
+      name: 'gallery',
+      type: 'array',
+      label: 'Φωτογραφίες Gallery',
+      admin: { description: 'Επιπλέον φωτογραφίες για την σελίδα της περιοχής.' },
+      fields: [
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Φωτογραφία',
+          required: true,
+        },
+        {
+          name: 'caption',
+          type: 'text',
+          label: 'Λεζάντα',
+        },
+      ],
+    },
+    {
+      type: 'collapsible',
+      label: '✈️ Ταξιδιωτικές Πληροφορίες',
+      admin: { initCollapsed: true },
+      fields: [
+        {
+          name: 'highlights',
+          type: 'textarea',
+          label: 'Highlights Περιοχής',
+          admin: { placeholder: 'π.χ. Φημισμένη για το μέλι, τα ελαιόλαδα και τα τοπικά τυριά...' },
+        },
+        {
+          name: 'bestTimeToVisit',
+          type: 'select',
+          label: 'Καλύτερη Εποχή Επίσκεψης',
+          options: [
+            { label: 'Όλο τον χρόνο', value: 'all_year' },
+            { label: 'Άνοιξη (Μάρτιος - Μάιος)', value: 'spring' },
+            { label: 'Καλοκαίρι (Ιούνιος - Αύγουστος)', value: 'summer' },
+            { label: 'Φθινόπωρο (Σεπτέμβριος - Νοέμβριος)', value: 'autumn' },
+            { label: 'Χειμώνας (Δεκέμβριος - Φεβρουάριος)', value: 'winter' },
+          ],
+        },
+        {
+          name: 'howToGetThere',
+          type: 'textarea',
+          label: 'Πώς να Φτάσεις',
+          admin: { placeholder: 'π.χ. Αεροπορικώς μέσω Ηρακλείου, οδικώς από Αθήνα 5 ώρες...' },
+        },
+        {
+          name: 'localProducts',
+          type: 'textarea',
+          label: 'Τοπικά Προϊόντα & Γεύσεις',
+          admin: { placeholder: 'π.χ. Μέλι Κρήτης, Σταφίδα Κορίνθου, Φέτα ΠΟΠ...' },
+        },
+        {
+          name: 'travelTips',
+          type: 'textarea',
+          label: 'Συμβουλές Ταξιδιού',
+          admin: { placeholder: 'π.χ. Επισκεφτείτε την τοπική αγορά το πρωί...' },
+        },
+      ],
+    },
+    {
       name: 'geoJSON',
       type: 'json',
       label: 'GeoJSON (Χάρτης)',
