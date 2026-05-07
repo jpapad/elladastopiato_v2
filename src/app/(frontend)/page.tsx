@@ -28,7 +28,7 @@ export default async function HomePage() {
   // If blocks are configured, render them
   if (blocks && blocks.length > 0) {
     return (
-      <main className="min-h-screen bg-white dark:bg-[#0E0C0A]">
+      <main className="min-h-screen bg-white dark:bg-[#050505]">
         {blocks.map(async (block: any, i: number) => {
           if (block.blockType === 'hero') {
             return <HeroBlockComponent key={i} block={block} />
@@ -61,7 +61,7 @@ export default async function HomePage() {
 
   // Fallback: hardcoded homepage (same as before)
   return (
-    <main className="min-h-screen bg-white dark:bg-[#0E0C0A]">
+    <main className="min-h-screen bg-white dark:bg-[#050505]">
       {/* HERO SECTION */}
       <section className="relative h-screen flex items-center overflow-hidden -mt-28">
         <div className="absolute inset-0 z-0">

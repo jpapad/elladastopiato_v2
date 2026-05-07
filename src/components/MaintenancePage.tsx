@@ -12,7 +12,7 @@ export default function MaintenancePage({
   estimate = 'Επιστρέφουμε σύντομα',
 }: Props) {
   return (
-    <div className="min-h-screen bg-[#0E0C0A] flex items-center justify-center px-6">
+    <div className="min-h-screen bg-[#050505] flex items-center justify-center px-6">
       <div className="text-center max-w-2xl mx-auto">
         <div className="flex justify-center mb-10">
           <div className="w-24 h-24 rounded-full bg-orange-500/10 border border-orange-500/20 flex items-center justify-center">

@@ -18,7 +18,7 @@ export default async function DashboardStats() {
   ])
 
   const stats = [
-    { label: 'Συνταγές', value: recipes.totalDocs, sub: `${published.totalDocs} δημ. · ${drafts.totalDocs} σχέδ.`, color: '#E8700A' },
+    { label: 'Συνταγές', value: recipes.totalDocs, sub: `${published.totalDocs} δημ. · ${drafts.totalDocs} σχέδ.`, color: '#f97316' },
     { label: 'Τοποθεσίες', value: locations.totalDocs, sub: 'Περιφ., Νομοί, Δήμοι', color: '#3b82f6' },
     { label: 'Σελίδες', value: pages.totalDocs, sub: 'Page builder', color: '#8b5cf6' },
     { label: 'Subscribers', value: subscribers.totalDocs, sub: 'Newsletter', color: '#10b981' },

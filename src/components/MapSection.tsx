@@ -326,7 +326,7 @@ export default function MapSection({ onLocationSelect }: Props) {
                               outline: 'none',
                             } : {
                               fill: 'rgba(249,115,22,0.4)',
-                              stroke: '#E8700A',
+                              stroke: '#f97316',
                               strokeWidth: 1.5,
                               outline: 'none',
                               cursor: 'pointer',
@@ -335,7 +335,7 @@ export default function MapSection({ onLocationSelect }: Props) {
                             pressed: isSettlementLevel ? {
                               fill: 'rgba(249,115,22,0.05)', outline: 'none'
                             } : {
-                              fill: '#E8700A', outline: 'none',
+                              fill: '#f97316', outline: 'none',
                               filter: 'drop-shadow(0 0 14px rgba(249,115,22,0.9))',
                             },
                           }}
@@ -356,7 +356,7 @@ export default function MapSection({ onLocationSelect }: Props) {
                   >
                     <circle
                       r={dotR}
-                      fill="#E8700A"
+                      fill="#f97316"
                       fillOpacity={0.85}
                       stroke="rgba(249,115,22,0.3)"
                       strokeWidth={dotR * 1.5}

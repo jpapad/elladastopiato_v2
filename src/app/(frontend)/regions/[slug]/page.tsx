@@ -89,7 +89,7 @@ export default async function SingleRegionPage({ params }: { params: Promise<{ s
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0E0C0A]">
+    <div className="min-h-screen bg-white dark:bg-[#050505]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* Hero */}

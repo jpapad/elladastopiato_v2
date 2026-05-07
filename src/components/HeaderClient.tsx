@@ -39,7 +39,7 @@ export const HeaderClient = ({ navLinks }: { navLinks: NavLink[] }) => {
   return (
     <>
       <header className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 px-6 md:px-12 py-6 ${
-          scrolled ? 'bg-[#0E0C0A]/80 backdrop-blur-xl border-b border-white/5 py-4' : 'bg-transparent'
+          scrolled ? 'bg-[#050505]/80 backdrop-blur-xl border-b border-white/5 py-4' : 'bg-transparent'
         }`}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 group relative z-[110]">
@@ -75,7 +75,7 @@ export const HeaderClient = ({ navLinks }: { navLinks: NavLink[] }) => {
 
       <AnimatePresence>
         {isOpen && (
-          <motion.div variants={menuVariants} initial="closed" animate="opened" exit="closed" className="fixed inset-0 z-[105] bg-[#0E0C0A] flex flex-col justify-center px-6 md:px-24">
+          <motion.div variants={menuVariants} initial="closed" animate="opened" exit="closed" className="fixed inset-0 z-[105] bg-[#050505] flex flex-col justify-center px-6 md:px-24">
             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
               <nav className="flex flex-col gap-6 md:gap-10">
                 {navLinks?.map((link, i) => (

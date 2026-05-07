@@ -9,7 +9,7 @@ export const Footer = () => {
   }
 
   return (
-    <footer className="bg-white dark:bg-[#0E0C0A] border-t border-black/5 dark:border-white/5 pt-24 pb-12 overflow-hidden">
+    <footer className="bg-white dark:bg-[#050505] border-t border-black/5 dark:border-white/5 pt-24 pb-12 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
 
         {/* Top Section */}

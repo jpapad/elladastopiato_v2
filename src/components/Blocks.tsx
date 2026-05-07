@@ -23,7 +23,7 @@ export const RenderBlocks = ({ layout }: RenderBlocksProps) => {
 
           case 'mapBlock':
             return (
-              <section key={index} className="max-w-7xl mx-auto px-6 py-24 bg-[#0E0C0A]">
+              <section key={index} className="max-w-7xl mx-auto px-6 py-24 bg-[#050505]">
                 {block.heading && <h2 className="text-4xl md:text-6xl font-black uppercase italic tracking-tighter mb-12">{block.heading}</h2>}
                 <div className="rounded-[3rem] overflow-hidden border border-white/10 bg-white/[0.02] p-4">
                   <MapWrapper />

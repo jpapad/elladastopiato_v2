@@ -37,7 +37,7 @@ export default async function RegionsPage() {
   const peripheries = locations.filter((l: any) => l.level === '1')
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0E0C0A] pt-40 pb-24 px-6 md:px-12">
+    <div className="min-h-screen bg-white dark:bg-[#050505] pt-40 pb-24 px-6 md:px-12">
       <div className="max-w-7xl mx-auto">
         <header className="mb-24">
           <span className="text-orange-500 text-[10px] font-black uppercase tracking-[0.5em] mb-6 block">

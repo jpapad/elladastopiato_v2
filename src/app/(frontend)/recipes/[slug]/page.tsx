@@ -72,7 +72,7 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
   })
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0E0C0A] pb-24 font-sans antialiased">
+    <div className="min-h-screen bg-white dark:bg-[#050505] pb-24 font-sans antialiased">
       <div className="max-w-7xl mx-auto px-6">
 
         {/* Top nav */}
@@ -180,7 +180,7 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
                 <div className="flex flex-wrap gap-2">
                   {((recipe as any).tags as string[]).map(tag => (
                     <span key={tag} className="flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 px-4 py-2 rounded-xl text-[10px] font-black uppercase text-orange-400">
-                      <Zap size={10} fill="#E8700A" /> {tag}
+                      <Zap size={10} fill="#f97316" /> {tag}
                     </span>
                   ))}
                 </div>
