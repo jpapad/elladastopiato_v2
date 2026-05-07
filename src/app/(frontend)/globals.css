@@ -1,6 +1,13 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
+@theme {
+  --color-orange-400: #F08030;
+  --color-orange-500: #E8700A;
+  --color-orange-600: #C25A00;
+  --font-display: var(--font-fraunces), serif;
+}
+
 :root {
   --prose-li:        rgba(10, 10, 10, 0.65);
   --prose-li-hover:  #0a0a0a;
