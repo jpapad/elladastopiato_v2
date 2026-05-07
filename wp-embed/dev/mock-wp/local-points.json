@@ -1,0 +1,65 @@
+[
+  {
+    "id": 101,
+    "slug": "sfakiani-pita-chora-sfakion",
+    "link": "https://elladastopiato.gr/topika-simeia/sfakiani-pita-chora-sfakion/",
+    "title": { "rendered": "Σφακιανή πίτα στη Χώρα Σφακίων" },
+    "acf": {
+      "lat": "35.2016",
+      "lng": "24.1405",
+      "point_type": { "value": "restaurant", "label": "Εστιατόριο / Ταβέρνα" },
+      "short_description": "Λεπτή πίτα με μυζήθρα, ψημένη στο τηγάνι και περιχυμένη με θυμαρίσιο μέλι.",
+      "cover_image": { "ID": 2, "url": "/dev/placeholder.svg", "alt": "", "sizes": {} },
+      "external_url": ""
+    }
+  },
+  {
+    "id": 102,
+    "slug": "dimotiki-agora-chanion",
+    "link": "https://elladastopiato.gr/topika-simeia/dimotiki-agora-chanion/",
+    "title": { "rendered": "Δημοτική Αγορά Χανίων" },
+    "acf": { "lat": 35.5141, "lng": 24.0193, "point_type": "market", "short_description": "Η σταυρόσχημη αγορά του 1913." }
+  },
+  {
+    "id": 103,
+    "slug": "elaiolado-kolymvariou",
+    "link": "https://elladastopiato.gr/topika-simeia/elaiolado-kolymvariou/",
+    "title": { "rendered": "Ελαιόλαδο Κολυμβαρίου ΠΟΠ" },
+    "acf": { "lat": 35.5414, "lng": 23.7787, "point_type": "producer", "short_description": "Συνεταιριστικό ελαιοτριβείο." }
+  },
+  {
+    "id": 104,
+    "slug": "rakokazana",
+    "link": "https://elladastopiato.gr/topika-simeia/rakokazana/",
+    "title": { "rendered": "Ρακοκάζανα στο Ρέθυμνο" },
+    "acf": { "lat": 35.36555, "lng": 24.48232, "point_type": "festival", "external_url": "https://example.com/rakokazana" }
+  },
+  {
+    "id": 105,
+    "slug": "meli-anogeion",
+    "link": "https://elladastopiato.gr/topika-simeia/meli-anogeion/",
+    "title": { "rendered": "Μέλι Ανωγείων" },
+    "acf": { "lat": 35.2878, "lng": 24.8856, "point_type": "product" }
+  },
+  {
+    "id": 106,
+    "slug": "varvakeios",
+    "link": "https://elladastopiato.gr/topika-simeia/varvakeios/",
+    "title": { "rendered": "Βαρβάκειος Αγορά" },
+    "acf": { "lat": 37.9807, "lng": 23.7265, "point_type": "market", "short_description": "Η κεντρική αγορά της Αθήνας." }
+  },
+  {
+    "id": 107,
+    "slug": "xoris-syntetagmenes",
+    "link": "https://elladastopiato.gr/topika-simeia/xoris-syntetagmenes/",
+    "title": { "rendered": "Σημείο χωρίς συντεταγμένες" },
+    "acf": { "lat": "", "lng": null, "point_type": "other" }
+  },
+  {
+    "id": 108,
+    "slug": "sti-thalassa",
+    "link": "https://elladastopiato.gr/topika-simeia/sti-thalassa/",
+    "title": { "rendered": "Σημείο στη θάλασσα (λάθος συντεταγμένες)" },
+    "acf": { "lat": 35.0, "lng": 27.6, "point_type": "other" }
+  }
+]

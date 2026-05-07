@@ -1,0 +1,19 @@
+/*
+ * Styles του αυτόνομου χάρτη για WordPress.
+ * Μπαίνουν ΜΟΝΟ μέσα στο Shadow DOM του widget, οπότε ούτε το theme του WordPress
+ * επηρεάζει τον χάρτη, ούτε το Tailwind (preflight) επηρεάζει το υπόλοιπο site.
+ */
+@import 'tailwindcss' source(none);
+
+/* Σαρώνουμε μόνο τα αρχεία του χάρτη για κλάσεις Tailwind. */
+@source "../../src/components/map";
+@source "./";
+
+/* Unlayered κανόνας → υπερισχύει του preflight (@layer base) που ορίζει δική του γραμματοσειρά στο :host. */
+:host {
+  display: block;
+  font-family: inherit; /* η γραμματοσειρά του theme του WordPress */
+  font-size: 16px; /* ανεξάρτητο από το html { font-size } του theme */
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}

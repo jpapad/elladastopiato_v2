@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="el">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Χάρτης — dev (ψεύτικο WordPress)</title>
+    <!--
+      Προσομοίωση «εχθρικού» WordPress theme: αν ο χάρτης είναι σωστά απομονωμένος
+      (Shadow DOM + px αντί για rem), τίποτα από αυτά δεν πρέπει να τον επηρεάζει.
+    -->
+    <style>
+      html {
+        font-size: 62.5%;
+      }
+      body {
+        margin: 0;
+        font-family: Georgia, 'Times New Roman', serif;
+        background: #f4efe6;
+        color: #222;
+      }
+      .site-header {
+        padding: 2rem 4rem;
+        background: #1d3557;
+        color: #fff;
+        font-size: 2rem;
+      }
+      .entry-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 4rem 1.6rem;
+      }
+      .entry-content > h2 {
+        font-size: 3.6rem;
+      }
+      h2 {
+        color: green !important;
+        text-decoration: underline;
+      }
+      p {
+        font-size: 1.8rem;
+        margin: 3rem 0;
+      }
+      button {
+        background: hotpink;
+        padding: 2rem;
+        border: 4px solid blue;
+        font-size: 3rem;
+      }
+      svg path {
+        fill: red;
+      }
+      a {
+        color: purple;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">elladastopiato.gr — δοκιμαστική σελίδα WordPress</header>
+    <main class="entry-content">
+      <h2>Σελίδα με τον χάρτη</h2>
+      <p>
+        Κείμενο του theme πάνω από τον χάρτη. Ο χάρτης παρακάτω πρέπει να φαίνεται ίδιος με το
+        Next.js site.
+      </p>
+
+      <!-- Ό,τι παράγει το shortcode [ellada_map settlements="true"] -->
+      <div data-ellada-map data-api="/wp-json/" data-geo="/geo/" data-settlements="true"></div>
+
+      <p>Κείμενο κάτω από τον χάρτη.</p>
+    </main>
+    <script>
+      document.addEventListener('ellada-map:select', (e) =>
+        console.log('[dev] ellada-map:select', e.detail),
+      )
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

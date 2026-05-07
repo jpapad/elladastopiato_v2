@@ -1,0 +1,66 @@
+[
+  {
+    "id": 10,
+    "slug": "kriti",
+    "link": "https://elladastopiato.gr/perioxes/kriti/",
+    "parent": 0,
+    "title": { "rendered": "Κρήτη" },
+    "acf": {
+      "map_level": "region",
+      "geo_region": "Κρήτη",
+      "short_description": "Το μεγαλύτερο ελληνικό νησί, με ελαιόλαδο, ρακή, γραβιέρα και χόρτα του βουνού.",
+      "cover_image": { "ID": 1, "url": "/dev/placeholder.svg", "alt": "Κρήτη", "sizes": { "medium_large": "/dev/placeholder.svg" } },
+      "local_products": "Ελαιόλαδο, ρακή, γραβιέρα, μέλι θυμαρίσιο",
+      "best_time_to_visit": { "value": "spring", "label": "Άνοιξη (Μάρτιος – Μάιος)" }
+    }
+  },
+  {
+    "id": 11,
+    "slug": "chania",
+    "link": "https://elladastopiato.gr/perioxes/kriti/chania/",
+    "parent": 10,
+    "title": { "rendered": "Χανιά" },
+    "acf": {
+      "map_level": "prefecture",
+      "geo_prefecture": "ΧΑΝΙΩΝ",
+      "short_description": "Σφακιανές πίτες, μυζήθρα, κρασιά της Κισσάμου και το λιμάνι των Βενετών.",
+      "cover_image": false,
+      "local_products": "Μυζήθρα, σφακιανή πίτα"
+    }
+  },
+  {
+    "id": 12,
+    "slug": "sfakia",
+    "link": "https://elladastopiato.gr/perioxes/kriti/chania/sfakia/",
+    "parent": 11,
+    "title": { "rendered": "Σφακιά" },
+    "acf": {
+      "map_level": "municipality",
+      "geo_municipality": "ΧΑΝΙΩΝ|Σφακίων",
+      "short_description": "Η πατρίδα της σφακιανής πίτας με μέλι.",
+      "cover_image": null
+    }
+  },
+  {
+    "id": 13,
+    "slug": "rethymno",
+    "link": "https://elladastopiato.gr/perioxes/kriti/rethymno/",
+    "parent": 10,
+    "title": { "rendered": "Ρέθυμνο &#8211; Ψηλορείτης" },
+    "acf": {
+      "map_level": "prefecture",
+      "geo_prefecture": "ΡΕΘΥΜΝΟΥ",
+      "short_description": "Ανώγεια, βοσκοί του Ψηλορείτη και αντικριστό."
+    }
+  },
+  {
+    "id": 20,
+    "slug": "attiki",
+    "link": "https://elladastopiato.gr/perioxes/attiki/",
+    "parent": 0,
+    "title": { "rendered": "Αττική" },
+    "acf": {
+      "short_description": "Χωρίς map_level: το επίπεδο συμπεραίνεται από την ιεραρχία και η αντιστοίχιση γίνεται με τον τίτλο."
+    }
+  }
+]

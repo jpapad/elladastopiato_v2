@@ -50,3 +50,7 @@ node_modules/
 /playwright/.cache/
 
 .vercel
+
+# WordPress map bundle (npm run wp-map:build)
+/wp-embed/dist/
+/wp-embed/wordpress-plugin/ellada-map/assets/
