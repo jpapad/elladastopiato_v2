@@ -14,7 +14,7 @@ export const Hero = ({ title, subtitle, backgroundImage }: HeroProps) => {
   const imageUrl = typeof backgroundImage === 'object' ? backgroundImage?.url : backgroundImage
 
   return (
-    <section className="relative h-[95vh] w-full flex items-center justify-center overflow-hidden bg-[#050505]">
+    <section className="relative h-[95vh] w-full flex items-center justify-center overflow-hidden bg-[#0E0C0A]">
       {imageUrl && (
         <div className="absolute inset-0 z-0">
           <Image 

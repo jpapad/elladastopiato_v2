@@ -111,7 +111,7 @@ export default function CookingMode({ instructions, title, totalTime, onClose }:
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[200] bg-[#050505] flex flex-col"
+      className="fixed inset-0 z-[200] bg-[#0E0C0A] flex flex-col"
     >
       {/* Top bar */}
       <div className="flex items-center justify-between px-8 py-5 border-b border-white/5">
@@ -200,7 +200,7 @@ export default function CookingMode({ instructions, title, totalTime, onClose }:
           <div className="relative flex items-center justify-center">
             <svg className="w-32 h-32 -rotate-90" viewBox="0 0 120 120">
               <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="6" />
-              <circle cx="60" cy="60" r="50" fill="none" stroke={countFinished ? '#22c55e' : '#f97316'}
+              <circle cx="60" cy="60" r="50" fill="none" stroke={countFinished ? '#22c55e' : '#E8700A'}
                 strokeWidth="6" strokeLinecap="round"
                 strokeDasharray={`${2 * Math.PI * 50}`}
                 strokeDashoffset={`${2 * Math.PI * 50 * (1 - countPct / 100)}`}

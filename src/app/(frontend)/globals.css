@@ -6,6 +6,7 @@
   --prose-li-hover:  #0a0a0a;
   --prose-step:      rgba(10, 10, 10, 0.75);
   --scrollbar-track: rgba(0, 0, 0, 0.03);
+  --accent:          #E8700A;
 }
 
 .dark {
@@ -15,8 +16,25 @@
   --scrollbar-track: rgba(255, 255, 255, 0.02);
 }
 
+/* Fraunces for all large display headings */
+h1, h2, h3 {
+  font-family: var(--font-fraunces), serif;
+}
+
 body {
   -webkit-font-smoothing: antialiased;
+}
+
+/* Grain texture — editorial premium feel */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.022;
+  mix-blend-mode: overlay;
 }
 
 /* --- LIST STYLES (recipe ingredients & instructions) --- */
@@ -44,7 +62,7 @@ body {
   top: 0.75rem;
   width: 12px;
   height: 2px;
-  background: #f97316;
+  background: #E8700A;
   border-radius: 4px;
   box-shadow: 0 0 8px rgba(249, 115, 22, 0.6);
 }
@@ -79,8 +97,8 @@ body {
   font-weight: 900;
   font-style: italic;
   font-size: 1.3rem;
-  color: #f97316;
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  color: #E8700A;
+  font-family: var(--font-fraunces), serif;
   letter-spacing: -0.02em;
   opacity: 1;
 }
@@ -113,8 +131,8 @@ body {
     border-bottom: 1pt solid #e5e5e5;
   }
 
-  .prose ul li::before { background: #f97316 !important; box-shadow: none !important; }
-  .prose ol li::before { color: #f97316 !important; }
+  .prose ul li::before { background: #E8700A !important; box-shadow: none !important; }
+  .prose ol li::before { color: #E8700A !important; }
 
   .prose ul li, .prose ol li { color: #222 !important; }
 
@@ -126,10 +144,10 @@ body {
   .print-hide-image { display: none !important; }
 
   /* Bring back hidden dark backgrounds */
-  .dark\:bg-\[\#050505\] { background: white !important; }
+  .dark\:bg-\[\#0E0C0A\] { background: white !important; }
 }
 
 /* --- CUSTOM SCROLLBAR --- */
 .custom-scrollbar::-webkit-scrollbar { width: 4px; }
 .custom-scrollbar::-webkit-scrollbar-track { background: var(--scrollbar-track); }
-.custom-scrollbar::-webkit-scrollbar-thumb { background: #f97316; border-radius: 10px; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #E8700A; border-radius: 10px; }

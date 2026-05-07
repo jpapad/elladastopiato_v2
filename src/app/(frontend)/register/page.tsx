@@ -57,7 +57,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#050505] flex items-center justify-center px-6 pt-20">
+    <div className="min-h-screen bg-white dark:bg-[#0E0C0A] flex items-center justify-center px-6 pt-20">
       <div className="w-full max-w-md">
         <div className="text-center mb-12">
           <span className="text-orange-500 text-[10px] font-black uppercase tracking-[0.5em] block mb-4">

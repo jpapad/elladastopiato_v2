@@ -1,6 +1,6 @@
 import React from 'react'
 import './globals.css'
-import { Inter } from 'next/font/google'
+import { Inter, Fraunces } from 'next/font/google'
 import { cookies } from 'next/headers'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
@@ -37,6 +37,14 @@ const getMaintenanceSettings = unstable_cache(
 const inter = Inter({
   subsets: ['latin', 'greek'],
   display: 'swap',
+})
+
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-fraunces',
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  style: ['normal', 'italic'],
 })
 
 export const metadata = {
@@ -77,7 +85,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang="el" className="scroll-smooth" suppressHydrationWarning>
-      <body className={`${inter.className} bg-white dark:bg-[#050505] text-gray-900 dark:text-white antialiased selection:bg-orange-500 selection:text-black`}>
+      <body className={`${inter.className} ${fraunces.variable} bg-[#FAF8F5] dark:bg-[#0E0C0A] text-gray-900 dark:text-white antialiased selection:bg-orange-500 selection:text-black`}>
         <ThemeProvider>
           <Navbar logo={settings.logo ?? null} logoHeight={settings.logoHeight ?? 40} />
           <div className="flex flex-col min-h-screen">

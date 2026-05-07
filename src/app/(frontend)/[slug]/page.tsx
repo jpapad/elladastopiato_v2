@@ -29,7 +29,7 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
   if (!page) return notFound()
 
   return (
-    <main className="min-h-screen bg-[#050505]">
+    <main className="min-h-screen bg-[#0E0C0A]">
       {/* Εδώ ο Page Builder κάνει όλη τη δουλειά! */}
       <RenderBlocks layout={page.layout} />
     </main>

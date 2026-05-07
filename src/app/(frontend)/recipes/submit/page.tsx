@@ -78,7 +78,7 @@ export default function SubmitRecipePage() {
   const labelCls = "block text-[10px] font-black uppercase tracking-widest text-black/40 dark:text-white/40 mb-2"
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#050505] pt-20 pb-24 px-6">
+    <div className="min-h-screen bg-white dark:bg-[#0E0C0A] pt-20 pb-24 px-6">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-12">
           <ChefHat size={40} className="text-orange-500 mx-auto mb-4" />

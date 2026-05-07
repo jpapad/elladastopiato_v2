@@ -37,7 +37,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
   })
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#050505] pt-40 pb-24 px-6">
+    <div className="min-h-screen bg-white dark:bg-[#0E0C0A] pt-40 pb-24 px-6">
       <div className="max-w-7xl mx-auto">
         <Link
           href="/categories"

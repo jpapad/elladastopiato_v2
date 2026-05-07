@@ -77,7 +77,7 @@ const s = {
   tabs:    { display: 'flex', gap: 4, marginBottom: 32, borderBottom: '1px solid var(--theme-elevation-150, rgba(255,255,255,0.1))' } as React.CSSProperties,
   row:     { display: 'flex', gap: 12, marginBottom: 32 } as React.CSSProperties,
   input:   { flex: 1, padding: '10px 16px', borderRadius: 8, border: '1px solid var(--theme-elevation-150, rgba(255,255,255,0.12))', background: 'var(--theme-elevation-50, rgba(255,255,255,0.04))', color: 'inherit', fontSize: 14 } as React.CSSProperties,
-  btn:     { padding: '10px 24px', borderRadius: 8, border: 'none', background: 'var(--theme-success-500, #f97316)', color: '#000', fontWeight: 800, fontSize: 12, textTransform: 'uppercase' as const, letterSpacing: '0.08em', cursor: 'pointer' } as React.CSSProperties,
+  btn:     { padding: '10px 24px', borderRadius: 8, border: 'none', background: 'var(--theme-success-500, #E8700A)', color: '#000', fontWeight: 800, fontSize: 12, textTransform: 'uppercase' as const, letterSpacing: '0.08em', cursor: 'pointer' } as React.CSSProperties,
   btnSec:  { padding: '10px 24px', borderRadius: 8, border: '1px solid var(--theme-elevation-200)', background: 'transparent', color: 'inherit', fontWeight: 700, fontSize: 12, textTransform: 'uppercase' as const, letterSpacing: '0.08em', cursor: 'pointer' } as React.CSSProperties,
   card:    { background: 'var(--theme-elevation-50, rgba(255,255,255,0.03))', border: '1px solid var(--theme-elevation-150, rgba(255,255,255,0.1))', borderRadius: 12, padding: '28px 32px', marginBottom: 24 } as React.CSSProperties,
   label:   { fontSize: 11, fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.1em', opacity: 0.5, marginBottom: 6, display: 'block' } as React.CSSProperties,
@@ -108,7 +108,7 @@ function RecipePreview({
       <div style={s.card}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>
           <h2 style={{ fontSize: 20, fontWeight: 900, margin: 0 }}>{data.title}</h2>
-          <span style={{ ...s.badge, background: 'rgba(249,115,22,0.15)', color: '#f97316' }}>
+          <span style={{ ...s.badge, background: 'rgba(249,115,22,0.15)', color: '#E8700A' }}>
             Βρέθηκε ✓
           </span>
         </div>
@@ -116,14 +116,14 @@ function RecipePreview({
         <div style={s.grid2}>
           <div style={s.stat}>
             <div style={{ ...s.label, marginBottom: 4 }}>Υλικά</div>
-            <div style={{ fontSize: 20, fontWeight: 800, color: data.ingredients.length ? '#f97316' : 'inherit' }}>
+            <div style={{ fontSize: 20, fontWeight: 800, color: data.ingredients.length ? '#E8700A' : 'inherit' }}>
               {data.ingredients.length}
               <span style={{ fontSize: 12, opacity: 0.5, fontWeight: 400, marginLeft: 6 }}>items</span>
             </div>
           </div>
           <div style={s.stat}>
             <div style={{ ...s.label, marginBottom: 4 }}>Βήματα Εκτέλεσης</div>
-            <div style={{ fontSize: 20, fontWeight: 800, color: data.instructions.length ? '#f97316' : 'inherit' }}>
+            <div style={{ fontSize: 20, fontWeight: 800, color: data.instructions.length ? '#E8700A' : 'inherit' }}>
               {data.instructions.length}
               <span style={{ fontSize: 12, opacity: 0.5, fontWeight: 400, marginLeft: 6 }}>βήματα</span>
             </div>
@@ -347,8 +347,8 @@ export default function ImportRecipePage() {
               padding: '8px 20px',
               background: 'none',
               border: 'none',
-              borderBottom: tab === t ? '2px solid #f97316' : '2px solid transparent',
-              color: tab === t ? '#f97316' : 'inherit',
+              borderBottom: tab === t ? '2px solid #E8700A' : '2px solid transparent',
+              color: tab === t ? '#E8700A' : 'inherit',
               fontWeight: 700,
               fontSize: 12,
               textTransform: 'uppercase',
