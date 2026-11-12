@@ -15,7 +15,9 @@
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "test": "pnpm run test:int && pnpm run test:e2e",
     "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --import=tsx/esm\" playwright test --config=playwright.config.ts",
-    "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
+    "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts",
+    "wp-map:dev": "vite --config wp-embed/vite.config.ts",
+    "wp-map:build": "vite build --config wp-embed/vite.config.ts && node wp-embed/scripts/package-plugin.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.95.0",
@@ -29,6 +31,7 @@
     "@payloadcms/ui": "^3.84.1",
     "@tailwindcss/postcss": "^4.1.18",
     "cross-env": "^7.0.3",
+    "d3-geo": "^2.0.2",
     "dotenv": "16.4.7",
     "framer-motion": "^12.31.0",
     "graphql": "^16.8.1",
@@ -62,6 +65,7 @@
     "tailwindcss": "^4.1.18",
     "tsx": "4.21.0",
     "typescript": "5.7.3",
+    "vite": "^7.3.8",
     "vite-tsconfig-paths": "5.1.4",
     "vitest": "3.2.3"
   },
