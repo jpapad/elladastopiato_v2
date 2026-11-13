@@ -443,9 +443,16 @@ add_shortcode(
 				)
 			);
 		} else {
-			$q   = new WP_Query( ellada_recipe_query_args( $atts['source'], absint( $atts['id'] ) ? absint( $atts['id'] ) : get_queried_object_id(), $atts['limit'], $post_type ) );
+			$ctx = absint( $atts['id'] ) ? absint( $atts['id'] ) : get_queried_object_id();
+			$q   = new WP_Query( ellada_recipe_query_args( $atts['source'], $ctx, $atts['limit'], $post_type ) );
 			$ids = wp_list_pluck( $q->posts, 'ID' );
 			$pag = '';
+			// «Δείτε ακόμα»: αν η ίδια περιφέρεια δεν έχει αρκετές, συμπληρώνεται με τις πιο πρόσφατες.
+			if ( 'related' === $atts['source'] && count( $ids ) < (int) $atts['limit'] ) {
+				$more = ellada_recipe_query_args( 'latest', $ctx, (int) $atts['limit'] - count( $ids ), $post_type );
+				$more['post__not_in'] = array_merge( array( $ctx ), $ids );
+				$ids = array_merge( $ids, wp_list_pluck( ( new WP_Query( $more ) )->posts, 'ID' ) );
+			}
 		}
 
 		if ( ! $ids ) {
