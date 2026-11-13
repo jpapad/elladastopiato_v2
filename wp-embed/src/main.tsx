@@ -15,6 +15,15 @@
  *   data-locations-endpoint  REST base τοποθεσιών (default locations)
  *   data-points-endpoint     REST base τοπικών σημείων (default local-points)
  *   data-accent              Χρώμα τονισμού: hex (#f97316) ή var(--…) (default πορτοκαλί)
+ *   data-bg                  Χρώμα φόντου (hex ή var(--…))
+ *   data-height-mobile       Ελάχιστο ύψος σε κινητά (px)
+ *   data-radius              Στρογγυλάδα γωνιών (px)
+ *   data-type-colors         JSON {"restaurant":"#e11d48",…}
+ *   data-types               Τύποι σημείων που εμφανίζονται, με κόμμα (π.χ. "restaurant,market")
+ *   data-legend="true"       Υπόμνημα/φίλτρο τύπων σημείων
+ *   data-start-region        Περιφέρεια (name_greek) στην οποία ανοίγει ο χάρτης
+ *   data-empty-areas         normal | dim | disabled
+ *   data-texts               JSON με κείμενα (hintRegions, guideButton, pointsHeading, …)
  *
  * Global API (window.ElladaMap): mount(el, config?), unmount(el), mountAll(scope?)
  * Event: 'ellada-map:select' στο host element, με detail = { type, … }.
@@ -22,6 +31,8 @@
 import React from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import { GreeceMap, type MapSelectEvent } from '@/components/map'
+import type { EmptyAreas, MapTexts } from '@/components/map/GreeceMap'
+import type { LocalPointType } from '@/lib/wordpress/types'
 import css from './styles.css?inline'
 
 export type EmbedConfig = {
@@ -33,9 +44,46 @@ export type EmbedConfig = {
   locationsEndpoint?: string
   pointsEndpoint?: string
   accent?: string
+  background?: string
+  mobileMinHeight?: number
+  radius?: number
+  typeColors?: Partial<Record<LocalPointType, string>>
+  pointTypes?: LocalPointType[]
+  legend?: boolean
+  startRegion?: string
+  emptyAreas?: EmptyAreas
+  texts?: MapTexts
 }
 
-export const version = '1.1.0'
+const POINT_TYPES: LocalPointType[] = [
+  'product',
+  'producer',
+  'restaurant',
+  'market',
+  'festival',
+  'sight',
+  'other',
+]
+/** Μόνο hex ή μεταβλητή CSS (π.χ. καθολικό χρώμα Elementor). */
+const COLOR_RE = /^(#[0-9a-f]{3}([0-9a-f]{3})?|var\(--[\w-]+\))$/i
+const isColor = (v: unknown): v is string => typeof v === 'string' && COLOR_RE.test(v)
+
+function parseJson(value: string | undefined): Record<string, unknown> {
+  if (!value) return {}
+  try {
+    const v = JSON.parse(value)
+    return v && typeof v === 'object' && !Array.isArray(v) ? v : {}
+  } catch {
+    return {}
+  }
+}
+
+const positive = (v: string | undefined) => {
+  const n = Number(v)
+  return Number.isFinite(n) && n > 0 ? n : undefined
+}
+
+export const version = '1.2.0'
 
 const SELECTOR = '[data-ellada-map]'
 const mounted = new Map<HTMLElement, Root>()
@@ -80,6 +128,25 @@ function registerPropertyRules() {
 function readConfig(el: HTMLElement): EmbedConfig {
   const d = el.dataset
   const height = Number(d.height)
+
+  const typeColors: Partial<Record<LocalPointType, string>> = {}
+  for (const [k, v] of Object.entries(parseJson(d.typeColors)))
+    if (POINT_TYPES.includes(k as LocalPointType) && isColor(v)) typeColors[k as LocalPointType] = v
+
+  const texts: MapTexts = {}
+  for (const [k, v] of Object.entries(parseJson(d.texts)))
+    if (typeof v === 'string' && v.trim()) (texts as Record<string, string>)[k] = v.trim()
+
+  const pointTypes = (d.types ?? '')
+    .split(',')
+    .map((x) => x.trim())
+    .filter((x): x is LocalPointType => POINT_TYPES.includes(x as LocalPointType))
+
+  const emptyAreas = ['normal', 'dim', 'disabled'].includes(d.emptyAreas ?? '')
+    ? (d.emptyAreas as EmptyAreas)
+    : undefined
+
+  const radius = Number(d.radius)
   return {
     apiRoot: d.api || undefined,
     geoBase: d.geo || undefined,
@@ -89,6 +156,15 @@ function readConfig(el: HTMLElement): EmbedConfig {
     locationsEndpoint: d.locationsEndpoint || undefined,
     pointsEndpoint: d.pointsEndpoint || undefined,
     accent: d.accent || undefined,
+    background: d.bg || undefined,
+    mobileMinHeight: positive(d.heightMobile),
+    radius: d.radius !== undefined && Number.isFinite(radius) && radius >= 0 ? radius : undefined,
+    typeColors,
+    pointTypes: pointTypes.length ? pointTypes : undefined,
+    legend: d.legend === 'true' || d.legend === '1',
+    startRegion: d.startRegion || undefined,
+    emptyAreas,
+    texts,
   }
 }
 
@@ -108,10 +184,11 @@ export function mount(el: HTMLElement, overrides: EmbedConfig = {}) {
   const config = { ...readConfig(el), ...overrides }
   const geoBase = (config.geoBase || fallbackGeoBase).replace(/\/?$/, '/')
 
-  // Μόνο hex ή μεταβλητή CSS (π.χ. καθολικό χρώμα Elementor)· αλλιώς μένει το προεπιλεγμένο.
-  if (config.accent && /^(#[0-9a-f]{3}([0-9a-f]{3})?|var\(--[\w-]+\))$/i.test(config.accent))
-    el.style.setProperty('--ellada-accent', config.accent)
+  // Μη έγκυρα χρώματα αγνοούνται και μένουν τα προεπιλεγμένα.
+  if (isColor(config.accent)) el.style.setProperty('--ellada-accent', config.accent)
   else el.style.removeProperty('--ellada-accent')
+  if (isColor(config.background)) el.style.setProperty('--ellada-bg', config.background)
+  else el.style.removeProperty('--ellada-bg')
 
   const shadow = el.shadowRoot ?? el.attachShadow({ mode: 'open' })
   shadow.replaceChildren()
@@ -140,6 +217,14 @@ export function mount(el: HTMLElement, overrides: EmbedConfig = {}) {
         }}
         title={config.title}
         minHeight={config.minHeight}
+        mobileMinHeight={config.mobileMinHeight}
+        radius={config.radius}
+        typeColors={config.typeColors}
+        pointTypes={config.pointTypes}
+        legend={config.legend}
+        startRegion={config.startRegion}
+        emptyAreas={config.emptyAreas}
+        texts={config.texts}
         onSelect={onSelect}
       />
     </React.StrictMode>,

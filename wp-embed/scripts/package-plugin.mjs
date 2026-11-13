@@ -112,6 +112,17 @@ const acf = buildAcfImport(geo)
 fs.writeFileSync(path.join(pluginDir, 'acf-import.json'), JSON.stringify(acf, null, 2) + '\n')
 console.log(`  acf  acf-import.json       ${acf.length} αντικείμενα (2 post types, 2 field groups)`)
 
+/* ══════════════ 2β. Leaflet (χάρτης επιλογής θέσης στο διαχειριστικό) ══════════════ */
+
+const leafletSrc = path.join(repoRoot, 'node_modules', 'leaflet', 'dist')
+const leafletOut = path.join(pluginDir, 'assets', 'vendor', 'leaflet')
+fs.mkdirSync(path.join(leafletOut, 'images'), { recursive: true })
+for (const f of ['leaflet.js', 'leaflet.css'])
+  fs.copyFileSync(path.join(leafletSrc, f), path.join(leafletOut, f))
+for (const f of fs.readdirSync(path.join(leafletSrc, 'images')))
+  fs.copyFileSync(path.join(leafletSrc, 'images', f), path.join(leafletOut, 'images', f))
+fs.copyFileSync(path.join(repoRoot, 'node_modules', 'leaflet', 'LICENSE'), path.join(leafletOut, 'LICENSE'))
+
 /* ══════════════ 3. ZIP ══════════════ */
 
 const CRC_TABLE = new Uint32Array(256).map((_, n) => {

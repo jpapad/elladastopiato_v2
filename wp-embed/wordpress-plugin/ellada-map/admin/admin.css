@@ -1,0 +1,39 @@
+/* Ρυθμίσεις → Χάρτης Ελλάδας */
+.ellada-admin .ellada-tab { max-width: 1040px; }
+.ellada-admin .ellada-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; margin: 20px 0 24px; }
+.ellada-admin .ellada-card { background: #fff; border: 1px solid #dcdcde; border-radius: 8px; padding: 16px 18px; }
+.ellada-admin .ellada-card h3 { margin: 0 0 6px; font-size: 13px; color: #50575e; font-weight: 500; }
+.ellada-admin .ellada-card .num { font-size: 30px; font-weight: 600; line-height: 1.2; }
+.ellada-admin .ellada-card .num .of { font-size: 16px; color: #8c8f94; font-weight: 400; }
+.ellada-admin .ellada-card .sub { color: #646970; margin: 4px 0 12px; }
+.ellada-admin .ellada-card .button { margin-right: 8px; }
+.ellada-admin .ellada-bar { height: 8px; background: #f0f0f1; border-radius: 4px; overflow: hidden; }
+.ellada-admin .ellada-bar span { display: block; height: 100%; background: #2271b1; border-radius: 4px; }
+.ellada-admin h2 { margin-top: 28px; }
+.ellada-admin h2 .count { color: #8c8f94; font-weight: 400; }
+.ellada-admin .ellada-coverage tr.is-empty td { color: #8c8f94; }
+.ellada-admin .ellada-ok { color: #00a32a; font-weight: 600; }
+.ellada-admin .ellada-missing { color: #8c8f94; }
+.ellada-admin .ellada-ok-line { color: #00a32a; }
+.ellada-admin .ellada-howto td code { font-size: 13px; }
+.ellada-admin .ellada-version { margin-top: 32px; color: #8c8f94; }
+.ellada-admin .ellada-type-colors th { font-weight: 400; padding-top: 12px; padding-bottom: 12px; }
+.ellada-admin .ellada-type-colors td { padding-top: 6px; padding-bottom: 6px; }
+.ellada-admin .ellada-inline-form { display: inline-block; margin-right: 8px; }
+.ellada-admin .ellada-import { max-width: 720px; margin-top: 12px; }
+.ellada-admin .ellada-diag td.icon { width: 22px; text-align: center; font-weight: 700; }
+.ellada-admin .ellada-diag tr.is-ok td.icon { color: #00a32a; }
+.ellada-admin .ellada-diag tr.is-warn td.icon { color: #dba617; }
+.ellada-admin .ellada-diag tr.is-error td.icon { color: #d63638; }
+.ellada-admin .ellada-diag tr.is-error td { background: #fcf0f1; }
+.ellada-admin .ellada-diag td:nth-child(2) { width: 220px; }
+
+/* Θέση στον χάρτη (Τοπικό Σημείο) */
+.ellada-picker-search { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
+.ellada-picker-search input { flex: 1 1 260px; }
+.ellada-picker-status { color: #646970; font-size: 12px; flex-basis: 100%; }
+.ellada-picker-status:empty { display: none; }
+.ellada-picker-map { height: 360px; border: 1px solid #dcdcde; border-radius: 6px; z-index: 0; }
+.ellada-picker-area { margin: 10px 0 4px; font-weight: 600; min-height: 1.4em; }
+.ellada-picker-area.is-ok { color: #1d6b38; }
+.ellada-picker-area.is-error { color: #b32d2e; }

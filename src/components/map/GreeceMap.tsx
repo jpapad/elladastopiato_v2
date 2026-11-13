@@ -9,11 +9,11 @@
  * Το ίδιο component χρησιμοποιείται από το Next.js app (MapWrapper) και από
  * το αυτόνομο bundle για WordPress (wp-embed/).
  */
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowLeft, ChevronRight } from 'lucide-react'
-import type { MapLocation } from '@/lib/wordpress/types'
+import type { LocalPointType, MapLocation } from '@/lib/wordpress/types'
 import {
   GREECE_PROJ,
   MAP_H,
@@ -34,6 +34,19 @@ export type MapSelectEvent =
   | { type: 'region' | 'prefecture' | 'municipality'; name: string; location: MapLocation | null }
   | { type: 'point'; point: PlacedPoint }
 
+/** Κείμενα του χάρτη που μπορούν να αλλάξουν (π.χ. από τις ρυθμίσεις του WordPress). */
+export type MapTexts = Partial<{
+  hintRegions: string
+  hintPrefectures: string
+  hintMunicipalities: string
+  hintPoints: string
+  guideButton: string
+  pointsHeading: string
+}>
+
+/** Πώς φαίνονται οι περιοχές χωρίς περιεχόμενο: κανονικά, αχνές ή αχνές και μη κλικαριστές. */
+export type EmptyAreas = 'normal' | 'dim' | 'disabled'
+
 export type GreeceMapProps = MapDataConfig & {
   /** Καλείται σε κάθε επιλογή περιοχής ή τοπικού σημείου. */
   onSelect?: (event: MapSelectEvent) => void
@@ -41,6 +54,22 @@ export type GreeceMapProps = MapDataConfig & {
   title?: string
   /** Ελάχιστο ύψος του χάρτη σε px (default 600). */
   minHeight?: number
+  /** Ελάχιστο ύψος σε κινητά (<640px). Default = minHeight. */
+  mobileMinHeight?: number
+  /** Στρογγυλάδα γωνιών σε px (default 40). */
+  radius?: number
+  /** Χρώμα πινέζας ανά τύπο σημείου· όσοι λείπουν παίρνουν το χρώμα τονισμού. */
+  typeColors?: Partial<Record<LocalPointType, string>>
+  /** Ποιοι τύποι σημείων εμφανίζονται (default όλοι). */
+  pointTypes?: LocalPointType[]
+  /** Υπόμνημα/φίλτρο τύπων σημείων για τον επισκέπτη (default false). */
+  legend?: boolean
+  /** Περιφέρεια (name_greek) στην οποία ανοίγει ο χάρτης αντί για όλη την Ελλάδα. */
+  startRegion?: string
+  /** Εμφάνιση περιοχών χωρίς περιεχόμενο (default 'normal'). */
+  emptyAreas?: EmptyAreas
+  /** Αλλαγές στα κείμενα του χάρτη. */
+  texts?: MapTexts
 }
 
 /* ── constants ── */
@@ -75,12 +104,17 @@ const LEVEL_STYLE = [
 /** Περιοχές με περιεχόμενο στο WordPress (σελίδα ή τοπικά σημεία) φαίνονται λίγο πιο έντονα. */
 const CONTENT_FILL = accent(0.16)
 
-const LEVEL_HINT = [
-  'Κάντε κλικ σε περιφέρεια για εξερεύνηση',
-  'Κάντε κλικ σε νομό για εξερεύνηση',
-  'Κάντε κλικ σε δήμο ή σε τοπικό σημείο',
-  'Κάντε κλικ σε τοπικό σημείο για λεπτομέρειες',
-]
+const DEFAULT_TEXTS: Required<MapTexts> = {
+  hintRegions: 'Κάντε κλικ σε περιφέρεια για εξερεύνηση',
+  hintPrefectures: 'Κάντε κλικ σε νομό για εξερεύνηση',
+  hintMunicipalities: 'Κάντε κλικ σε δήμο ή σε τοπικό σημείο',
+  hintPoints: 'Κάντε κλικ σε τοπικό σημείο για λεπτομέρειες',
+  guideButton: 'Ο γαστρονομικός οδηγός',
+  pointsHeading: 'Τοπικά σημεία',
+}
+/** Αχνό γέμισμα για περιοχές χωρίς περιεχόμενο (emptyAreas = 'dim' | 'disabled'). */
+const EMPTY_STYLE = { fill: 'rgba(255,255,255,0.012)', stroke: 'rgba(255,255,255,0.07)' }
+const DEFAULT_RADIUS = 40 // 2.5rem
 const LEVEL_LABEL = ['Περιφέρειες', 'Νομοί', 'Δήμοι', 'Τοπικά σημεία']
 const KIND_LABEL = ['Περιφέρεια', 'Νομός', 'Δήμος', 'Τοπικό σημείο']
 
@@ -114,7 +148,28 @@ export default function GreeceMap({
   onSelect,
   title = 'Εξερεύνηση',
   minHeight = 600,
+  mobileMinHeight,
+  radius = DEFAULT_RADIUS,
+  typeColors,
+  pointTypes,
+  legend = false,
+  startRegion,
+  emptyAreas = 'normal',
+  texts,
 }: GreeceMapProps) {
+  const t = {
+    ...DEFAULT_TEXTS,
+    ...Object.fromEntries(Object.entries(texts ?? {}).filter(([, v]) => v)),
+  }
+  const levelHint = [t.hintRegions, t.hintPrefectures, t.hintMunicipalities, t.hintPoints]
+  const typeColor = (type: LocalPointType) => typeColors?.[type] || ACCENT
+  const mobileH = mobileMinHeight && mobileMinHeight > 0 ? mobileMinHeight : minHeight
+  const sizeVars = {
+    '--ellada-h': `${minHeight}px`,
+    '--ellada-h-m': `${mobileH}px`,
+    borderRadius: radius,
+  } as React.CSSProperties
+
   const {
     regions,
     prefectures,
@@ -122,9 +177,24 @@ export default function GreeceMap({
     settlements,
     geoError,
     locationIndex,
-    points,
+    points: allPoints,
     wpStatus,
   } = useMapData({ apiRoot, endpoints, geoUrls })
+
+  /** Μόνο οι τύποι σημείων που επιτρέπουν οι ρυθμίσεις. */
+  const points = useMemo(
+    () => (pointTypes?.length ? allPoints.filter((p) => pointTypes.includes(p.type)) : allPoints),
+    [allPoints, pointTypes],
+  )
+  /** Τύποι που έκρυψε ο επισκέπτης από το υπόμνημα. */
+  const [hiddenTypes, setHiddenTypes] = useState<Set<LocalPointType>>(() => new Set())
+  const toggleType = (type: LocalPointType) =>
+    setHiddenTypes((prev) => {
+      const next = new Set(prev)
+      if (next.has(type)) next.delete(type)
+      else next.add(type)
+      return next
+    })
 
   const [level, setLevel] = useState(0)
   const [projConfig, setProjConfig] = useState<ProjConfig>(GREECE_PROJ)
@@ -209,6 +279,18 @@ export default function GreeceMap({
     [locationIndex, onSelect],
   )
 
+  /** Αρχική προβολή: άνοιγμα κατευθείαν σε μια περιφέρεια (μία φορά, όταν φορτώσουν τα όρια). */
+  const startApplied = useRef(false)
+  useEffect(() => {
+    if (startApplied.current || !startRegion || !regions) return
+    startApplied.current = true
+    const feat = regions.features.find((f) => featureName(f) === startRegion)
+    if (!feat) return
+    setProjConfig(calcProjection([feat]))
+    setSelectedRegion(startRegion)
+    setLevel(1)
+  }, [startRegion, regions])
+
   const handlePrefectureClick = useCallback(
     (feat: GeoFeature) => {
       const name = featureName(feat)
@@ -288,11 +370,28 @@ export default function GreeceMap({
     return null
   })()
 
-  const visiblePoints: PlacedPoint[] = useMemo(() => {
+  /** Σημεία της τρέχουσας περιοχής (πριν το φίλτρο του υπομνήματος). */
+  const areaPoints: PlacedPoint[] = useMemo(() => {
     if (level === 2) return points.filter((p) => p.prefecture === selectedPref)
     if (level === 3) return points.filter((p) => p.municipality === muniKeyStr)
     return []
   }, [level, points, selectedPref, muniKeyStr])
+
+  const visiblePoints = useMemo(
+    () => areaPoints.filter((p) => !hiddenTypes.has(p.type)),
+    [areaPoints, hiddenTypes],
+  )
+
+  /** Τύποι που υπάρχουν στην περιοχή, για το υπόμνημα. */
+  const legendTypes = useMemo(() => {
+    const m = new Map<LocalPointType, { label: string; count: number }>()
+    for (const p of areaPoints) {
+      const e = m.get(p.type)
+      if (e) e.count++
+      else m.set(p.type, { label: p.typeLabel, count: 1 })
+    }
+    return [...m.entries()]
+  }, [areaPoints])
 
   const visibleSettlements =
     level === 3 && selectedMuni ? (settlements[featureName(selectedMuni)] ?? []) : []
@@ -340,7 +439,7 @@ export default function GreeceMap({
       meta: count ? countLabel(count) : undefined,
       image: lvlLoc.image,
       link: lvlLoc.link,
-      linkLabel: 'Ο γαστρονομικός οδηγός',
+      linkLabel: t.guideButton,
     }
   })()
 
@@ -353,8 +452,8 @@ export default function GreeceMap({
   if (geoError && !regions) {
     return (
       <div
-        className="bg-[var(--ellada-bg,#0a0a0a)] rounded-[2.5rem] border border-white/5 p-8 flex items-center justify-center"
-        style={{ minHeight }}
+        className="bg-[var(--ellada-bg,#0a0a0a)] border border-white/5 p-8 flex items-center justify-center min-h-[var(--ellada-h-m)] sm:min-h-[var(--ellada-h)]"
+        style={sizeVars}
       >
         <p className="text-white/40 text-xs uppercase tracking-widest text-center">
           Δεν φορτώθηκαν τα γεωγραφικά δεδομένα
@@ -368,8 +467,8 @@ export default function GreeceMap({
   if (!regions) {
     return (
       <div
-        className="bg-[var(--ellada-bg,#0a0a0a)] rounded-[2.5rem] border border-white/5 p-8 flex items-center justify-center"
-        style={{ minHeight }}
+        className="bg-[var(--ellada-bg,#0a0a0a)] border border-white/5 p-8 flex items-center justify-center min-h-[var(--ellada-h-m)] sm:min-h-[var(--ellada-h)]"
+        style={sizeVars}
       >
         <div className="text-orange-500 animate-pulse font-bold tracking-widest uppercase text-xs">
           Φορτωση Γεωγραφικων Δεδομενων...
@@ -380,8 +479,8 @@ export default function GreeceMap({
 
   return (
     <div
-      className="bg-[var(--ellada-bg,#0a0a0a)] text-white rounded-[2.5rem] border border-white/5 shadow-2xl relative flex flex-col overflow-hidden"
-      style={{ minHeight }}
+      className="bg-[var(--ellada-bg,#0a0a0a)] text-white border border-white/5 shadow-2xl relative flex flex-col overflow-hidden min-h-[var(--ellada-h-m)] sm:min-h-[var(--ellada-h)]"
+      style={sizeVars}
     >
       {/* ── top bar ── */}
       <div className="flex items-center justify-between gap-4 px-8 pt-8 pb-3 z-10">
@@ -450,8 +549,13 @@ export default function GreeceMap({
       {/* ── map (+ κάρτα: overlay σε desktop, από κάτω σε κινητό) ── */}
       <div className="flex-1 relative flex flex-col">
         <div
-          className="flex-1 relative overflow-hidden min-h-[280px] sm:min-h-[var(--ellada-map-h)]"
-          style={{ '--ellada-map-h': `${minHeight - 140}px` } as React.CSSProperties}
+          className="flex-1 relative overflow-hidden min-h-[var(--ellada-map-h-m)] sm:min-h-[var(--ellada-map-h)]"
+          style={
+            {
+              '--ellada-map-h': `${minHeight - 140}px`,
+              '--ellada-map-h-m': `${Math.max(280, mobileH - 320)}px`,
+            } as React.CSSProperties
+          }
         >
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
@@ -475,19 +579,26 @@ export default function GreeceMap({
                   <Geographies geography={currentGeo}>
                     {({ geographies }: { geographies: GeoFeature[] }) =>
                       geographies.map((geo) => {
-                        const interactive = level < 3
+                        const clickableLevel = level < 3
                         const name = displayName(level, geo)
-                        const count = interactive ? featureCount(level, geo) : 0
+                        const count = clickableLevel ? featureCount(level, geo) : 0
                         const hasContent =
-                          interactive && (count > 0 || !!featureLocation(level, geo))
+                          clickableLevel && (count > 0 || !!featureLocation(level, geo))
+                        // Μόνο όταν έχει φορτώσει το περιεχόμενο, αλλιώς όλα θα φαίνονταν «άδεια».
+                        const empty =
+                          emptyAreas !== 'normal' &&
+                          level < 3 &&
+                          wpStatus === 'ready' &&
+                          !hasContent
+                        const interactive = level < 3 && !(empty && emptyAreas === 'disabled')
                         const activate = () => {
                           if (level === 0) handleRegionClick(geo)
                           else if (level === 1) handlePrefectureClick(geo)
                           else if (level === 2) handleMunicipalityClick(geo)
                         }
                         const base = {
-                          fill: hasContent ? CONTENT_FILL : style.fill,
-                          stroke: style.stroke,
+                          fill: hasContent ? CONTENT_FILL : empty ? EMPTY_STYLE.fill : style.fill,
+                          stroke: empty ? EMPTY_STYLE.stroke : style.stroke,
                           strokeWidth: style.strokeWidth,
                           outline: 'none',
                         }
@@ -575,13 +686,16 @@ export default function GreeceMap({
                         {active && (
                           <circle
                             r={pointR * 2.6}
-                            style={{ fill: accent(0.18), stroke: accent(0.6) }}
+                            style={{
+                              fill: `color-mix(in srgb, ${typeColor(p.type)} 18%, transparent)`,
+                              stroke: `color-mix(in srgb, ${typeColor(p.type)} 60%, transparent)`,
+                            }}
                             strokeWidth={0.8}
                           />
                         )}
                         <circle
                           r={active ? pointR * 1.3 : pointR}
-                          style={{ fill: ACCENT, stroke: BG }}
+                          style={{ fill: typeColor(p.type), stroke: BG }}
                           strokeWidth={pointR * 0.45}
                         />
                         {(level === 3 || i < 15) && (
@@ -630,7 +744,7 @@ export default function GreeceMap({
 
       {/* ── λίστα τοπικών σημείων ── */}
       <AnimatePresence>
-        {visiblePoints.length > 0 && (
+        {areaPoints.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -639,8 +753,34 @@ export default function GreeceMap({
             className="px-8 pb-6 pt-2 z-10"
           >
             <p className="text-white/30 text-[9px] uppercase tracking-widest mb-3 font-bold">
-              Τοπικά σημεία ({visiblePoints.length})
+              {t.pointsHeading} ({visiblePoints.length})
             </p>
+            {legend && legendTypes.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-3" role="group" aria-label="Φίλτρο τύπων">
+                {legendTypes.map(([type, { label, count }]) => {
+                  const on = !hiddenTypes.has(type)
+                  return (
+                    <button
+                      type="button"
+                      key={type}
+                      aria-pressed={on}
+                      onClick={() => toggleType(type)}
+                      className={`flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border transition-all ${
+                        on
+                          ? 'border-white/20 text-white/80'
+                          : 'border-white/5 text-white/25 line-through'
+                      }`}
+                    >
+                      <span
+                        className="w-2 h-2 rounded-full"
+                        style={{ background: typeColor(type), opacity: on ? 1 : 0.3 }}
+                      />
+                      {label} · {count}
+                    </button>
+                  )
+                })}
+              </div>
+            )}
             <div className="flex flex-wrap gap-2 max-h-28 overflow-y-auto">
               {visiblePoints.map((p) => (
                 <button
@@ -664,7 +804,7 @@ export default function GreeceMap({
       {/* ── footer hint ── */}
       <div className="flex flex-col items-center gap-1 border-t border-white/5 py-3 z-10">
         <p className="px-4 text-center text-white/20 text-[8px] uppercase tracking-[0.25em] sm:tracking-[0.4em] font-bold italic">
-          {LEVEL_HINT[level]}
+          {levelHint[level]}
         </p>
         {wpStatus === 'loading' && (
           <p className="text-white/20 text-[8px] uppercase tracking-[0.3em] animate-pulse">
