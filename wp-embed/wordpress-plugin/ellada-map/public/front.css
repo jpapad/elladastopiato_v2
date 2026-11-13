@@ -1,0 +1,150 @@
+/*
+ * Σελίδες του οδηγού (συνταγές, περιοχές, συλλογές).
+ * Τα χρώματα έρχονται από το Elementor Kit:
+ *   primary = τονισμός, secondary = σκούρο, text = κείμενο, accent = απαλό κείμενο.
+ */
+:root {
+	--ellada-accent: var(--e-global-color-primary, #F97316);
+	--ellada-dark: var(--e-global-color-secondary, #0A0A0A);
+	--ellada-ink: var(--e-global-color-text, #151311);
+	--ellada-muted: var(--e-global-color-accent, #6A645E);
+	--ellada-surface: #FFFFFF;
+	--ellada-line: #E4E1DD;
+	--ellada-accent-deep: #C2410C;
+	--ellada-radius: 16px;
+}
+
+.ellada-h {
+	font-size: clamp(1.35rem, 1.1rem + 1vw, 1.75rem);
+	font-weight: 800;
+	line-height: 1.1;
+	margin: 0 0 0.75em;
+	color: var(--ellada-ink);
+}
+.ellada-muted { color: var(--ellada-muted); }
+.ellada-empty { color: var(--ellada-muted); margin: 0; }
+
+/* ── Στοιχεία συνταγής ── */
+.ellada-facts { display: flex; flex-direction: column; gap: 16px; }
+.ellada-facts__list {
+	display: flex; flex-wrap: wrap; gap: 0; margin: 0;
+	border-top: 1px solid var(--ellada-line); border-bottom: 1px solid var(--ellada-line);
+}
+.ellada-facts__list > div { padding: 14px 24px 14px 0; margin-right: 24px; border-right: 1px solid var(--ellada-line); }
+.ellada-facts__list > div:last-child { border-right: 0; margin-right: 0; }
+.ellada-facts dt {
+	font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+	color: var(--ellada-muted); margin: 0 0 2px;
+}
+.ellada-facts dd { margin: 0; font-size: 1.05rem; font-weight: 700; color: var(--ellada-ink); }
+
+.ellada-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.ellada-chip {
+	display: inline-block; padding: 6px 14px; border-radius: 999px;
+	border: 1px solid var(--ellada-line); background: var(--ellada-surface);
+	color: var(--ellada-ink); font-size: 13px; font-weight: 600; text-decoration: none;
+	transition: border-color .15s, color .15s;
+}
+.ellada-chip:hover { border-color: var(--ellada-accent); color: var(--ellada-accent-deep); }
+.ellada-chip.is-area { background: var(--ellada-dark); border-color: var(--ellada-dark); color: #F5F4F2; }
+.ellada-chip.is-area:hover { color: var(--ellada-accent); }
+.ellada-chip.is-active { background: var(--ellada-accent); border-color: var(--ellada-accent); color: var(--ellada-dark); }
+
+/* ── Υλικά ── */
+.ellada-ingredients {
+	background: var(--ellada-surface); border-radius: var(--ellada-radius); padding: 28px;
+}
+.ellada-ingredients > .ellada-muted { margin: -0.4em 0 1em; }
+.ellada-ingredients ul { list-style: none; margin: 0 0 1.25em; padding: 0; }
+.ellada-ingredients li {
+	display: flex; gap: 10px; align-items: baseline; padding: 9px 0;
+	border-bottom: 1px solid var(--ellada-line); line-height: 1.45;
+}
+.ellada-ingredients li:last-child { border-bottom: 0; }
+.ellada-ingredients__qty { flex: 0 0 auto; min-width: 72px; font-weight: 700; color: var(--ellada-accent-deep); }
+.ellada-ingredients__group {
+	font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+	color: var(--ellada-muted); margin: 1em 0 0.25em;
+}
+
+/* ── Βήματα ── */
+.ellada-steps ol { list-style: none; margin: 0; padding: 0; counter-reset: none; }
+.ellada-steps li { display: flex; gap: 18px; padding: 0 0 26px; }
+.ellada-steps__n {
+	flex: 0 0 36px; height: 36px; border-radius: 999px; background: var(--ellada-dark); color: #F5F4F2;
+	display: grid; place-items: center; font-weight: 800; font-size: 15px;
+}
+.ellada-steps__body p { margin: 6px 0 0; line-height: 1.65; max-width: 65ch; }
+.ellada-steps__img { display: block; margin-top: 14px; border-radius: 12px; max-width: 100%; height: auto; }
+
+/* ── Επιπλέον ── */
+.ellada-extras { display: flex; flex-direction: column; gap: 24px; }
+.ellada-tips {
+	border-left: 4px solid var(--ellada-accent); padding: 4px 0 4px 20px; max-width: 70ch;
+}
+.ellada-tips p:last-child { margin-bottom: 0; }
+.ellada-allergens { margin: 0; color: var(--ellada-muted); }
+.ellada-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 8px; }
+.ellada-gallery img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 12px; display: block; }
+
+/* ── Οδηγός περιοχής ── */
+.ellada-guide { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 40px; align-items: start; }
+.ellada-guide__main { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px; }
+.ellada-list { list-style: none; margin: 0; padding: 0; }
+.ellada-list li { padding: 8px 0 8px 18px; position: relative; border-bottom: 1px solid var(--ellada-line); }
+.ellada-list li::before {
+	content: ""; position: absolute; left: 0; top: 0.95em; width: 7px; height: 7px;
+	border-radius: 999px; background: var(--ellada-accent);
+}
+.ellada-guide__side {
+	margin: 0; background: var(--ellada-dark); color: #F5F4F2; border-radius: var(--ellada-radius);
+	padding: 24px; display: flex; flex-direction: column; gap: 18px;
+}
+.ellada-guide__side dt {
+	font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ellada-accent);
+}
+.ellada-guide__side dd { margin: 4px 0 0; line-height: 1.55; }
+@media (max-width: 880px) { .ellada-guide { grid-template-columns: 1fr; } }
+
+/* ── Κάρτες συνταγών ── */
+.ellada-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 28px 24px; }
+.ellada-card__link { display: block; text-decoration: none; color: inherit; }
+.ellada-card__media { aspect-ratio: 4 / 3; border-radius: var(--ellada-radius); overflow: hidden; background: var(--ellada-dark); }
+.ellada-card__img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease; }
+.ellada-card__placeholder {
+	display: block; width: 100%; height: 100%;
+	background: radial-gradient(120% 90% at 20% 10%, color-mix(in srgb, var(--ellada-accent) 35%, transparent), transparent 60%), var(--ellada-dark);
+}
+.ellada-card__link:hover .ellada-card__img { transform: scale(1.04); }
+.ellada-card__body { padding: 14px 2px 0; }
+.ellada-card__eyebrow {
+	margin: 0 0 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ellada-accent-deep);
+}
+.ellada-card__title { margin: 0; font-size: 1.15rem; font-weight: 800; line-height: 1.2; color: var(--ellada-ink); }
+.ellada-card__link:hover .ellada-card__title { color: var(--ellada-accent-deep); }
+.ellada-card__meta { margin: 6px 0 0; font-size: 14px; color: var(--ellada-muted); }
+
+/* ── Τοπικά σημεία ── */
+.ellada-points { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.ellada-point a {
+	display: flex; gap: 14px; height: 100%; padding: 16px; border-radius: var(--ellada-radius);
+	background: var(--ellada-surface); border: 1px solid var(--ellada-line); color: inherit; text-decoration: none;
+	transition: border-color .15s;
+}
+.ellada-point a:hover { border-color: var(--ellada-accent); }
+.ellada-point__img { flex: 0 0 72px; width: 72px; height: 72px; object-fit: cover; border-radius: 10px; }
+.ellada-point__type {
+	margin: 0 0 4px; display: flex; align-items: center; gap: 6px;
+	font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ellada-muted);
+}
+.ellada-point__type span { width: 8px; height: 8px; border-radius: 999px; display: inline-block; }
+.ellada-point__title { margin: 0; font-size: 1rem; font-weight: 800; line-height: 1.25; }
+.ellada-point__desc { margin: 4px 0 0; font-size: 14px; color: var(--ellada-muted); line-height: 1.45; }
+
+/* ── Σελιδοποίηση ── */
+.ellada-pagination { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 36px; }
+.ellada-pagination .page-numbers {
+	padding: 8px 14px; border-radius: 999px; border: 1px solid var(--ellada-line);
+	text-decoration: none; color: var(--ellada-ink); font-weight: 600;
+}
+.ellada-pagination .page-numbers.current { background: var(--ellada-dark); border-color: var(--ellada-dark); color: #F5F4F2; }

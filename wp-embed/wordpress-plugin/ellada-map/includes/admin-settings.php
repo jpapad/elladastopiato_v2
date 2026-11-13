@@ -212,6 +212,7 @@ function ellada_map_admin_notices() {
 		'imported'   => array( 'success', 'Οι ρυθμίσεις εισήχθησαν.' ),
 		'bad-import' => array( 'error', 'Το κείμενο δεν είναι έγκυρο αρχείο ρυθμίσεων του χάρτη.' ),
 		'purged'     => array( 'success', 'Η cache καθαρίστηκε. Οι επισκέπτες θα δουν το πιο πρόσφατο περιεχόμενο.' ),
+		'resynced'   => array( 'success', 'Οι περιοχές όλων των συνταγών και των σημείων υπολογίστηκαν ξανά.' ),
 	);
 	$key = isset( $_GET['ellada-msg'] ) ? sanitize_key( wp_unslash( $_GET['ellada-msg'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	if ( isset( $messages[ $key ] ) ) {

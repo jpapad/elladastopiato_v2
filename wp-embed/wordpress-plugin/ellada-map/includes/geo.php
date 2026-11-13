@@ -169,3 +169,99 @@ function ellada_map_locate_region( $lat, $lng ) {
 	}
 	return $best;
 }
+
+/**
+ * Σε ποιον δήμο / νομό / περιφέρεια πέφτει ένα σημείο, με τον ίδιο κανόνα με τον χάρτη:
+ * μέσα στο πολύγωνο, αλλιώς ο κοντινότερος δήμος σε απόσταση έως ~0.08° (σημεία στην ακτή).
+ * Διαβάζει το municipalities.json (~1 MB), γι' αυτό καλείται μόνο κατά την αποθήκευση.
+ *
+ * @return array{region:string,prefecture:string,municipality:string}|null
+ */
+function ellada_map_locate_area( $lat, $lng ) {
+	static $index = null;
+	if ( null === $index ) {
+		$index = array();
+		foreach ( ellada_map_geo_file( 'municipalities' )['features'] as $f ) {
+			$polys = ellada_map_polygons( $f['geometry'] );
+			$x0    = INF;
+			$y0    = INF;
+			$x1    = -INF;
+			$y1    = -INF;
+			foreach ( $polys as $poly ) {
+				foreach ( $poly[0] as $pt ) {
+					$x0 = min( $x0, $pt[0] );
+					$x1 = max( $x1, $pt[0] );
+					$y0 = min( $y0, $pt[1] );
+					$y1 = max( $y1, $pt[1] );
+				}
+			}
+			if ( INF === $x0 ) {
+				continue;
+			}
+			$index[] = array(
+				'props' => $f['properties'],
+				'polys' => $polys,
+				'bbox'  => array( $x0, $y0, $x1, $y1 ),
+			);
+		}
+	}
+	if ( ! is_numeric( $lat ) || ! is_numeric( $lng ) ) {
+		return null;
+	}
+
+	$x   = (float) $lng;
+	$y   = (float) $lat;
+	$tol = 0.08;
+	$hit = null;
+
+	$near = array();
+	foreach ( $index as $m ) {
+		list( $x0, $y0, $x1, $y1 ) = $m['bbox'];
+		if ( $x < $x0 - $tol || $x > $x1 + $tol || $y < $y0 - $tol || $y > $y1 + $tol ) {
+			continue;
+		}
+		$near[] = $m;
+		foreach ( $m['polys'] as $poly ) {
+			if ( ! ellada_map_in_ring( $x, $y, $poly[0] ) ) {
+				continue;
+			}
+			$in_hole = false;
+			for ( $h = 1, $c = count( $poly ); $h < $c; $h++ ) {
+				if ( ellada_map_in_ring( $x, $y, $poly[ $h ] ) ) {
+					$in_hole = true;
+					break;
+				}
+			}
+			if ( ! $in_hole ) {
+				$hit = $m;
+				break 2;
+			}
+		}
+	}
+
+	if ( ! $hit ) {
+		$best = $tol * $tol;
+		foreach ( $near as $m ) {
+			foreach ( $m['polys'] as $poly ) {
+				foreach ( $poly[0] as $pt ) {
+					$d = ( $pt[0] - $x ) * ( $pt[0] - $x ) + ( $pt[1] - $y ) * ( $pt[1] - $y );
+					if ( $d < $best ) {
+						$best = $d;
+						$hit  = $m;
+					}
+				}
+			}
+		}
+	}
+	if ( ! $hit ) {
+		return null;
+	}
+
+	$pref = isset( $hit['props']['prefecture_greek'] ) ? $hit['props']['prefecture_greek'] : '';
+	$map  = ellada_map_prefecture_regions();
+	return array(
+		'region'       => isset( $map[ $pref ] ) ? $map[ $pref ] : '',
+		'prefecture'   => $pref,
+		'municipality' => $pref . '|' . $hit['props']['name_greek'],
+	);
+}

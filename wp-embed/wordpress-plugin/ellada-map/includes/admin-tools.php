@@ -140,6 +140,10 @@ function ellada_map_tab_tools() {
 	<p>Αν ένα νέο σημείο ή μια αλλαγή δεν φαίνεται αμέσως στον χάρτη, καθαρίστε την cache της σελίδας (LiteSpeed) και τα αποθηκευμένα στοιχεία της Επισκόπησης.</p>
 	<?php ellada_map_tool_form( 'ellada_map_purge', 'Καθαρισμός cache' ); ?>
 
+	<h2>Περιοχές συνταγών και σημείων</h2>
+	<p>Κάθε συνταγή και κάθε τοπικό σημείο ξέρει αυτόματα σε ποια περιφέρεια, νομό και δήμο ανήκει, ώστε να εμφανίζεται στις σελίδες των περιοχών. Αν κάτι δεν εμφανίζεται εκεί που περιμένετε, ξαναϋπολογίστε το.</p>
+	<?php ellada_map_tool_form( 'ellada_map_resync', 'Επανυπολογισμός περιοχών' ); ?>
+
 	<h2>Εξαγωγή / εισαγωγή ρυθμίσεων</h2>
 	<p>Χρήσιμο για αντίγραφο ασφαλείας ή για μεταφορά σε άλλο site. Αφορά μόνο τις ρυθμίσεις του χάρτη, όχι το περιεχόμενο.</p>
 	<?php ellada_map_tool_form( 'ellada_map_export', 'Λήψη ρυθμίσεων (.json)' ); ?>
@@ -186,6 +190,16 @@ add_action(
 		global $wpdb;
 		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '\\_transient\\_ellada\\_map\\_%' OR option_name LIKE '\\_transient\\_timeout\\_ellada\\_map\\_%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		ellada_map_tool_redirect( 'purged' );
+	}
+);
+
+add_action(
+	'admin_post_ellada_map_resync',
+	function () {
+		ellada_map_tool_guard( 'ellada_map_resync' );
+		ellada_resync_all_areas();
+		do_action( 'litespeed_purge_all' );
+		ellada_map_tool_redirect( 'resynced' );
 	}
 );
 
