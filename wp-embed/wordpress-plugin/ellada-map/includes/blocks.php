@@ -9,7 +9,9 @@
  *   [ellada_recipe_extras]       Μυστικά επιτυχίας, αλλεργιογόνα, φωτογραφίες
  *   [ellada_location_guide]      Ο οδηγός μιας περιοχής (προϊόντα, αξιοθέατα, πότε, πώς)
  *   [ellada_area_map]            Ο χάρτης ανοιχτός στην περιφέρεια της σελίδας
- *   [ellada_cards source="area|collection|related|latest|archive" type="recipe|point" limit="12"]
+ *   [ellada_cards source="area|collection|related|latest|featured|archive" type="recipe|point|collection" limit="12"
+ *                 title="" more_url="" more_label=""]   Ο σύνδεσμος «more» εμφανίζεται μόνο όταν υπάρχουν κάρτες.
+ *   [ellada_regions]             Οι περιφέρειες που έχουν σελίδα, με το πλήθος συνταγών τους
  *   [ellada_term_filter taxonomy="recipe_category"]
  */
 
@@ -356,6 +358,32 @@ function ellada_recipe_card( $post_id ) {
 	);
 }
 
+function ellada_collection_card( $post_id ) {
+	$img   = get_the_post_thumbnail( $post_id, 'medium_large', array( 'loading' => 'lazy', 'class' => 'ellada-card__img' ) );
+	$theme = get_post_meta( $post_id, 'theme', true );
+	$themes = array(
+		'spring'    => 'Άνοιξη',
+		'summer'    => 'Καλοκαίρι',
+		'autumn'    => 'Φθινόπωρο',
+		'winter'    => 'Χειμώνας',
+		'easter'    => 'Πάσχα',
+		'christmas' => 'Χριστούγεννα',
+		'fasting'   => 'Νηστίσιμα',
+	);
+	$label = isset( $themes[ ellada_select_value( $theme ) ] ) ? $themes[ ellada_select_value( $theme ) ] : '';
+	$count = count( array_filter( (array) get_post_meta( $post_id, 'recipes', true ) ) );
+	$desc  = trim( (string) get_post_meta( $post_id, 'short_description', true ) );
+	return sprintf(
+		'<article class="ellada-card is-collection"><a href="%1$s" class="ellada-card__link"><div class="ellada-card__media">%2$s</div><div class="ellada-card__body">%3$s<h3 class="ellada-card__title">%4$s</h3>%5$s%6$s</div></a></article>',
+		esc_url( get_permalink( $post_id ) ),
+		$img ? $img : '<span class="ellada-card__placeholder" aria-hidden="true"></span>',
+		$label ? '<p class="ellada-card__eyebrow">' . esc_html( $label ) . '</p>' : '',
+		esc_html( get_the_title( $post_id ) ),
+		$desc ? '<p class="ellada-card__desc">' . esc_html( $desc ) . '</p>' : '',
+		$count ? '<p class="ellada-card__meta">' . esc_html( sprintf( 1 === $count ? '%d συνταγή' : '%d συνταγές', $count ) ) . '</p>' : ''
+	);
+}
+
 function ellada_point_card( $post_id ) {
 	$type   = ellada_select_value( get_post_meta( $post_id, 'point_type', true ) );
 	$types  = ellada_map_point_types();
@@ -387,16 +415,21 @@ add_shortcode(
 				'type'   => 'recipe',
 				'limit'  => 12,
 				'title'  => '',
-				'empty'  => '',
-				'id'     => 0,
+				'empty'      => '',
+				'id'         => 0,
+				'more_url'   => '',
+				'more_label' => '',
 			),
 			$atts,
 			'ellada_cards'
 		);
 		ellada_front_style();
-		$post_type = 'point' === $atts['type'] ? 'ellada_point' : 'ellada_recipe';
-		$render    = 'ellada_point' === $post_type ? 'ellada_point_card' : 'ellada_recipe_card';
-		$grid      = 'ellada_point' === $post_type ? 'ellada-points' : 'ellada-cards';
+		$types     = array(
+			'recipe'     => array( 'ellada_recipe', 'ellada_recipe_card', 'ellada-cards' ),
+			'point'      => array( 'ellada_point', 'ellada_point_card', 'ellada-points' ),
+			'collection' => array( 'ellada_collection', 'ellada_collection_card', 'ellada-cards' ),
+		);
+		list( $post_type, $render, $grid ) = isset( $types[ $atts['type'] ] ) ? $types[ $atts['type'] ] : $types['recipe'];
 
 		if ( 'archive' === $atts['source'] ) {
 			global $wp_query;
@@ -427,7 +460,11 @@ add_shortcode(
 		if ( $pag ) {
 			$html .= '<nav class="ellada-pagination" aria-label="Σελίδες">' . $pag . '</nav>';
 		}
-		return $html;
+		if ( $atts['more_url'] && $atts['more_label'] ) {
+			$html .= sprintf( '<p class="ellada-more"><a href="%s">%s</a></p>', esc_url( home_url( $atts['more_url'] ) ), esc_html( $atts['more_label'] ) );
+		}
+		// Το περιθώριο μπαίνει μόνο όταν υπάρχει περιεχόμενο, ώστε μια άδεια ενότητα να μην αφήνει κενό.
+		return '<div class="ellada-block">' . $html . '</div>';
 	}
 );
 
@@ -455,6 +492,42 @@ add_shortcode(
 	}
 );
 
+add_shortcode(
+	'ellada_regions',
+	function ( $atts ) {
+		$atts = shortcode_atts( array( 'title' => '' ), $atts, 'ellada_regions' );
+		$ids = get_posts(
+			array(
+				'post_type'      => 'ellada_location',
+				'post_status'    => 'publish',
+				'posts_per_page' => 20,
+				'fields'         => 'ids',
+				'orderby'        => 'title',
+				'order'          => 'ASC',
+				'meta_key'       => 'map_level', // phpcs:ignore WordPress.DB.SlowDBQuery
+				'meta_value'     => 'region', // phpcs:ignore WordPress.DB.SlowDBQuery
+				'no_found_rows'  => true,
+			)
+		);
+		if ( ! $ids ) {
+			return '';
+		}
+		ellada_front_style();
+		$html = '<div class="ellada-block">' . ( $atts['title'] ? '<h2 class="ellada-h">' . esc_html( $atts['title'] ) . '</h2>' : '' ) . '<div class="ellada-regions">';
+		foreach ( $ids as $id ) {
+			$q     = new WP_Query( array_merge( ellada_recipe_query_args( 'area', $id, 1 ), array( 'no_found_rows' => false, 'fields' => 'ids' ) ) );
+			$n     = (int) $q->found_posts;
+			$html .= sprintf(
+				'<a class="ellada-region" href="%s"><span class="ellada-region__name">%s</span>%s</a>',
+				esc_url( get_permalink( $id ) ),
+				esc_html( get_the_title( $id ) ),
+				$n ? '<span class="ellada-region__count">' . esc_html( sprintf( 1 === $n ? '%d συνταγή' : '%d συνταγές', $n ) ) . '</span>' : ''
+			);
+		}
+		return $html . '</div></div>';
+	}
+);
+
 /** Αρχείο συνταγών: 12 ανά σελίδα. */
 add_action(
 	'pre_get_posts',
@@ -462,7 +535,7 @@ add_action(
 		if ( is_admin() || ! $q->is_main_query() ) {
 			return;
 		}
-		if ( $q->is_post_type_archive( 'ellada_recipe' ) || $q->is_tax( array( 'recipe_category', 'recipe_diet' ) ) ) {
+		if ( $q->is_post_type_archive( array( 'ellada_recipe', 'ellada_collection' ) ) || $q->is_tax( array( 'recipe_category', 'recipe_diet' ) ) ) {
 			$q->set( 'posts_per_page', 12 );
 		}
 	}

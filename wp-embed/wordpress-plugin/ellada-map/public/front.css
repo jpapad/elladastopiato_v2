@@ -148,3 +148,23 @@
 	text-decoration: none; color: var(--ellada-ink); font-weight: 600;
 }
 .ellada-pagination .page-numbers.current { background: var(--ellada-dark); border-color: var(--ellada-dark); color: #F5F4F2; }
+
+/* ── Συλλογές, «δείτε όλες», περιφέρειες ── */
+.ellada-card__desc { margin: 6px 0 0; font-size: 15px; line-height: 1.45; color: var(--ellada-ink); }
+.ellada-more { margin: 28px 0 0; }
+.ellada-more a {
+	display: inline-block; padding: 12px 24px; border-radius: 999px; background: var(--ellada-dark); color: #F5F4F2;
+	font-weight: 700; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none;
+}
+.ellada-more a:hover { background: var(--ellada-accent); color: var(--ellada-dark); }
+.ellada-regions { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.ellada-region {
+	display: flex; flex-direction: column; justify-content: flex-end; gap: 4px; min-height: 120px; padding: 20px;
+	border-radius: var(--ellada-radius); background: var(--ellada-dark); color: #F5F4F2; text-decoration: none;
+	transition: background .2s;
+}
+.ellada-region:hover { background: #2A2724; }
+.ellada-region__name { font-weight: 800; font-style: italic; text-transform: uppercase; font-size: 1.15rem; line-height: 1.1; }
+.ellada-region__count { font-size: 13px; color: var(--ellada-accent); font-weight: 700; }
+/* Κάθε γεμάτη ενότητα κρατά το δικό της κάτω περιθώριο· οι άδειες δεν αφήνουν κενό. */
+.ellada-block { margin-bottom: 72px; }

@@ -231,6 +231,16 @@ function ellada_recipe_query_args( $source, $post_id, $limit = 12, $post_type = 
 			$args['orderby'] = 'rand';
 			break;
 
+		case 'featured':
+			// Συλλογές με «Προβολή στην αρχική» πρώτες, μετά οι πιο πρόσφατες.
+			$args['meta_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery
+				'relation' => 'OR',
+				'featured' => array( 'key' => 'featured', 'compare' => 'EXISTS' ),
+				'plain'    => array( 'key' => 'featured', 'compare' => 'NOT EXISTS' ),
+			);
+			$args['orderby']    = array( 'featured' => 'DESC', 'date' => 'DESC' );
+			break;
+
 		default: // latest
 			$args['orderby'] = 'date';
 	}
