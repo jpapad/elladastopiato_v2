@@ -56,14 +56,24 @@ const variants = {
   }),
 }
 
+/**
+ * Χρώμα τονισμού. Ρυθμίζεται με τη μεταβλητή CSS --ellada-accent (π.χ. από το plugin του
+ * WordPress)· αν δεν οριστεί, μένει το πορτοκαλί (#f97316) του αρχικού σχεδίου.
+ */
+const ACCENT = 'var(--ellada-accent, #f97316)'
+const accent = (alpha: number) =>
+  `color-mix(in srgb, ${ACCENT} ${Math.round(alpha * 100)}%, transparent)`
+/** Φόντο χάρτη: --ellada-bg ή το αρχικό σχεδόν μαύρο. */
+const BG = 'var(--ellada-bg, #0a0a0a)'
+
 const LEVEL_STYLE = [
   { fill: 'rgba(255,255,255,0.04)', stroke: 'rgba(255,255,255,0.18)', strokeWidth: 0.5 },
-  { fill: 'rgba(249,115,22,0.06)', stroke: 'rgba(249,115,22,0.35)', strokeWidth: 0.8 },
-  { fill: 'rgba(249,115,22,0.08)', stroke: 'rgba(249,115,22,0.45)', strokeWidth: 1 },
-  { fill: 'rgba(249,115,22,0.05)', stroke: 'rgba(249,115,22,0.25)', strokeWidth: 1.2 },
+  { fill: accent(0.06), stroke: accent(0.35), strokeWidth: 0.8 },
+  { fill: accent(0.08), stroke: accent(0.45), strokeWidth: 1 },
+  { fill: accent(0.05), stroke: accent(0.25), strokeWidth: 1.2 },
 ]
 /** Περιοχές με περιεχόμενο στο WordPress (σελίδα ή τοπικά σημεία) φαίνονται λίγο πιο έντονα. */
-const CONTENT_FILL = 'rgba(249,115,22,0.16)'
+const CONTENT_FILL = accent(0.16)
 
 const LEVEL_HINT = [
   'Κάντε κλικ σε περιφέρεια για εξερεύνηση',
@@ -343,7 +353,7 @@ export default function GreeceMap({
   if (geoError && !regions) {
     return (
       <div
-        className="bg-[#0a0a0a] rounded-[2.5rem] border border-white/5 p-8 flex items-center justify-center"
+        className="bg-[var(--ellada-bg,#0a0a0a)] rounded-[2.5rem] border border-white/5 p-8 flex items-center justify-center"
         style={{ minHeight }}
       >
         <p className="text-white/40 text-xs uppercase tracking-widest text-center">
@@ -358,7 +368,7 @@ export default function GreeceMap({
   if (!regions) {
     return (
       <div
-        className="bg-[#0a0a0a] rounded-[2.5rem] border border-white/5 p-8 flex items-center justify-center"
+        className="bg-[var(--ellada-bg,#0a0a0a)] rounded-[2.5rem] border border-white/5 p-8 flex items-center justify-center"
         style={{ minHeight }}
       >
         <div className="text-orange-500 animate-pulse font-bold tracking-widest uppercase text-xs">
@@ -370,7 +380,7 @@ export default function GreeceMap({
 
   return (
     <div
-      className="bg-[#0a0a0a] text-white rounded-[2.5rem] border border-white/5 shadow-2xl relative flex flex-col overflow-hidden"
+      className="bg-[var(--ellada-bg,#0a0a0a)] text-white rounded-[2.5rem] border border-white/5 shadow-2xl relative flex flex-col overflow-hidden"
       style={{ minHeight }}
     >
       {/* ── top bar ── */}
@@ -512,19 +522,19 @@ export default function GreeceMap({
                               default: { ...base, cursor: interactive ? 'pointer' : 'default' },
                               hover: interactive
                                 ? {
-                                    fill: 'rgba(249,115,22,0.4)',
-                                    stroke: '#f97316',
+                                    fill: accent(0.4),
+                                    stroke: ACCENT,
                                     strokeWidth: 1.5,
                                     outline: 'none',
                                     cursor: 'pointer',
-                                    filter: 'drop-shadow(0 0 8px rgba(249,115,22,0.6))',
+                                    filter: `drop-shadow(0 0 8px ${accent(0.6)})`,
                                   }
                                 : base,
                               pressed: interactive
                                 ? {
-                                    fill: '#f97316',
+                                    fill: ACCENT,
                                     outline: 'none',
-                                    filter: 'drop-shadow(0 0 14px rgba(249,115,22,0.9))',
+                                    filter: `drop-shadow(0 0 14px ${accent(0.9)})`,
                                   }
                                 : base,
                             }}
@@ -565,15 +575,13 @@ export default function GreeceMap({
                         {active && (
                           <circle
                             r={pointR * 2.6}
-                            fill="rgba(249,115,22,0.18)"
-                            stroke="rgba(249,115,22,0.6)"
+                            style={{ fill: accent(0.18), stroke: accent(0.6) }}
                             strokeWidth={0.8}
                           />
                         )}
                         <circle
                           r={active ? pointR * 1.3 : pointR}
-                          fill="#f97316"
-                          stroke="#0a0a0a"
+                          style={{ fill: ACCENT, stroke: BG }}
                           strokeWidth={pointR * 0.45}
                         />
                         {(level === 3 || i < 15) && (

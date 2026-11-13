@@ -14,6 +14,7 @@
  *   data-height              Ελάχιστο ύψος σε px (default 600)
  *   data-locations-endpoint  REST base τοποθεσιών (default locations)
  *   data-points-endpoint     REST base τοπικών σημείων (default local-points)
+ *   data-accent              Χρώμα τονισμού: hex (#f97316) ή var(--…) (default πορτοκαλί)
  *
  * Global API (window.ElladaMap): mount(el, config?), unmount(el), mountAll(scope?)
  * Event: 'ellada-map:select' στο host element, με detail = { type, … }.
@@ -31,9 +32,10 @@ export type EmbedConfig = {
   minHeight?: number
   locationsEndpoint?: string
   pointsEndpoint?: string
+  accent?: string
 }
 
-export const version = '1.0.0'
+export const version = '1.1.0'
 
 const SELECTOR = '[data-ellada-map]'
 const mounted = new Map<HTMLElement, Root>()
@@ -86,6 +88,7 @@ function readConfig(el: HTMLElement): EmbedConfig {
     minHeight: Number.isFinite(height) && height > 0 ? height : undefined,
     locationsEndpoint: d.locationsEndpoint || undefined,
     pointsEndpoint: d.pointsEndpoint || undefined,
+    accent: d.accent || undefined,
   }
 }
 
@@ -104,6 +107,11 @@ export function mount(el: HTMLElement, overrides: EmbedConfig = {}) {
   if (mounted.has(el)) return
   const config = { ...readConfig(el), ...overrides }
   const geoBase = (config.geoBase || fallbackGeoBase).replace(/\/?$/, '/')
+
+  // Μόνο hex ή μεταβλητή CSS (π.χ. καθολικό χρώμα Elementor)· αλλιώς μένει το προεπιλεγμένο.
+  if (config.accent && /^(#[0-9a-f]{3}([0-9a-f]{3})?|var\(--[\w-]+\))$/i.test(config.accent))
+    el.style.setProperty('--ellada-accent', config.accent)
+  else el.style.removeProperty('--ellada-accent')
 
   const shadow = el.shadowRoot ?? el.attachShadow({ mode: 'open' })
   shadow.replaceChildren()

@@ -17,3 +17,13 @@
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
+
+/*
+ * Χρώμα τονισμού από το WordPress (data-accent → --ellada-accent στο host).
+ * Οι κλάσεις orange-* του χάρτη διαβάζουν αυτές τις μεταβλητές, οπότε αλλάζουν όλες μαζί.
+ * Χωρίς --ellada-accent μένουν οι αρχικές τιμές του Tailwind.
+ */
+:host {
+  --color-orange-500: var(--ellada-accent, oklch(70.5% 0.213 47.604));
+  --color-orange-400: color-mix(in oklab, var(--color-orange-500) 82%, white);
+}
