@@ -13,6 +13,7 @@
  *                 title="" more_url="" more_label=""]   Ο σύνδεσμος «more» εμφανίζεται μόνο όταν υπάρχουν κάρτες.
  *   [ellada_regions]             Οι περιφέρειες που έχουν σελίδα, με το πλήθος συνταγών τους
  *   [ellada_term_filter taxonomy="recipe_category"]
+ *   [ellada_recipe_finder]       Φόρμα «Βρείτε συνταγή» (περιφέρεια + κατηγορία)
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -535,6 +536,39 @@ add_shortcode(
 	}
 );
 
+/**
+ * [ellada_recipe_finder] Φόρμα «Βρείτε συνταγή»: περιφέρεια + κατηγορία → /syntages/ με φίλτρα.
+ * Δείχνει μόνο περιφέρειες και κατηγορίες που έχουν ήδη συνταγές.
+ */
+add_shortcode(
+	'ellada_recipe_finder',
+	function ( $atts ) {
+		$atts = shortcode_atts( array( 'button' => 'Βρείτε συνταγή' ), $atts, 'ellada_recipe_finder' );
+		ellada_front_style();
+		global $wpdb;
+		$regions = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$wpdb->prepare(
+				"SELECT DISTINCT pm.meta_value FROM {$wpdb->postmeta} pm INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+				 WHERE pm.meta_key = %s AND p.post_type = 'ellada_recipe' AND p.post_status = 'publish' ORDER BY pm.meta_value",
+				ELLADA_AREA_KEYS['region']
+			)
+		);
+		$cats    = get_terms( array( 'taxonomy' => 'recipe_category', 'hide_empty' => true ) );
+		$cur_reg = isset( $_GET['perioxi'] ) ? sanitize_text_field( wp_unslash( $_GET['perioxi'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$html    = sprintf( '<form class="ellada-finder" action="%s" method="get" role="search" aria-label="Βρείτε συνταγή">', esc_url( get_post_type_archive_link( 'ellada_recipe' ) ) );
+		$html   .= '<label class="ellada-finder__field"><span>Περιφέρεια</span><select name="perioxi"><option value="">Όλη η Ελλάδα</option>';
+		foreach ( $regions as $r ) {
+			$html .= sprintf( '<option value="%1$s"%2$s>%1$s</option>', esc_attr( $r ), selected( $cur_reg, $r, false ) );
+		}
+		$html .= '</select></label><label class="ellada-finder__field"><span>Κατηγορία</span><select name="recipe_category"><option value="">Όλες</option>';
+		foreach ( is_wp_error( $cats ) ? array() : $cats as $t ) {
+			$html .= sprintf( '<option value="%s">%s</option>', esc_attr( $t->slug ), esc_html( $t->name ) );
+		}
+		$html .= sprintf( '</select></label><button type="submit" class="ellada-finder__btn">%s</button></form>', esc_html( $atts['button'] ) );
+		return $html;
+	}
+);
+
 /** Αρχείο συνταγών: 12 ανά σελίδα. */
 add_action(
 	'pre_get_posts',
@@ -544,6 +578,13 @@ add_action(
 		}
 		if ( $q->is_post_type_archive( array( 'ellada_recipe', 'ellada_collection' ) ) || $q->is_tax( array( 'recipe_category', 'recipe_diet' ) ) ) {
 			$q->set( 'posts_per_page', 12 );
+		}
+		// Φίλτρο περιφέρειας από τη φόρμα «Βρείτε συνταγή» (?perioxi=Κρήτη).
+		$region = isset( $_GET['perioxi'] ) ? sanitize_text_field( wp_unslash( $_GET['perioxi'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( $region && in_array( $region, ellada_map_region_names(), true ) && ( $q->is_post_type_archive( 'ellada_recipe' ) || $q->is_tax( 'recipe_category' ) ) ) {
+			$mq   = (array) $q->get( 'meta_query' );
+			$mq[] = array( 'key' => ELLADA_AREA_KEYS['region'], 'value' => $region );
+			$q->set( 'meta_query', array_filter( $mq ) );
 		}
 	}
 );

@@ -168,3 +168,34 @@
 .ellada-region__count { font-size: 13px; color: var(--ellada-accent); font-weight: 700; }
 /* Κάθε γεμάτη ενότητα κρατά το δικό της κάτω περιθώριο· οι άδειες δεν αφήνουν κενό. */
 .ellada-block { margin-bottom: 72px; }
+
+/* ── «Βρείτε συνταγή» (σε σκούρο φόντο) ── */
+.ellada-finder {
+	display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px;
+	padding: 10px; border-radius: 999px; background: #F5F4F2; max-width: 760px;
+}
+.ellada-finder__field { flex: 1 1 200px; display: flex; flex-direction: column; gap: 2px; padding: 6px 18px; }
+.ellada-finder__field span {
+	font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ellada-muted);
+}
+.ellada-finder select {
+	appearance: none; -webkit-appearance: none; border: 0; background: transparent; padding: 2px 22px 2px 0; margin: 0;
+	font: inherit; font-size: 17px; font-weight: 700; color: var(--ellada-ink); cursor: pointer;
+	background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+	background-position: right 6px center, right 1px center; background-size: 5px 5px; background-repeat: no-repeat;
+}
+.ellada-finder select:focus-visible { outline: 2px solid var(--ellada-accent); outline-offset: 4px; border-radius: 4px; }
+.ellada-finder__btn {
+	flex: 0 0 auto; border: 0; border-radius: 999px; padding: 18px 30px; cursor: pointer;
+	background: var(--ellada-accent); color: var(--ellada-dark);
+	font: inherit; font-size: 14px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.ellada-finder__btn:hover { background: #FB8A3C; }
+@media (max-width: 640px) {
+	.ellada-finder { border-radius: 24px; padding: 8px; }
+	.ellada-finder__field { flex-basis: 100%; padding: 8px 14px; }
+	.ellada-finder__btn { width: 100%; }
+}
+
+/* Σε τίτλους οθόνης, η λέξη σε <strong> παίρνει το χρώμα τονισμού (ίδια οικογένεια, όχι άλλη γραμματοσειρά). */
+h1 strong, .ellada-display strong { color: var(--ellada-accent); font-weight: inherit; }
