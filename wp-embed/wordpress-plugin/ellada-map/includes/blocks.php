@@ -28,18 +28,8 @@ function ellada_front_style() {
 	wp_enqueue_style( 'ellada-front' );
 }
 
-/** Στις σελίδες του οδηγού τα στυλ μπαίνουν στο <head> (όχι αργά στο footer). */
-add_action(
-	'wp_enqueue_scripts',
-	function () {
-		if ( is_singular( array( 'ellada_recipe', 'ellada_location', 'ellada_collection', 'ellada_point' ) )
-			|| is_post_type_archive( array( 'ellada_recipe', 'ellada_collection' ) )
-			|| is_tax( array( 'recipe_category', 'recipe_diet' ) )
-			|| is_front_page() ) {
-			ellada_front_style();
-		}
-	}
-);
+/** Τα στυλ μπαίνουν σε όλες τις σελίδες στο <head>: η κεφαλίδα (φακός αναζήτησης) υπάρχει παντού. */
+add_action( 'wp_enqueue_scripts', 'ellada_front_style' );
 add_action( 'elementor/preview/enqueue_styles', 'ellada_front_style' );
 
 /* ═════════════════════ Βοηθητικά ═════════════════════ */
