@@ -242,9 +242,10 @@ export function unmount(el: HTMLElement) {
 }
 
 /*
- * Ο χάρτης κατεβάζει ~1 MB γεωγραφικά δεδομένα. Όταν βρίσκεται πιο κάτω στη σελίδα (π.χ. στην αρχική),
- * ξεκινά μόνο όταν ο επισκέπτης πλησιάσει με το scroll, ώστε η πρώτη οθόνη να φορτώνει γρήγορα.
- * Με data-eager="true" ξεκινά αμέσως.
+ * Ο χάρτης κατεβάζει ~1 MB γεωγραφικά δεδομένα. Όταν δεν φαίνεται στην πρώτη οθόνη (π.χ. στην αρχική,
+ * κάτω από το hero), ξεκινά αφού φορτώσει η σελίδα και ο επισκέπτης πλησιάσει με το scroll, ώστε η
+ * πρώτη οθόνη να εμφανίζεται χωρίς να «παλεύει» για το δίκτυο. Όταν φαίνεται αμέσως (σελίδα /xartis/),
+ * ή έχει data-eager="true", ξεκινά αμέσως.
  */
 const waiting = new WeakSet<HTMLElement>()
 const lazyObserver =
@@ -259,21 +260,33 @@ const lazyObserver =
             if (el.isConnected) mount(el)
           }
         },
-        { rootMargin: '800px 0px' },
+        { rootMargin: '300px 0px' },
       )
     : null
+
+function afterPageLoad(fn: () => void) {
+  const idle = () =>
+    'requestIdleCallback' in window
+      ? (window as Window & { requestIdleCallback: (cb: () => void, o?: { timeout: number }) => void }).requestIdleCallback(fn, { timeout: 2000 })
+      : setTimeout(fn, 200)
+  if (document.readyState === 'complete') idle()
+  else window.addEventListener('load', idle, { once: true })
+}
 
 export function mountAll(scope: ParentNode = document) {
   scope
     .querySelectorAll<HTMLElement>(`${SELECTOR}:not([data-ellada-map-mounted])`)
     .forEach((el) => {
-      if (!lazyObserver || el.dataset.eager === 'true') {
+      const aboveFold = el.getBoundingClientRect().top < window.innerHeight
+      if (!lazyObserver || el.dataset.eager === 'true' || aboveFold) {
         mount(el)
         return
       }
       if (waiting.has(el)) return
       waiting.add(el)
-      lazyObserver.observe(el)
+      afterPageLoad(() => {
+        if (el.isConnected && !mounted.has(el)) lazyObserver.observe(el)
+      })
     })
 }
 
