@@ -74,6 +74,15 @@ add_action(
 
 /* ═════════════════════ Κεφαλίδα ενότητας ═════════════════════ */
 
+/** num="auto": οι ενότητες αριθμούνται με τη σειρά που εμφανίζονται (όσες δεν έχουν περιεχόμενο δεν μετράνε). */
+function ellada_section_num( $num ) {
+	static $n = 0;
+	if ( 'auto' !== $num ) {
+		return $num;
+	}
+	return sprintf( '%02d', ++$n );
+}
+
 add_shortcode(
 	'ellada_section_head',
 	function ( $atts ) {
@@ -90,7 +99,8 @@ add_shortcode(
 			'ellada_section_head'
 		);
 		ellada_front_style();
-		$more = '';
+		$a['num'] = ellada_section_num( $a['num'] );
+		$more     = '';
 		if ( $a['more_url'] && $a['more_label'] ) {
 			$url  = 0 === strpos( $a['more_url'], 'http' ) ? $a['more_url'] : home_url( $a['more_url'] );
 			$more = sprintf( '<a class="ellada-sh__more" href="%s">%s <span aria-hidden="true">→</span></a>', esc_url( $url ), esc_html( $a['more_label'] ) );
@@ -150,7 +160,8 @@ add_shortcode(
 			'ellada_map_intro'
 		);
 		ellada_front_style();
-		$c = ellada_home_counts();
+		$a['num'] = ellada_section_num( $a['num'] );
+		$c        = ellada_home_counts();
 		return sprintf(
 			'<div class="ellada-mapintro"><span class="ellada-sh__num">%s</span><p class="ellada-sh__eyebrow">%s</p><h2 class="ellada-mapintro__title">%s</h2><p class="ellada-mapintro__text">%s</p><dl class="ellada-mapintro__stats"><div><dt>Συνταγές</dt><dd>%d</dd></div><div><dt>Περιφέρειες με περιεχόμενο</dt><dd>%d<span>/%d</span></dd></div></dl></div>',
 			esc_html( $a['num'] ),

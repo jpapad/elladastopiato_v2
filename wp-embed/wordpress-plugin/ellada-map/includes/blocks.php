@@ -141,10 +141,23 @@ add_shortcode(
 			return '';
 		}
 		ellada_front_style();
-		$serv = (int) get_post_meta( $id, 'servings', true );
-		$html = '<section class="ellada-ingredients"><h2 class="ellada-h">Υλικά</h2>';
-		if ( $serv ) {
-			$html .= sprintf( '<p class="ellada-muted">Για %d %s</p>', $serv, 1 === $serv ? 'μερίδα' : 'μερίδες' );
+		$serv  = (int) get_post_meta( $id, 'servings', true );
+		$tools = function_exists( 'ellada_feature' ) && ellada_feature( 'recipe_tools' );
+		if ( $tools ) {
+			ellada_recipe_tools_assets();
+			$html = sprintf( '<section class="ellada-ingredients is-tools" id="ylika" data-recipe="%d" data-servings="%d"><h2 class="ellada-h">Υλικά</h2>', $id, $serv );
+			if ( $serv ) {
+				$html .= sprintf(
+					'<div class="ellada-serv"><span class="ellada-serv__label" id="ellada-serv-%1$d">Μερίδες</span><div class="ellada-serv__ctrl" role="group" aria-labelledby="ellada-serv-%1$d"><button type="button" data-serv="-1" aria-label="Λιγότερες μερίδες">−</button><output aria-live="polite">%2$d</output><button type="button" data-serv="1" aria-label="Περισσότερες μερίδες">+</button></div></div><p class="ellada-serv__note" hidden>Οι ποσότητες άλλαξαν για <span></span>. <button type="button" data-serv-reset>Επαναφορά</button></p>',
+					$id,
+					$serv
+				);
+			}
+		} else {
+			$html = '<section class="ellada-ingredients"><h2 class="ellada-h">Υλικά</h2>';
+			if ( $serv ) {
+				$html .= sprintf( '<p class="ellada-muted">Για %d %s</p>', $serv, 1 === $serv ? 'μερίδα' : 'μερίδες' );
+			}
 		}
 		$open = false;
 		foreach ( $rows as $row ) {
@@ -164,6 +177,16 @@ add_shortcode(
 			}
 			$qty   = trim( (string) ( $row['quantity'] ?? '' ) );
 			$note  = trim( (string) ( $row['note'] ?? '' ) );
+			if ( $tools ) {
+				// Κάθε υλικό τσεκάρεται την ώρα του μαγειρέματος· οι ποσότητες αλλάζουν με τις μερίδες.
+				$html .= sprintf(
+					'<li><label><input type="checkbox">%s<span class="ellada-ingredients__item">%s%s</span></label></li>',
+					$qty ? '<span class="ellada-ingredients__qty" data-q="' . esc_attr( $qty ) . '">' . esc_html( $qty ) . '</span>' : '<span class="ellada-ingredients__qty"></span>',
+					esc_html( $item ),
+					$note ? ' <span class="ellada-muted">' . esc_html( $note ) . '</span>' : ''
+				);
+				continue;
+			}
 			$html .= sprintf(
 				'<li>%s<span class="ellada-ingredients__item">%s</span>%s</li>',
 				$qty ? '<span class="ellada-ingredients__qty">' . esc_html( $qty ) . '</span>' : '',
@@ -171,7 +194,11 @@ add_shortcode(
 				$note ? ' <span class="ellada-muted">' . esc_html( $note ) . '</span>' : ''
 			);
 		}
-		return $html . ( $open ? '</ul>' : '' ) . '</section>';
+		$html .= $open ? '</ul>' : '';
+		if ( $tools ) {
+			$html .= '<button type="button" class="ellada-ingredients__clear" hidden>Ξετσεκάρισμα όλων</button>';
+		}
+		return $html . '</section>';
 	}
 );
 
@@ -190,8 +217,11 @@ add_shortcode(
 			return '';
 		}
 		ellada_front_style();
-		$html = '<section class="ellada-steps"><h2 class="ellada-h">Εκτέλεση</h2><ol>';
-		$n    = 0;
+		$tools = function_exists( 'ellada_feature' ) && ellada_feature( 'recipe_tools' );
+		$html  = '<section class="ellada-steps' . ( $tools ? ' is-tools' : '' ) . '" id="ektelesi"><h2 class="ellada-h">Εκτέλεση</h2>';
+		$html .= $tools ? '<p class="ellada-muted ellada-steps__hint">Πατήστε τον αριθμό για να σημειώσετε ένα βήμα ως έτοιμο.</p>' : '';
+		$html .= '<ol>';
+		$n     = 0;
 		foreach ( $rows as $row ) {
 			$n++;
 			$img = '';
@@ -199,10 +229,13 @@ add_shortcode(
 				$img = wp_get_attachment_image( (int) $row['image']['ID'], 'medium_large', false, array( 'class' => 'ellada-steps__img', 'loading' => 'lazy' ) );
 			}
 			$html .= sprintf(
-				'<li id="step-%1$d"><span class="ellada-steps__n" aria-hidden="true">%1$d</span><div class="ellada-steps__body"><p>%2$s</p>%3$s</div></li>',
+				'<li id="step-%1$d">%4$s<div class="ellada-steps__body"><p>%2$s</p>%3$s</div></li>',
 				$n,
 				wp_kses( (string) $row['text'], array( 'br' => array() ) ),
-				$img
+				$img,
+				$tools
+					? sprintf( '<button type="button" class="ellada-steps__n" aria-pressed="false" aria-label="Βήμα %1$d, σημείωση ως έτοιμο">%1$d</button>', $n )
+					: sprintf( '<span class="ellada-steps__n" aria-hidden="true">%d</span>', $n )
 			);
 		}
 		return $html . '</ol></section>';
