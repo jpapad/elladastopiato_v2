@@ -410,6 +410,7 @@ add_shortcode(
 				'id'         => 0,
 				'more_url'   => '',
 				'more_label' => '',
+				'exclude'    => '',
 			),
 			$atts,
 			'ellada_cards'
@@ -435,7 +436,12 @@ add_shortcode(
 			);
 		} else {
 			$ctx = absint( $atts['id'] ) ? absint( $atts['id'] ) : get_queried_object_id();
-			$q   = new WP_Query( ellada_recipe_query_args( $atts['source'], $ctx, $atts['limit'], $post_type ) );
+			$qa  = ellada_recipe_query_args( $atts['source'], $ctx, $atts['limit'], $post_type );
+			// exclude="featured": χωρίς τη «Συνταγή της εβδομάδας», που φαίνεται ήδη πιο πάνω.
+			if ( 'featured' === $atts['exclude'] && function_exists( 'ellada_featured_recipe_id' ) && ellada_featured_recipe_id() ) {
+				$qa['post__not_in'] = array( ellada_featured_recipe_id() );
+			}
+			$q   = new WP_Query( $qa );
 			$ids = wp_list_pluck( $q->posts, 'ID' );
 			$pag = '';
 			// «Δείτε ακόμα»: αν η ίδια περιφέρεια δεν έχει αρκετές, συμπληρώνεται με τις πιο πρόσφατες.
