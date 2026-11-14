@@ -130,6 +130,11 @@ function ellada_meta_data() {
 	}
 
 	$data['description'] = ellada_meta_text( $data['description'] );
+	// Χωρίς δική της φωτογραφία, η σελίδα παίρνει την εικόνα κοινοποίησης του site (1200x630).
+	$og = (int) get_option( 'ellada_og_image' );
+	if ( ! $data['image'] && $og ) {
+		$data['image'] = (string) wp_get_attachment_image_url( $og, 'full' );
+	}
 	if ( ! $data['image'] && get_option( 'site_icon' ) ) {
 		$data['image'] = get_site_icon_url( 512 );
 	}
