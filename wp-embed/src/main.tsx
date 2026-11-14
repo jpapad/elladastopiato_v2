@@ -9,7 +9,8 @@
  * data-* attributes:
  *   data-api                 Ρίζα REST API (rest_url()), π.χ. https://elladastopiato.gr/wp-json/
  *   data-geo                 URL φακέλου με regions.json / prefectures.json / municipalities.json
- *   data-settlements="true"  Εμφάνιση οικισμών σε επίπεδο δήμου (φορτώνει settlements.json)
+ *   data-settlements="true"  Πόλεις και χωριά: στον νομό οι πόλεις, στον δήμο όλοι (settlements/, ανά νομό)
+ *   data-start-place         Άνοιγμα σε οικισμό: «ΝΟΜΟΣ|Δήμος|id». Και από τη διεύθυνση: ?topos=…
  *   data-title               Τίτλος (default «Εξερεύνηση»)
  *   data-height              Ελάχιστο ύψος σε px (default 600)
  *   data-locations-endpoint  REST base τοποθεσιών (default locations)
@@ -51,6 +52,7 @@ export type EmbedConfig = {
   pointTypes?: LocalPointType[]
   legend?: boolean
   startRegion?: string
+  startPlace?: string
   emptyAreas?: EmptyAreas
   texts?: MapTexts
 }
@@ -62,6 +64,10 @@ const POINT_TYPES: LocalPointType[] = [
   'market',
   'festival',
   'sight',
+  'beach',
+  'museum',
+  'winery',
+  'trail',
   'other',
 ]
 /** Μόνο hex ή μεταβλητή CSS (π.χ. καθολικό χρώμα Elementor). */
@@ -163,6 +169,12 @@ function readConfig(el: HTMLElement): EmbedConfig {
     pointTypes: pointTypes.length ? pointTypes : undefined,
     legend: d.legend === 'true' || d.legend === '1',
     startRegion: d.startRegion || undefined,
+    // Μόνο ο πρώτος χάρτης της σελίδας ακούει τη διεύθυνση (?topos=ΝΟΜΟΣ|Δήμος|id).
+    startPlace:
+      d.startPlace ||
+      (el === document.querySelector(SELECTOR)
+        ? new URLSearchParams(window.location.search).get('topos') || undefined
+        : undefined),
     emptyAreas,
     texts,
   }
@@ -213,7 +225,7 @@ export function mount(el: HTMLElement, overrides: EmbedConfig = {}) {
           regions: `${geoBase}regions.json`,
           prefectures: `${geoBase}prefectures.json`,
           municipalities: `${geoBase}municipalities.json`,
-          settlements: config.settlements ? `${geoBase}settlements.json` : undefined,
+          settlements: config.settlements ? `${geoBase}settlements/index.json` : undefined,
         }}
         title={config.title}
         minHeight={config.minHeight}
@@ -223,6 +235,7 @@ export function mount(el: HTMLElement, overrides: EmbedConfig = {}) {
         pointTypes={config.pointTypes}
         legend={config.legend}
         startRegion={config.startRegion}
+        startPlace={config.startPlace}
         emptyAreas={config.emptyAreas}
         texts={config.texts}
         onSelect={onSelect}

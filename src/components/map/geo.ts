@@ -118,6 +118,8 @@ export type LocationIndex = {
   region(name: string): MapLocation | undefined
   prefecture(name: string): MapLocation | undefined
   municipality(prefecture: string, name: string): MapLocation | undefined
+  /** Σελίδα πόλης / χωριού, από το id του οικισμού. */
+  settlement(id: number): MapLocation | undefined
 }
 
 export function buildLocationIndex(locations: MapLocation[]): LocationIndex {
@@ -125,8 +127,13 @@ export function buildLocationIndex(locations: MapLocation[]): LocationIndex {
   const prefectures = new Map<string, MapLocation>()
   const munis = new Map<string, MapLocation>()
   const munisByName = new Map<string, MapLocation>()
+  const settlements = new Map<number, MapLocation>()
 
   for (const loc of locations) {
+    if (loc.level === 'settlement') {
+      if (loc.geoSettlement) settlements.set(loc.geoSettlement, loc)
+      continue
+    }
     // Το ACF πεδίο έχει προτεραιότητα, αλλιώς δοκιμάζουμε τον τίτλο του post.
     const name = normalizeGreek(loc.geoName || loc.title)
     if (!name) continue
@@ -142,6 +149,7 @@ export function buildLocationIndex(locations: MapLocation[]): LocationIndex {
     region: (n) => regions.get(normalizeGreek(n)),
     prefecture: (n) => prefectures.get(normalizeGreek(n)),
     municipality: (p, n) => munis.get(municipalityKey(p, n)) ?? munisByName.get(normalizeGreek(n)),
+    settlement: (id) => settlements.get(id),
   }
 }
 

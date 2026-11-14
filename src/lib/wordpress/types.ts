@@ -7,7 +7,7 @@
  *  - ACF field groups με «Show in REST API» ενεργό.
  */
 
-export type GeoLevel = 'region' | 'prefecture' | 'municipality'
+export type GeoLevel = 'region' | 'prefecture' | 'municipality' | 'settlement'
 
 /* ── Raw σχήματα όπως τα επιστρέφει το WP REST με ?acf_format=standard ── */
 
@@ -32,6 +32,8 @@ export type WpLocationAcf = {
   geo_region?: AcfSelect
   geo_prefecture?: AcfSelect
   geo_municipality?: AcfSelect
+  /** «ΝΟΜΟΣ|Δήμος|osm id» του οικισμού (επίπεδο Πόλη / Χωριό). */
+  geo_settlement?: string | null
   short_description?: string | null
   cover_image?: AcfImage | number | false | null
   local_products?: string | null
@@ -80,6 +82,8 @@ export type MapLocation = {
   geoName: string | null
   /** Μόνο για δήμους: ο νομός (prefecture_greek) του GeoJSON, για να ξεχωρίζουν ομώνυμοι δήμοι. */
   geoPrefecture: string | null
+  /** Μόνο για πόλεις / χωριά: το id του οικισμού (OpenStreetMap). */
+  geoSettlement: number | null
   description: string
   image: MapImage | null
   localProducts: string
@@ -92,6 +96,10 @@ export type LocalPointType =
   | 'market'
   | 'festival'
   | 'sight'
+  | 'beach'
+  | 'museum'
+  | 'winery'
+  | 'trail'
   | 'other'
 
 export type LocalPoint = {

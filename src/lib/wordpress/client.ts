@@ -178,7 +178,9 @@ function toNumber(v: string | number | null | undefined): number | null {
   return Number.isFinite(n) ? n : null
 }
 
+/** Επίπεδα που συμπεραίνονται από το βάθος στην ιεραρχία (οι οικισμοί δηλώνονται πάντα ρητά). */
 const LEVELS: GeoLevel[] = ['region', 'prefecture', 'municipality']
+const ALL_LEVELS: GeoLevel[] = [...LEVELS, 'settlement']
 
 export const POINT_TYPE_LABELS: Record<LocalPointType, string> = {
   product: 'Τοπικό προϊόν',
@@ -187,18 +189,30 @@ export const POINT_TYPE_LABELS: Record<LocalPointType, string> = {
   market: 'Αγορά',
   festival: 'Γιορτή / Πανηγύρι',
   sight: 'Αξιοθέατο',
+  beach: 'Παραλία',
+  museum: 'Μουσείο',
+  winery: 'Οινοποιείο',
+  trail: 'Μονοπάτι / Φύση',
   other: 'Τοπικό σημείο',
 }
 
 export function mapLocation(raw: WpLocationRaw): MapLocation {
   const acf = acfObject<WpLocationAcf>(raw.acf)
   const levelValue = selectValue(acf.map_level)
-  const level = LEVELS.includes(levelValue as GeoLevel) ? (levelValue as GeoLevel) : null
+  const level = ALL_LEVELS.includes(levelValue as GeoLevel) ? (levelValue as GeoLevel) : null
 
   let geoName: string | null = null
   let geoPrefecture: string | null = null
   if (level === 'region') geoName = selectValue(acf.geo_region)
   if (level === 'prefecture') geoName = selectValue(acf.geo_prefecture)
+  let geoSettlement: number | null = null
+  if (level === 'settlement') {
+    // «ΝΟΜΟΣ|Δήμος|osm id»
+    const [pref, muni, id] = String(acf.geo_settlement || '').split('|')
+    geoPrefecture = pref || null
+    geoName = muni || null
+    geoSettlement = Number(id) || null
+  }
   if (level === 'municipality') {
     // Οι τιμές δήμων αποθηκεύονται ως «ΝΟΜΟΣ|Δήμος» για να ξεχωρίζουν ομώνυμοι δήμοι.
     const value = selectValue(acf.geo_municipality)
@@ -218,6 +232,7 @@ export function mapLocation(raw: WpLocationRaw): MapLocation {
     level,
     geoName,
     geoPrefecture,
+    geoSettlement,
     description: acf.short_description?.trim() ?? '',
     image: toImage(acf.cover_image),
     localProducts: acf.local_products?.trim() ?? '',

@@ -14,6 +14,7 @@ import zlib from 'node:zlib'
 import { fileURLToPath } from 'node:url'
 import { geoArea } from 'd3-geo'
 import { buildAcfImport } from './acf-definitions.mjs'
+import { buildPlaces } from './build-places.mjs'
 
 const here = path.dirname(fileURLToPath(import.meta.url))
 const embedDir = path.resolve(here, '..')
@@ -92,19 +93,9 @@ for (const { src, out, keep } of GEO_FILES) {
   )
 }
 
-// Οικισμοί (προαιρετικοί, data-settlements="true")
-{
-  const raw = readJson(path.join(repoRoot, 'public', 'greece-settlements.json'))
-  const slim = Object.fromEntries(
-    Object.entries(raw).map(([k, list]) => [
-      k,
-      list.map((s) => ({ n: s.n, lat: round(s.lat), lon: round(s.lon) })),
-    ]),
-  )
-  const json = JSON.stringify(slim)
-  fs.writeFileSync(path.join(geoOut, 'settlements.json'), json)
-  console.log(`  geo  settlements.json     → ${kb(json.length)}`)
-}
+// Οικισμοί: πόλεις, κωμοπόλεις, χωριά (OpenStreetMap), ανά νομό, και στοιχεία περιοχών
+fs.rmSync(path.join(geoOut, 'settlements.json'), { force: true })
+buildPlaces(geo, geoOut)
 
 /* ══════════════ 2. ACF ══════════════ */
 

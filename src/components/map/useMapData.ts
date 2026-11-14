@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { fetchWordPressMapData, type WordPressMapEndpoints } from '@/lib/wordpress/client'
 import type { MapLocation, LocalPoint } from '@/lib/wordpress/types'
 import {
@@ -11,13 +11,17 @@ import {
   type PlacedPoint,
 } from './geo'
 
-export type Settlement = { n: string; lat: number; lon: number }
+/** Οικισμός: i = id (OpenStreetMap), n = όνομα, t = c πόλη | t κωμόπολη | v χωριό | h μικρός οικισμός, p = κάτοικοι. */
+export type SettlementType = 'c' | 't' | 'v' | 'h'
+export type Settlement = { i: number; n: string; t: SettlementType; p: number; x: number; y: number }
+/** Οικισμοί ενός νομού, ανά δήμο (name_greek). */
+export type PrefectureSettlements = Record<string, Settlement[]>
 
 export type GeoUrls = {
   regions: string
   prefectures: string
   municipalities: string
-  /** Προαιρετικό: οικισμοί ανά δήμο (greece-settlements.json). */
+  /** Προαιρετικό: settlements/index.json (νομός → αρχείο οικισμών, φορτώνεται όταν ανοίγει ο νομός). */
   settlements?: string
 }
 
@@ -46,7 +50,9 @@ export function useMapData({ apiRoot, endpoints, geoUrls }: MapDataConfig) {
   const [regions, setRegions] = useState<GeoCollection | null>(null)
   const [prefectures, setPrefectures] = useState<GeoCollection | null>(null)
   const [municipalities, setMunicipalities] = useState<GeoCollection | null>(null)
-  const [settlements, setSettlements] = useState<Record<string, Settlement[]>>({})
+  const [settlementIndex, setSettlementIndex] = useState<Record<string, string> | null>(null)
+  /** Νομός → οικισμοί του (όσοι νομοί έχουν ήδη φορτωθεί). */
+  const [settlements, setSettlements] = useState<Record<string, PrefectureSettlements>>({})
   const [geoError, setGeoError] = useState<string | null>(null)
 
   const [locations, setLocations] = useState<MapLocation[]>([])
@@ -70,9 +76,10 @@ export function useMapData({ apiRoot, endpoints, geoUrls }: MapDataConfig) {
       .then((g) => alive && setMunicipalities(rewindCollection(g)))
       .catch(fail)
     if (geoUrls.settlements) {
-      loadJson<Record<string, Settlement[]>>(geoUrls.settlements)
-        .then((s) => alive && setSettlements(s))
-        .catch(fail)
+      // Οι οικισμοί δεν είναι απαραίτητοι: αν αποτύχουν, ο χάρτης δουλεύει χωρίς αυτούς.
+      loadJson<Record<string, string>>(geoUrls.settlements)
+        .then((s) => alive && setSettlementIndex(s))
+        .catch((e) => console.warn('[ΕλλάδαΣτοΠιάτο χάρτης] Οικισμοί:', e))
     }
     return () => {
       alive = false
@@ -107,6 +114,20 @@ export function useMapData({ apiRoot, endpoints, geoUrls }: MapDataConfig) {
     }
   }, [apiRoot, endpointsKey])
 
+  /** Φορτώνει τους οικισμούς ενός νομού (μία φορά). */
+  const loadSettlements = useCallback(
+    (prefecture: string | null) => {
+      if (!prefecture || !settlementIndex || !geoUrls.settlements) return
+      const file = settlementIndex[prefecture]
+      if (!file) return
+      const url = geoUrls.settlements.replace(/[^/]*$/, file)
+      loadJson<PrefectureSettlements>(url)
+        .then((data) => setSettlements((prev) => (prev[prefecture] ? prev : { ...prev, [prefecture]: data })))
+        .catch((e) => console.warn('[ΕλλάδαΣτοΠιάτο χάρτης] Οικισμοί:', e))
+    },
+    [settlementIndex, geoUrls.settlements],
+  )
+
   const locationIndex: LocationIndex = useMemo(() => buildLocationIndex(locations), [locations])
 
   const points: PlacedPoint[] = useMemo(() => {
@@ -127,6 +148,8 @@ export function useMapData({ apiRoot, endpoints, geoUrls }: MapDataConfig) {
     prefectures,
     municipalities,
     settlements,
+    settlementsReady: !!settlementIndex,
+    loadSettlements,
     geoError,
     locationIndex,
     points,

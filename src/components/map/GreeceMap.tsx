@@ -28,11 +28,18 @@ import {
   type ProjConfig,
 } from './geo'
 import InfoCard, { type InfoCardData } from './InfoCard'
-import { useMapData, type MapDataConfig } from './useMapData'
+import { useMapData, type MapDataConfig, type Settlement, type SettlementType } from './useMapData'
 
 export type MapSelectEvent =
   | { type: 'region' | 'prefecture' | 'municipality'; name: string; location: MapLocation | null }
   | { type: 'point'; point: PlacedPoint }
+  | {
+      type: 'settlement'
+      settlement: Settlement
+      prefecture: string
+      municipality: string
+      location: MapLocation | null
+    }
 
 /** Κείμενα του χάρτη που μπορούν να αλλάξουν (π.χ. από τις ρυθμίσεις του WordPress). */
 export type MapTexts = Partial<{
@@ -66,6 +73,8 @@ export type GreeceMapProps = MapDataConfig & {
   legend?: boolean
   /** Περιφέρεια (name_greek) στην οποία ανοίγει ο χάρτης αντί για όλη την Ελλάδα. */
   startRegion?: string
+  /** Άνοιγμα κατευθείαν σε έναν οικισμό: «ΝΟΜΟΣ|Δήμος|id» (π.χ. από την αναζήτηση του site). */
+  startPlace?: string
   /** Εμφάνιση περιοχών χωρίς περιεχόμενο (default 'normal'). */
   emptyAreas?: EmptyAreas
   /** Αλλαγές στα κείμενα του χάρτη. */
@@ -108,7 +117,7 @@ const DEFAULT_TEXTS: Required<MapTexts> = {
   hintRegions: 'Κάντε κλικ σε περιφέρεια για εξερεύνηση',
   hintPrefectures: 'Κάντε κλικ σε νομό για εξερεύνηση',
   hintMunicipalities: 'Κάντε κλικ σε δήμο ή σε τοπικό σημείο',
-  hintPoints: 'Κάντε κλικ σε τοπικό σημείο για λεπτομέρειες',
+  hintPoints: 'Κάντε κλικ σε πόλη, χωριό ή τοπικό σημείο',
   guideButton: 'Ο γαστρονομικός οδηγός',
   pointsHeading: 'Τοπικά σημεία',
 }
@@ -117,6 +126,26 @@ const EMPTY_STYLE = { fill: 'rgba(255,255,255,0.012)', stroke: 'rgba(255,255,255
 const DEFAULT_RADIUS = 40 // 2.5rem
 const LEVEL_LABEL = ['Περιφέρειες', 'Νομοί', 'Δήμοι', 'Τοπικά σημεία']
 const KIND_LABEL = ['Περιφέρεια', 'Νομός', 'Δήμος', 'Τοπικό σημείο']
+
+const SETTLEMENT_LABEL: Record<SettlementType, string> = {
+  c: 'Πόλη',
+  t: 'Κωμόπολη',
+  v: 'Χωριό',
+  h: 'Οικισμός',
+}
+/** Μέγεθος κουκκίδας ανά είδος οικισμού (πολλαπλασιαστής). */
+const SETTLEMENT_SIZE: Record<SettlementType, number> = { c: 2, t: 1.45, v: 1, h: 0.6 }
+
+/** Απόσταση σε km (haversine). */
+function distanceKm(lat1: number, lon1: number, lat2: number, lon2: number) {
+  const r = Math.PI / 180
+  const a =
+    Math.sin(((lat2 - lat1) * r) / 2) ** 2 +
+    Math.cos(lat1 * r) * Math.cos(lat2 * r) * Math.sin(((lon2 - lon1) * r) / 2) ** 2
+  return 12742 * Math.asin(Math.sqrt(a))
+}
+
+const fmtPop = (n: number) => (n >= 1000 ? n.toLocaleString('el-GR') : String(n))
 
 const countLabel = (n: number) => (n === 1 ? '1 τοπικό σημείο' : `${n} τοπικά σημεία`)
 
@@ -154,6 +183,7 @@ export default function GreeceMap({
   pointTypes,
   legend = false,
   startRegion,
+  startPlace,
   emptyAreas = 'normal',
   texts,
 }: GreeceMapProps) {
@@ -175,6 +205,7 @@ export default function GreeceMap({
     prefectures,
     municipalities,
     settlements,
+    loadSettlements,
     geoError,
     locationIndex,
     points: allPoints,
@@ -202,6 +233,7 @@ export default function GreeceMap({
   const [selectedPref, setSelectedPref] = useState<string | null>(null)
   const [selectedMuni, setSelectedMuni] = useState<GeoFeature | null>(null)
   const [selectedPointId, setSelectedPointId] = useState<number | null>(null)
+  const [selectedSettlementId, setSelectedSettlementId] = useState<number | null>(null)
   const [cardDismissed, setCardDismissed] = useState(false)
 
   const [hovered, setHovered] = useState<{ kind: string; name: string; meta?: string } | null>(null)
@@ -263,6 +295,7 @@ export default function GreeceMap({
     setDirection(d)
     setAnimKey((k) => k + 1)
     setSelectedPointId(null)
+    setSelectedSettlementId(null)
     setCardDismissed(false)
     setHovered(null)
   }
@@ -323,12 +356,38 @@ export default function GreeceMap({
 
   const handlePointClick = useCallback(
     (point: PlacedPoint) => {
+      setSelectedSettlementId(null)
       setSelectedPointId(point.id)
       setCardDismissed(false)
       onSelect?.({ type: 'point', point })
     },
     [onSelect],
   )
+
+  /* ── οικισμοί: φορτώνονται όταν ανοίγει ένας νομός ── */
+  useEffect(() => {
+    if (level >= 2 && selectedPref) loadSettlements(selectedPref)
+  }, [level, selectedPref, loadSettlements])
+
+  /** Άνοιγμα σε οικισμό («ΝΟΜΟΣ|Δήμος|id»), μία φορά, όταν φορτώσουν τα όρια. */
+  const placeApplied = useRef(false)
+  useEffect(() => {
+    if (placeApplied.current || !startPlace || !prefectures || !municipalities) return
+    placeApplied.current = true
+    const [pref, muni, id] = startPlace.split('|')
+    const feat = municipalities.features.find(
+      (f) => f.properties.prefecture_greek === pref && featureName(f) === muni,
+    )
+    if (!feat) return
+    const region =
+      prefectures.features.find((f) => featureName(f) === pref)?.properties.periphery_greek ?? null
+    setProjConfig(calcProjection([feat], 1.3))
+    setSelectedRegion(region)
+    setSelectedPref(pref)
+    setSelectedMuni(feat)
+    setLevel(3)
+    setSelectedSettlementId(Number(id) || null)
+  }, [startPlace, prefectures, municipalities])
 
   const goTo = useCallback(
     (index: number) => {
@@ -393,8 +452,50 @@ export default function GreeceMap({
     return [...m.entries()]
   }, [areaPoints])
 
-  const visibleSettlements =
-    level === 3 && selectedMuni ? (settlements[featureName(selectedMuni)] ?? []) : []
+  /** Οικισμοί που φαίνονται: στον νομό οι πόλεις και κωμοπόλεις, στον δήμο όλοι. */
+  const visibleSettlements: (Settlement & { muni: string })[] = useMemo(() => {
+    const prefData = selectedPref ? settlements[selectedPref] : undefined
+    if (!prefData) return []
+    if (level === 3 && selectedMuni) {
+      const muni = featureName(selectedMuni)
+      return (prefData[muni] ?? []).map((s) => ({ ...s, muni }))
+    }
+    if (level === 2) {
+      return Object.entries(prefData).flatMap(([muni, list]) =>
+        list.filter((s) => s.t === 'c' || s.t === 't').map((s) => ({ ...s, muni })),
+      )
+    }
+    return []
+  }, [level, selectedPref, selectedMuni, settlements])
+
+  /** Ποιοι οικισμοί έχουν ετικέτα με το όνομα (ώστε ο χάρτης να μη γεμίζει γράμματα). */
+  const settlementLabel = useMemo(() => {
+    const villages = visibleSettlements.filter((s) => s.t === 'v').length
+    const towns = visibleSettlements.filter((s) => s.t === 't').length
+    return (s: Settlement) =>
+      !!locationIndex.settlement(s.i) ||
+      s.t === 'c' ||
+      (s.t === 't' && (level === 3 || towns <= 14)) ||
+      (s.t === 'v' && villages <= 25)
+  }, [visibleSettlements, level, locationIndex])
+
+  const selectedSettlement = visibleSettlements.find((s) => s.i === selectedSettlementId) ?? null
+
+  const handleSettlementClick = useCallback(
+    (s: Settlement & { muni: string }) => {
+      setSelectedPointId(null)
+      setSelectedSettlementId(s.i)
+      setCardDismissed(false)
+      onSelect?.({
+        type: 'settlement',
+        settlement: s,
+        prefecture: selectedPref ?? '',
+        municipality: s.muni,
+        location: locationIndex.settlement(s.i) ?? null,
+      })
+    },
+    [onSelect, selectedPref, locationIndex],
+  )
 
   const selectedPoint = visiblePoints.find((p) => p.id === selectedPointId) ?? null
 
@@ -411,6 +512,35 @@ export default function GreeceMap({
   /* ── info card ── */
   const card: InfoCardData | null = (() => {
     if (cardDismissed) return null
+    if (selectedSettlement) {
+      const s = selectedSettlement
+      const loc = locationIndex.settlement(s.i) ?? null
+      const muniLoc2 =
+        selectedPref && locationIndex.municipality(selectedPref, s.muni)
+      const near = points
+        .map((p) => ({ p, d: distanceKm(s.y, s.x, p.lat, p.lng) }))
+        .filter(({ d }) => d <= 5)
+        .sort((a, b) => a.d - b.d)
+        .slice(0, 4)
+        .map(({ p }) => p.title)
+      return {
+        key: `settlement-${s.i}`,
+        eyebrow: SETTLEMENT_LABEL[s.t],
+        title: loc?.title || s.n,
+        description:
+          loc?.description || (near.length ? `Κοντά: ${near.join(', ')}` : undefined),
+        meta:
+          [
+            `Δήμος ${muniLoc2 ? muniLoc2.title.replace(/^Δήμος\s+/, '') : prettifyName(s.muni)}`,
+            s.p ? `≈ ${fmtPop(s.p)} κάτοικοι` : '',
+          ]
+            .filter(Boolean)
+            .join(' · '),
+        image: loc?.image ?? null,
+        link: loc?.link,
+        linkLabel: 'Ο οδηγός του τόπου',
+      }
+    }
     if (selectedPoint) {
       const muniName = selectedMuni ? breadcrumbs[3] : null
       return {
@@ -655,17 +785,76 @@ export default function GreeceMap({
                     }
                   </Geographies>
 
-                  {/* settlements (προαιρετικά, μόνο σε επίπεδο δήμου) */}
-                  {visibleSettlements.map((s, i) => (
-                    <Marker
-                      key={`s-${i}`}
-                      coordinates={[s.lon, s.lat]}
-                      onMouseEnter={() => setHovered({ kind: 'Οικισμός', name: s.n })}
-                      onMouseLeave={() => setHovered(null)}
-                    >
-                      <circle r={settlementR} fill="rgba(255,255,255,0.35)" />
-                    </Marker>
-                  ))}
+                  {/* οικισμοί: στον νομό πόλεις/κωμοπόλεις, στον δήμο όλοι */}
+                  {visibleSettlements.map((s) => {
+                    const r = settlementR * SETTLEMENT_SIZE[s.t]
+                    const hasPage = !!locationIndex.settlement(s.i)
+                    const active = s.i === selectedSettlementId
+                    const name = locationIndex.settlement(s.i)?.title || s.n
+                    return (
+                      <Marker
+                        key={`s-${s.i}`}
+                        coordinates={[s.x, s.y]}
+                        onMouseEnter={() =>
+                          setHovered({
+                            kind: SETTLEMENT_LABEL[s.t],
+                            name,
+                            meta: s.p ? `≈ ${fmtPop(s.p)} κάτοικοι` : undefined,
+                          })
+                        }
+                        onMouseLeave={() => setHovered(null)}
+                        onClick={() => handleSettlementClick(s)}
+                        style={{
+                          default: { cursor: 'pointer' },
+                          hover: { cursor: 'pointer' },
+                          pressed: { cursor: 'pointer' },
+                        }}
+                      >
+                        {/* μεγαλύτερη αόρατη περιοχή για εύκολο κλικ */}
+                        <circle r={Math.max(r * 2.2, 4)} fill="transparent" />
+                        {active && <circle r={r * 2.6} fill={accent(0.2)} stroke={ACCENT} strokeWidth={0.6} />}
+                        <circle
+                          r={r}
+                          fill={
+                            hasPage || active
+                              ? ACCENT
+                              : s.t === 'c' || s.t === 't'
+                                ? 'rgba(255,255,255,0.85)'
+                                : s.t === 'v'
+                                  ? 'rgba(255,255,255,0.5)'
+                                  : 'rgba(255,255,255,0.3)'
+                          }
+                          stroke={BG}
+                          strokeWidth={s.t === 'h' ? 0 : r * 0.35}
+                        />
+                        {(settlementLabel(s) || active) && (
+                          <text
+                            textAnchor="start"
+                            x={r + 2.5}
+                            y={labelSize * 0.35}
+                            style={{
+                              fontFamily: 'inherit',
+                              fontSize:
+                                s.t === 'c' ? labelSize * 1.15 : s.t === 't' ? labelSize : labelSize * 0.85,
+                              fontWeight: s.t === 'c' || hasPage ? 800 : 600,
+                              fill: hasPage
+                                ? ACCENT
+                                : s.t === 'v'
+                                  ? 'rgba(255,255,255,0.55)'
+                                  : 'rgba(255,255,255,0.8)',
+                              pointerEvents: 'none',
+                              userSelect: 'none',
+                              paintOrder: 'stroke',
+                              stroke: BG,
+                              strokeWidth: 2,
+                            }}
+                          >
+                            {name}
+                          </text>
+                        )}
+                      </Marker>
+                    )
+                  })}
 
                   {/* τοπικά σημεία από το WordPress */}
                   {visiblePoints.map((p, i) => {
