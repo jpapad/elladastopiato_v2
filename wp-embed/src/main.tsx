@@ -241,10 +241,40 @@ export function unmount(el: HTMLElement) {
   el.removeAttribute('data-ellada-map-mounted')
 }
 
+/*
+ * Ο χάρτης κατεβάζει ~1 MB γεωγραφικά δεδομένα. Όταν βρίσκεται πιο κάτω στη σελίδα (π.χ. στην αρχική),
+ * ξεκινά μόνο όταν ο επισκέπτης πλησιάσει με το scroll, ώστε η πρώτη οθόνη να φορτώνει γρήγορα.
+ * Με data-eager="true" ξεκινά αμέσως.
+ */
+const waiting = new WeakSet<HTMLElement>()
+const lazyObserver =
+  typeof window !== 'undefined' && 'IntersectionObserver' in window
+    ? new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (!e.isIntersecting) continue
+            const el = e.target as HTMLElement
+            lazyObserver?.unobserve(el)
+            waiting.delete(el)
+            if (el.isConnected) mount(el)
+          }
+        },
+        { rootMargin: '800px 0px' },
+      )
+    : null
+
 export function mountAll(scope: ParentNode = document) {
   scope
     .querySelectorAll<HTMLElement>(`${SELECTOR}:not([data-ellada-map-mounted])`)
-    .forEach((el) => mount(el))
+    .forEach((el) => {
+      if (!lazyObserver || el.dataset.eager === 'true') {
+        mount(el)
+        return
+      }
+      if (waiting.has(el)) return
+      waiting.add(el)
+      lazyObserver.observe(el)
+    })
 }
 
 /* ── auto-init ── */
