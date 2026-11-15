@@ -38,7 +38,7 @@ export async function fetchPlaces() {
   const places = []
   for (const e of elements) {
     const t = e.tags || {}
-    const n = (t['name:el'] || t.name || '').trim()
+    const n = cleanName(t['name:el'] || t.name || '')
     if (!n) continue
     const pop = String(t.population || '').replace(/[.\s]/g, '')
     places.push({
@@ -63,6 +63,14 @@ export async function fetchPlaces() {
   return out
 }
 
+/** Διορθώσεις ονομάτων του OSM: γενική πτώση, σημειώσεις σε παρένθεση. Τα ερείπια δεν είναι οικισμοί. */
+const NAME_FIX = { 'Χώρας Σφακίων': 'Χώρα Σφακίων', 'Φίλιπποι - (Καβάλας)': 'Φίλιπποι' }
+function cleanName(raw) {
+  const n = String(raw).trim()
+  if (/\(ερείπια\)/.test(n)) return ''
+  return NAME_FIX[n] || n
+}
+
 const km2 = (f) => Math.round(geoArea(f) * EARTH_R_KM * EARTH_R_KM)
 
 /** geo = { regions, prefectures, municipalities } (ήδη ελαφριά και με σωστό winding). */
@@ -83,6 +91,8 @@ export function buildPlaces(geo, geoOut, log = console.log) {
   const rows = []
   let lost = 0
   for (const p of src.places) {
+    p.n = cleanName(p.n)
+    if (!p.n) continue
     const c = [p.lon, p.lat]
     const near = munis.filter(
       ({ bbox: [[x0, y0], [x1, y1]] }) =>

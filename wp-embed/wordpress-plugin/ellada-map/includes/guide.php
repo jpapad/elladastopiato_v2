@@ -441,9 +441,22 @@ function ellada_guide_children_html( $id, $c ) {
 			}
 		}
 		$types = ellada_guide_place_types();
+		// Πόλεις, κωμοπόλεις και σελίδες οικισμών· αν είναι λίγες, συμπληρώνουν τα μεγαλύτερα χωριά (η λίστα είναι ήδη ταξινομημένη).
+		$main = 0;
 		foreach ( $all as $r ) {
-			$page = ellada_guide_page( 'settlement', $r[0] );
-			if ( $page || in_array( $r[3], array( 'c', 't' ), true ) ) {
+			if ( in_array( $r[3], array( 'c', 't' ), true ) || ellada_guide_page( 'settlement', $r[0] ) ) {
+				++$main;
+			}
+		}
+		$fill = max( 0, 6 - $main );
+		foreach ( $all as $r ) {
+			$page  = ellada_guide_page( 'settlement', $r[0] );
+			$major = $page || in_array( $r[3], array( 'c', 't' ), true );
+			if ( ! $major && $fill > 0 ) {
+				$major = true;
+				--$fill;
+			}
+			if ( $major ) {
 				$items[] = array( $r[1], $page ? get_permalink( $page ) : ellada_guide_map_url( $r[7], $r[6], $r[0] ), $types[ $r[3] ] . ( $r[4] ? ' · ≈ ' . ellada_guide_num( $r[4] ) . ' κάτοικοι' : '' ) );
 			}
 		}
