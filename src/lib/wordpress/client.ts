@@ -233,6 +233,7 @@ export function mapLocation(raw: WpLocationRaw): MapLocation {
     geoName,
     geoPrefecture,
     geoSettlement,
+    thin: !!raw.ellada_thin,
     description: acf.short_description?.trim() ?? '',
     image: toImage(acf.cover_image),
     localProducts: acf.local_products?.trim() ?? '',
@@ -283,7 +284,7 @@ export function mapLocalPoint(raw: WpLocalPointRaw): LocalPoint | null {
 
 /* ══════════════ public API ══════════════ */
 
-const LOCATION_FIELDS = 'id,slug,link,parent,title,acf'
+const LOCATION_FIELDS = 'id,slug,link,parent,title,acf,ellada_thin'
 const POINT_FIELDS = 'id,slug,link,title,acf'
 
 /**

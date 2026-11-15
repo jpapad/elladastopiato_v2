@@ -47,6 +47,8 @@ export type WpLocationRaw = {
   parent?: number
   title: WpRendered
   acf?: WpLocationAcf | [] // το ACF επιστρέφει [] όταν δεν υπάρχουν πεδία
+  /** Σελίδα του οδηγού χωρίς δικό της κείμενο ακόμα (plugin ellada-map). */
+  ellada_thin?: boolean
 }
 
 export type WpLocalPointAcf = {
@@ -84,6 +86,8 @@ export type MapLocation = {
   geoPrefecture: string | null
   /** Μόνο για πόλεις / χωριά: το id του οικισμού (OpenStreetMap). */
   geoSettlement: number | null
+  /** Η σελίδα δεν έχει ακόμα δικό της κείμενο: ο χάρτης δεν την «ανάβει». */
+  thin: boolean
   description: string
   image: MapImage | null
   localProducts: string

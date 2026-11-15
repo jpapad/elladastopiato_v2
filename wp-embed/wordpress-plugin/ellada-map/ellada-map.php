@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Ελλάδα στο Πιάτο — Διαδραστικός Χάρτης
  * Description:       Διαδραστικός χάρτης (Περιφέρειες → Νομοί → Δήμοι → Τοπικά Σημεία) με δεδομένα από το WordPress REST API και ACF Pro. Widget Elementor «Χάρτης Ελλάδας», shortcode [ellada_map] και ρυθμίσεις στο Ρυθμίσεις → Χάρτης Ελλάδας.
- * Version:           1.10.0
+ * Version:           1.11.0
  * Requires at least: 6.3
  * Requires PHP:      7.4
  * Author:            Ελλάδα στο Πιάτο
@@ -12,7 +12,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'ELLADA_MAP_VERSION', '1.10.0' );
+define( 'ELLADA_MAP_VERSION', '1.11.0' );
 define( 'ELLADA_MAP_FILE', __FILE__ );
 define( 'ELLADA_MAP_DIR', plugin_dir_path( __FILE__ ) );
 define( 'ELLADA_MAP_OPTION', 'ellada_map_settings' );
@@ -27,6 +27,7 @@ require_once ELLADA_MAP_DIR . 'includes/hardening.php';
 require_once ELLADA_MAP_DIR . 'includes/home.php';
 require_once ELLADA_MAP_DIR . 'includes/recipe-tools.php';
 require_once ELLADA_MAP_DIR . 'includes/season.php';
+require_once ELLADA_MAP_DIR . 'includes/guide.php';
 
 /* ═════════════════════ Ρυθμίσεις ═════════════════════ */
 
@@ -39,6 +40,10 @@ function ellada_map_point_types() {
 		'market'     => 'Αγορά',
 		'festival'   => 'Γιορτή / Φεστιβάλ',
 		'sight'      => 'Αξιοθέατο',
+		'beach'      => 'Παραλία',
+		'museum'     => 'Μουσείο',
+		'winery'     => 'Οινοποιείο',
+		'trail'      => 'Μονοπάτι / Φύση',
 		'other'      => 'Άλλο',
 	);
 	if ( function_exists( 'acf_get_field' ) ) {
@@ -59,6 +64,10 @@ function ellada_map_suggested_type_colors() {
 		'market'     => '#3b82f6',
 		'festival'   => '#a855f7',
 		'sight'      => '#14b8a6',
+		'beach'      => '#06b6d4',
+		'museum'     => '#eab308',
+		'winery'     => '#be123c',
+		'trail'      => '#65a30d',
 		'other'      => '#9ca3af',
 	);
 }
@@ -178,6 +187,11 @@ function ellada_map_render( array $args = array() ) {
 
 	$settlements = ellada_map_bool_arg( $args, 'settlements' );
 	$settlements = null === $settlements ? (bool) $s['settlements'] : $settlements;
+	// Με ενεργό τον ταξιδιωτικό οδηγό, οι πόλεις και τα χωριά φαίνονται πάντα.
+	if ( function_exists( 'ellada_feature' ) && ellada_feature( 'guide' ) ) {
+		$settlements = true;
+	}
+	$start_place = isset( $args['start_place'] ) ? sanitize_text_field( (string) $args['start_place'] ) : '';
 	$legend      = ellada_map_bool_arg( $args, 'legend' );
 	$legend      = null === $legend ? (bool) $s['legend'] : $legend;
 
@@ -235,6 +249,7 @@ function ellada_map_render( array $args = array() ) {
 		'data-type-colors'        => $type_colors ? wp_json_encode( $type_colors ) : '',
 		'data-types'              => implode( ',', $types ),
 		'data-start-region'       => $start_region,
+		'data-start-place'        => $start_place,
 		'data-empty-areas'        => 'normal' !== $empty_areas ? $empty_areas : '',
 		'data-texts'              => $texts ? wp_json_encode( $texts, JSON_UNESCAPED_UNICODE ) : '',
 		'data-locations-endpoint' => sanitize_title( isset( $args['locations'] ) ? $args['locations'] : '' ),

@@ -354,12 +354,15 @@ add_shortcode(
 			return ellada_map_render( array() );
 		}
 		$area = ellada_location_area( $id );
-		return ellada_map_render(
-			array(
-				'start_region' => $area['region'],
-				'height'       => isset( $atts['height'] ) ? $atts['height'] : '',
-			)
+		$args = array(
+			'start_region' => $area['region'],
+			'height'       => isset( $atts['height'] ) ? $atts['height'] : '',
 		);
+		// Δήμος ή χωριό: ο χάρτης ανοίγει κατευθείαν εκεί.
+		if ( function_exists( 'ellada_feature' ) && ellada_feature( 'guide' ) && $area['municipality'] && false !== strpos( $area['municipality'], '|' ) ) {
+			$args['start_place'] = $area['municipality'] . '|' . ( $area['settlement'] ?? '' );
+		}
+		return ellada_map_render( $args );
 	}
 );
 

@@ -173,7 +173,8 @@
         "choices": {
           "region": "Περιφέρεια",
           "prefecture": "Νομός",
-          "municipality": "Δήμος"
+          "municipality": "Δήμος",
+          "settlement": "Πόλη / Χωριό"
         },
         "default_value": "region",
         "return_format": "value",
@@ -958,6 +959,10 @@
           "market": "Αγορά",
           "festival": "Γιορτή / Πανηγύρι",
           "sight": "Αξιοθέατο",
+          "beach": "Παραλία",
+          "museum": "Μουσείο",
+          "winery": "Οινοποιείο",
+          "trail": "Μονοπάτι / Φύση",
           "other": "Άλλο"
         },
         "default_value": "other",

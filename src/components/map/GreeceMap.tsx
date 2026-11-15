@@ -713,7 +713,8 @@ export default function GreeceMap({
                         const name = displayName(level, geo)
                         const count = clickableLevel ? featureCount(level, geo) : 0
                         const hasContent =
-                          clickableLevel && (count > 0 || !!featureLocation(level, geo))
+                          clickableLevel &&
+                          (count > 0 || !!(featureLocation(level, geo) && !featureLocation(level, geo)!.thin))
                         // Μόνο όταν έχει φορτώσει το περιεχόμενο, αλλιώς όλα θα φαίνονταν «άδεια».
                         const empty =
                           emptyAreas !== 'normal' &&

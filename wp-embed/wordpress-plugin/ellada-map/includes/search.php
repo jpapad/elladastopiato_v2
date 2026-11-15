@@ -180,11 +180,22 @@ function ellada_search_suggest( $query ) {
 		$n             = count( array_filter( (array) get_post_meta( $id, 'recipes', true ) ) );
 		$collections[] = $item( $id, $n ? ellada_search_count_label( $n ) : 'Συλλογή', (string) get_the_post_thumbnail_url( $id, 'thumbnail' ) );
 	}
+	// Πόλεις και χωριά (ταξιδιωτικός οδηγός), όσα δεν είναι ήδη στις «Περιοχές».
+	$places = array();
+	if ( function_exists( 'ellada_feature' ) && ellada_feature( 'guide' ) ) {
+		$seen = wp_list_pluck( $areas, 'url' );
+		foreach ( ellada_guide_search_places( $query, 6 ) as $pl ) {
+			if ( ! in_array( $pl['url'], $seen, true ) && count( $places ) < 5 ) {
+				$places[] = $pl;
+			}
+		}
+	}
 	return array(
 		'query'       => (string) $query,
-		'total'       => count( $ids['ellada_recipe'] ) + count( $ids['ellada_location'] ) + count( $ids['ellada_collection'] ),
+		'total'       => count( $ids['ellada_recipe'] ) + count( $ids['ellada_location'] ) + count( $ids['ellada_collection'] ) + count( $places ),
 		'recipes'     => $recipes,
 		'areas'       => $areas,
+		'places'      => $places,
 		'collections' => $collections,
 		'all_url'     => add_query_arg( 's', rawurlencode( (string) $query ), home_url( '/' ) ),
 	);
@@ -297,7 +308,7 @@ function ellada_search_overlay() {
 					<input id="ellada-search-input" class="ellada-search__input" type="search" name="s" placeholder="Τι θέλετε να μαγειρέψετε;" autocomplete="off" spellcheck="false" enterkeyhint="search">
 				</div>
 			</form>
-			<p class="ellada-search__hint">Γράψτε μια συνταγή, ένα υλικό στον τίτλο ή μια περιοχή. Π.χ. <button type="button" data-ellada-search-try>ντάκος</button> <button type="button" data-ellada-search-try>Κρήτη</button> <button type="button" data-ellada-search-try>μακαρόνια</button></p>
+			<p class="ellada-search__hint">Γράψτε μια συνταγή, ένα υλικό στον τίτλο, μια περιοχή ή ένα χωριό. Π.χ. <button type="button" data-ellada-search-try>ντάκος</button> <button type="button" data-ellada-search-try>Κρήτη</button> <button type="button" data-ellada-search-try>μακαρόνια</button></p>
 			<div class="ellada-search__results" aria-live="polite"></div>
 		</div>
 	</div>
@@ -314,8 +325,9 @@ add_shortcode(
 		if ( '' === $query && isset( $_GET['q'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- απλή ανάγνωση για προεπισκόπηση
 			$query = sanitize_text_field( wp_unslash( $_GET['q'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		}
-		$ids   = ellada_search_ids( $query );
-		$total = count( $ids['ellada_recipe'] ) + count( $ids['ellada_location'] ) + count( $ids['ellada_collection'] );
+		$ids    = ellada_search_ids( $query );
+		$places = ( function_exists( 'ellada_feature' ) && ellada_feature( 'guide' ) ) ? ellada_guide_search_places( $query, 12 ) : array();
+		$total  = count( $ids['ellada_recipe'] ) + count( $ids['ellada_location'] ) + count( $ids['ellada_collection'] ) + count( $places );
 
 		ob_start();
 		?>
@@ -347,6 +359,18 @@ add_shortcode(
 				);
 			}
 			echo '</div></div>';
+		}
+		if ( $places ) {
+			echo '<div class="ellada-block"><h2 class="ellada-h">Πόλεις και χωριά</h2><ul class="ellada-gchildren">';
+			foreach ( $places as $pl ) {
+				printf(
+					'<li><a href="%s"><span class="ellada-gchildren__name">%s</span><span class="ellada-gchildren__meta">%s</span><span class="ellada-gchildren__arrow" aria-hidden="true">→</span></a></li>',
+					esc_url( $pl['url'] ),
+					esc_html( $pl['title'] ),
+					esc_html( $pl['meta'] )
+				);
+			}
+			echo '</ul></div>';
 		}
 		foreach ( array( 'ellada_recipe' => array( 'Συνταγές', 'ellada_recipe_card' ), 'ellada_collection' => array( 'Συλλογές', 'ellada_collection_card' ) ) as $type => $conf ) {
 			if ( ! $ids[ $type ] ) {

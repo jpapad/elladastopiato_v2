@@ -59,11 +59,13 @@
 			out.innerHTML = '<p class="ellada-search__empty">Δεν βρέθηκε κάτι για «' + esc(data.query) + '». Δοκιμάστε μια άλλη λέξη.</p>';
 			return;
 		}
-		var shown = data.recipes.length + data.areas.length + data.collections.length;
+		var places = data.places || [];
+		var shown = data.recipes.length + data.areas.length + data.collections.length + places.length;
 		out.innerHTML =
 			'<div class="ellada-search__groups">' +
 			group('Συνταγές', data.recipes, true) +
 			group('Περιοχές', data.areas, false) +
+			group('Πόλεις και χωριά', places, false) +
 			group('Συλλογές', data.collections, true) +
 			'</div>' +
 			'<a class="ellada-search__all" href="' + esc(data.all_url) + '">' +

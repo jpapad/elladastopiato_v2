@@ -34,6 +34,19 @@ function ellada_location_area( $location_id ) {
 	}
 	if ( 'municipality' === $level ) {
 		$area['municipality'] = (string) get_post_meta( $location_id, 'geo_municipality', true );
+		// Ο δήμος αποθηκεύεται ως «ΝΟΜΟΣ|Δήμος»· από εκεί προκύπτει και ο νομός.
+		if ( '' === $area['prefecture'] && false !== strpos( $area['municipality'], '|' ) ) {
+			$area['prefecture'] = strstr( $area['municipality'], '|', true );
+		}
+	}
+	if ( 'settlement' === $level ) {
+		// Πόλη / χωριό: «ΝΟΜΟΣ|Δήμος|id». Για τις λίστες μετράει ο δήμος του.
+		$parts = explode( '|', (string) get_post_meta( $location_id, 'geo_settlement', true ) );
+		if ( count( $parts ) >= 3 ) {
+			$area['prefecture']   = $parts[0];
+			$area['municipality'] = $parts[0] . '|' . $parts[1];
+			$area['settlement']   = (int) $parts[2];
+		}
 	}
 	// Ο νομός ορίζει μονοσήμαντα την περιφέρεια, αν λείπει.
 	if ( '' === $area['region'] && $area['prefecture'] ) {
@@ -129,7 +142,7 @@ function ellada_area_meta_changed( $meta_id, $post_id, $meta_key ) {
 		ellada_sync_recipe_area( $post_id );
 	} elseif ( 'ellada_point' === $type && in_array( $meta_key, array( 'lat', 'lng' ), true ) ) {
 		ellada_sync_point_area( $post_id );
-	} elseif ( 'ellada_location' === $type && in_array( $meta_key, array( 'map_level', 'geo_region', 'geo_prefecture', 'geo_municipality' ), true ) ) {
+	} elseif ( 'ellada_location' === $type && in_array( $meta_key, array( 'map_level', 'geo_region', 'geo_prefecture', 'geo_municipality', 'geo_settlement' ), true ) ) {
 		ellada_sync_location_recipes( $post_id );
 	}
 	$running = false;
@@ -173,6 +186,9 @@ function ellada_resync_all_areas() {
 function ellada_area_meta_query( $location_id ) {
 	$area  = ellada_location_area( $location_id );
 	$level = $area['level'] ? $area['level'] : 'region';
+	if ( 'settlement' === $level ) {
+		$level = 'municipality';
+	}
 	$value = $area[ $level ];
 	if ( '' === $value ) {
 		return null;
