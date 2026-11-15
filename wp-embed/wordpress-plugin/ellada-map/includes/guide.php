@@ -536,11 +536,17 @@ add_shortcode(
 
 /* ═════════════════════ Google: σελίδες χωρίς κείμενο ακόμα ═════════════════════ */
 
-/** Μια σελίδα του οδηγού είναι «άδεια» όσο δεν έχει δικό της κείμενο. */
+/** Μια σελίδα του οδηγού είναι «άδεια» όσο δεν έχει δικό της κείμενο ούτε συνταγές. */
 function ellada_guide_is_thin( $id ) {
-	return '' === trim( (string) get_post_meta( $id, 'guide_intro', true ) )
-		&& '' === trim( wp_strip_all_tags( (string) get_post_field( 'post_content', $id ) ) )
-		&& '' === trim( (string) get_post_meta( $id, 'short_description', true ) );
+	foreach ( array( 'guide_intro', 'short_description', 'highlights', 'local_products', 'travel_tips' ) as $k ) {
+		if ( '' !== trim( (string) get_post_meta( $id, $k, true ) ) ) {
+			return false;
+		}
+	}
+	if ( '' !== trim( wp_strip_all_tags( (string) get_post_field( 'post_content', $id ) ) ) ) {
+		return false;
+	}
+	return ! ( function_exists( 'ellada_search_recipe_count' ) && ellada_search_recipe_count( $id ) > 0 );
 }
 
 function ellada_guide_mark_thin( $post_id ) {
@@ -555,11 +561,22 @@ function ellada_guide_mark_thin( $post_id ) {
 }
 add_action( 'save_post_ellada_location', 'ellada_guide_mark_thin', 30 );
 add_action( 'acf/save_post', 'ellada_guide_mark_thin', 30 );
+/* Μια νέα συνταγή «ζωντανεύει» τη σελίδα της περιοχής της. */
+add_action(
+	'save_post_ellada_recipe',
+	function ( $recipe_id ) {
+		$loc = (int) get_post_meta( $recipe_id, 'location', true );
+		if ( $loc ) {
+			ellada_guide_mark_thin( $loc );
+		}
+	},
+	40
+);
 
 add_filter(
 	'wp_robots',
 	function ( $robots ) {
-		if ( is_singular( 'ellada_location' ) && get_post_meta( get_queried_object_id(), '_ellada_thin', true ) ) {
+		if ( ellada_feature( 'guide' ) && is_singular( 'ellada_location' ) && get_post_meta( get_queried_object_id(), '_ellada_thin', true ) ) {
 			$robots['noindex'] = true;
 			$robots['follow']  = true;
 		}
@@ -570,7 +587,7 @@ add_filter(
 add_filter(
 	'wp_sitemaps_posts_query_args',
 	function ( $args, $post_type ) {
-		if ( 'ellada_location' === $post_type ) {
+		if ( 'ellada_location' === $post_type && ellada_feature( 'guide' ) ) {
 			$args['meta_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 				array(
 					'key'     => '_ellada_thin',
