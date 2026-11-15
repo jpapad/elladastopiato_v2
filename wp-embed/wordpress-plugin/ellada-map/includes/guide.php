@@ -257,7 +257,10 @@ add_shortcode(
 			}
 			$dep = implode( ' · ', array_filter( array_keys( $deps ) ) );
 		}
-		$html .= '</ol>' . ( $dep ? '<span class="ellada-crumbs__dep">' . esc_html( $dep ) . '</span>' : '' ) . '</nav>';
+		if ( $dep === $c['region'] ) {
+			$dep = ''; // π.χ. Κρήτη: διαμέρισμα και περιφέρεια ίδια.
+		}
+		$html .= '</ol>' . ( $dep ? '<span class="ellada-crumbs__dep" title="Γεωγραφικό διαμέρισμα">' . esc_html( $dep ) . '</span>' : '' ) . '</nav>';
 		return $html;
 	}
 );
@@ -265,7 +268,7 @@ add_shortcode(
 /* ═════════════════════ Ο οδηγός μιας περιοχής ═════════════════════ */
 
 function ellada_guide_num( $n ) {
-	return number_format_i18n( (int) $n );
+	return number_format( (int) $n, 0, ',', '.' );
 }
 
 /** «Με μια ματιά». */
@@ -418,8 +421,17 @@ function ellada_guide_children_html( $id, $c ) {
 				continue;
 			}
 			$page    = ellada_guide_page( 'municipality', $key );
-			$items[] = array( ellada_guide_prettify( $muni ), $page ? get_permalink( $page ) : ellada_guide_map_url( $pref, $muni ), $a['largest'] ? 'με κέντρο ' . $a['largest'] : '' );
+			$items[] = array( ellada_guide_muni_title( $muni ), $page ? get_permalink( $page ) : ellada_guide_map_url( $pref, $muni ), trim( ( $a['settlements'] ? $a['settlements'] . ( 1 === (int) $a['settlements'] ? ' οικισμός' : ' οικισμοί' ) : '' ) . ( $a['largest'] ? ' · μεγαλύτερος: ' . $a['largest'] : '' ), ' ·' ) );
 		}
+		$plain = function ( $t ) {
+			return strtr( mb_strtolower( $t ), array( 'ά' => 'α', 'έ' => 'ε', 'ή' => 'η', 'ί' => 'ι', 'ϊ' => 'ι', 'ΐ' => 'ι', 'ό' => 'ο', 'ύ' => 'υ', 'ϋ' => 'υ', 'ΰ' => 'υ', 'ώ' => 'ω' ) );
+		};
+		usort(
+			$items,
+			function ( $a, $b ) use ( $plain ) {
+				return strcmp( $plain( $a[0] ), $plain( $b[0] ) );
+			}
+		);
 	} elseif ( 'municipality' === $c['level'] ) {
 		$title = 'Πόλεις και χωριά';
 		$all   = array();
@@ -662,7 +674,7 @@ function ellada_guide_search_places( $query, $limit = 5 ) {
 		$out[] = array(
 			'title' => $r[1],
 			'url'   => $page ? get_permalink( $page ) : ellada_guide_map_url( $r[7], $r[6], $r[0] ),
-			'meta'  => $types[ $r[3] ] . ' · ' . ellada_guide_prettify( $r[6] ) . ', ' . ellada_guide_prefecture_title( $r[7] ),
+			'meta'  => $types[ $r[3] ] . ' · ' . ellada_guide_muni_title( $r[6] ) . ', ' . ellada_guide_prefecture_title( $r[7] ),
 			'img'   => '',
 		);
 	}
