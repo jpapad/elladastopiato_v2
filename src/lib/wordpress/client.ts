@@ -284,7 +284,23 @@ export function mapLocalPoint(raw: WpLocalPointRaw): LocalPoint | null {
 
 /* ══════════════ public API ══════════════ */
 
-const LOCATION_FIELDS = 'id,slug,link,parent,title,acf,ellada_thin'
+/**
+ * Μόνο τα ACF πεδία που χρειάζεται ο χάρτης (nested _fields, WP ≥ 5.3) — χωρίς αυτό
+ * έρχονται και όλα τα κείμενα του οδηγού (guide_intro, why_go, …) και η φόρτωση αργεί.
+ */
+const LOCATION_FIELDS = [
+  'id,slug,link,parent,title,ellada_thin',
+  ...[
+    'map_level',
+    'geo_region',
+    'geo_prefecture',
+    'geo_municipality',
+    'geo_settlement',
+    'short_description',
+    'cover_image',
+    'local_products',
+  ].map((f) => `acf.${f}`),
+].join(',')
 const POINT_FIELDS = 'id,slug,link,title,acf'
 
 /**

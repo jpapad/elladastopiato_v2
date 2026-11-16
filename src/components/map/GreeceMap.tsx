@@ -23,6 +23,8 @@ import {
   filterGeo,
   municipalityKey,
   prettifyName,
+  prefectureLabel,
+  municipalityLabel,
   type GeoFeature,
   type PlacedPoint,
   type ProjConfig,
@@ -262,9 +264,9 @@ export default function GreeceMap({
     (lvl: number, f: GeoFeature) => {
       const name = featureName(f)
       if (lvl === 0) return locationIndex.region(name)?.title || name
-      if (lvl === 1) return locationIndex.prefecture(name)?.title || name
+      if (lvl === 1) return locationIndex.prefecture(name)?.title || prefectureLabel(name)
       return (
-        locationIndex.municipality(f.properties.prefecture_greek, name)?.title || prettifyName(name)
+        locationIndex.municipality(f.properties.prefecture_greek, name)?.title || municipalityLabel(name)
       )
     },
     [locationIndex],
@@ -503,9 +505,9 @@ export default function GreeceMap({
   const breadcrumbs = [
     'Ελλάδα',
     ...(level >= 1 && selectedRegion ? [regionLoc?.title || selectedRegion] : []),
-    ...(level >= 2 && selectedPref ? [prefLoc?.title || selectedPref] : []),
+    ...(level >= 2 && selectedPref ? [prefLoc?.title || prefectureLabel(selectedPref)] : []),
     ...(level >= 3 && selectedMuni
-      ? [muniLoc?.title || prettifyName(featureName(selectedMuni))]
+      ? [muniLoc?.title || municipalityLabel(featureName(selectedMuni))]
       : []),
   ]
 
