@@ -56,7 +56,12 @@
 ## Πρόοδος
 - Κείμενα live: Κρήτη (140), Χανιά 292, Ρέθυμνο 291, Ηράκλειο 289, Λασίθι 290 και οι 24 δήμοι
   της Κρήτης — 32 URLs τοποθεσιών στο sitemap.
-- ellada-map **1.11.10** live (backups έως 1.11.9). **SMTP ενεργό και επιβεβαιωμένο** (τα email φτάνουν στα
+- ellada-map **1.11.12** live (backups έως 1.11.11). 1.11.11–12: `[ellada_contact_aside]` (`includes/contact.php`,
+  κάρτες θεμάτων + email, `?thema=syntagi|topos|lathos|synergasia` επιλέγει το πεδίο `topic` της φόρμας)·
+  απενεργοποιημένο το wp-emoji (φόρτωνε από s.w.org) στο `includes/privacy.php`.
+- Νέα σελίδα Επικοινωνία σε **draft 629** (`epikoinonia-neo`): θέμα, πορτοκαλί κουμπί, κάρτες, χρόνος απάντησης.
+  Μετά την έγκριση: `_elementor_data` του 629 → 137, διαγραφή 629.
+- ellada-map 1.11.10: **SMTP ενεργό και επιβεβαιωμένο** (τα email φτάνουν στα
   εισερχόμενα). 1.11.10: νέος κωδικός ενεργοποιεί αυτόματα το SMTP. 1.11.9: SMTP μέσω smtp.hostinger.com:465 ως info@
   (`includes/mail.php`, σελίδα Ρυθμίσεις → Email του site, option `ellada_smtp`, ή σταθερές ELLADA_SMTP_* στο wp-config).
   Χωρίς SMTP τα email πάνε στα spam (αποστολή από web server ως wordpress@, χωρίς DKIM).

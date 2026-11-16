@@ -143,3 +143,43 @@ register_deactivation_hook(
 		wp_clear_scheduled_hook( ELLADA_SUBMISSIONS_CRON );
 	}
 );
+
+/* ═════════════════════ Emoji του WordPress ═════════════════════
+ * Το wp-emoji φορτώνει εικόνες από s.w.org (τρίτος server) σε συσκευές χωρίς γραμματοσειρά emoji.
+ * Η σελίδα «Απόρρητο» λέει ότι δεν φορτώνουμε τίποτα από τρίτους — και οι σύγχρονες συσκευές
+ * δείχνουν τα emoji μόνες τους. Μένουν τα emoji στο κείμενο, φεύγει μόνο η μετατροπή σε εικόνες.
+ */
+add_action(
+	'init',
+	function () {
+		remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+		remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+		remove_action( 'wp_print_styles', 'print_emoji_styles' );
+		remove_action( 'admin_print_styles', 'print_emoji_styles' );
+		remove_action( 'wp_enqueue_scripts', 'wp_enqueue_emoji_styles' );
+		remove_action( 'admin_enqueue_scripts', 'wp_enqueue_emoji_styles' );
+		remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
+		remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
+		remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
+		add_filter( 'emoji_svg_url', '__return_false' );
+	}
+);
+add_filter(
+	'wp_resource_hints',
+	function ( $urls, $relation ) {
+		if ( 'dns-prefetch' !== $relation ) {
+			return $urls;
+		}
+		return array_values(
+			array_filter(
+				$urls,
+				function ( $u ) {
+					$href = is_array( $u ) ? ( $u['href'] ?? '' ) : (string) $u;
+					return false === strpos( $href, 's.w.org' );
+				}
+			)
+		);
+	},
+	10,
+	2
+);

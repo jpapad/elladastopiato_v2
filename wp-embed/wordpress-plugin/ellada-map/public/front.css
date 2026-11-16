@@ -652,3 +652,42 @@ html body .ellada-footer-legal a:hover, html body .ellada-footer-legal a:focus-v
 html body .elementor-element.ellada-footer-widget { flex: 1 1 560px; width: auto; max-width: 800px; }
 html body .elementor-element.ellada-footer-legal-widget { margin-left: auto; width: auto; }
 @media (max-width: 1024px) { html body .elementor-element.ellada-footer-legal-widget { margin-left: 0; flex-basis: 100%; } }
+
+/* ═════════════════════ Επικοινωνία ([ellada_contact_aside] + φόρμα .ellada-contact-form) ═════════════════════ */
+html body .ellada-contact { font-family: "Commissioner", sans-serif; }
+html body .ellada-contact__mail { margin: 0 0 32px; font-size: 17px; line-height: 1.5; color: var(--ellada-muted); }
+html body .ellada-contact__mail a { color: var(--ellada-ink); font-weight: 700; text-decoration: underline; text-decoration-color: var(--ellada-accent); text-underline-offset: 3px; }
+html body .ellada-contact__mail a:hover { color: var(--ellada-accent-deep); }
+html body .ellada-contact__title {
+	margin: 0 0 14px; font-family: "Commissioner", sans-serif; font-size: 12px; font-weight: 700; line-height: 1.2;
+	letter-spacing: .14em; text-transform: uppercase; color: var(--ellada-muted);
+}
+html body .ellada-contact__cards { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+html body .ellada-contact__card {
+	display: grid; grid-template-columns: auto 1fr; column-gap: 12px; row-gap: 4px; height: 100%; box-sizing: border-box;
+	padding: 16px 18px; border: 1px solid var(--ellada-line); border-radius: 14px; background: var(--ellada-surface);
+	color: var(--ellada-ink); text-decoration: none; transition: border-color .15s, box-shadow .15s, transform .15s;
+}
+html body .ellada-contact__card:hover, html body .ellada-contact__card:focus-visible {
+	border-color: var(--ellada-accent); box-shadow: 0 6px 18px rgba(21, 19, 17, .08); transform: translateY(-1px);
+}
+html body .ellada-contact__card.is-active { border-color: var(--ellada-accent); box-shadow: inset 0 0 0 1px var(--ellada-accent); }
+html body .ellada-contact__icon { grid-row: span 2; display: flex; color: var(--ellada-accent); line-height: 0; padding-top: 1px; }
+html body .ellada-contact__icon svg { display: block; }
+html body .ellada-contact__name { font-size: 15px; font-weight: 700; line-height: 1.3; color: var(--ellada-ink); }
+html body .ellada-contact__text { font-size: 14px; line-height: 1.45; color: var(--ellada-muted); }
+@media (max-width: 600px) {
+	html body .ellada-contact__mail { margin-bottom: 24px; }
+	html body .ellada-contact__cards { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+	html body .ellada-contact__card { padding: 12px 14px; }
+	html body .ellada-contact__text { display: none; }
+	html body .ellada-contact__icon { grid-row: auto; padding-top: 0; }
+}
+/* Φόρμα */
+html body .ellada-contact-form .elementor-field-type-acceptance .elementor-field-option { display: flex; align-items: flex-start; gap: 10px; }
+html body .ellada-contact-form .elementor-field-type-acceptance input[type="checkbox"] {
+	flex: 0 0 auto; width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--ellada-accent); cursor: pointer;
+}
+html body .ellada-contact-form .elementor-field-type-acceptance label { font-size: 14px; line-height: 1.5; color: var(--ellada-muted); }
+html body .ellada-contact-form .elementor-field-type-acceptance label a { color: var(--ellada-ink); text-decoration: underline; }
+html body .ellada-contact-form .ellada-contact-note { margin: 0; font-size: 13px; line-height: 1.4; color: var(--ellada-muted); }
