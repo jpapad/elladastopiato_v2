@@ -56,7 +56,10 @@
 ## Πρόοδος
 - Κείμενα live: Κρήτη (140), Χανιά 292, Ρέθυμνο 291, Ηράκλειο 289, Λασίθι 290 και οι 24 δήμοι
   της Κρήτης — 32 URLs τοποθεσιών στο sitemap.
-- ellada-map **1.11.8** live (backups έως 1.11.7). 1.11.8: μηνύματα φόρμας (Elementor `wp_e_submissions`)
+- ellada-map **1.11.9** live (backups έως 1.11.8). 1.11.9: SMTP μέσω smtp.hostinger.com:465 ως info@
+  (`includes/mail.php`, σελίδα Ρυθμίσεις → Email του site, option `ellada_smtp`, ή σταθερές ELLADA_SMTP_* στο wp-config).
+  Χωρίς SMTP τα email πάνε στα spam (αποστολή από web server ως wordpress@, χωρίς DKIM).
+- ellada-map 1.11.8: 1.11.8: μηνύματα φόρμας (Elementor `wp_e_submissions`)
   χωρίς IP/user agent και διαγραφή μετά από 12 μήνες — cron `ellada_submissions_cleanup` (daily, `includes/privacy.php`). 1.11.4–1.11.6: shortcodes footer
   `[ellada_footer_links]`, `[ellada_footer_legal]` (`includes/footer.php`) — editors βλέπουν και drafts.
 - **Footer live** = Elementor template **624** (`include/general`). Το παλιό **71** είναι χωρίς conditions
@@ -72,7 +75,8 @@
 - Χριστουγεννιάτικη συλλογή 197 χρειάζεται συνταγές.
 - Συνταγές 141, 142 χρειάζονται φωτογραφίες.
 - Αργότερα: σελίδες οικισμών, διαδρομές, πανηγύρια, αγγλική έκδοση.
-- Δοκιμαστικό μήνυμα στη φόρμα επικοινωνίας — έλεγχος ότι το mailbox info@ λαμβάνει.
+- Ο χρήστης βάζει κωδικό info@ στο Ρυθμίσεις → Email του site → δοκιμή. Μετά: σβήσε το δοκιμαστικό
+  submission (id 3, «Δοκιμή Claude») από `wp_e_submissions`.
 - Social links στο footer όταν ο χρήστης δώσει λογαριασμούς.
 - Σε αναμονή: Search Console, Reach/newsletter.
 
