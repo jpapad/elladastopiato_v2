@@ -56,7 +56,12 @@
 ## Πρόοδος
 - Κείμενα live: Κρήτη (140), Χανιά 292, Ρέθυμνο 291, Ηράκλειο 289, Λασίθι 290 και οι 24 δήμοι
   της Κρήτης — 32 URLs τοποθεσιών στο sitemap.
-- ellada-map **1.11.12** live (backups έως 1.11.11). 1.11.11–12: `[ellada_contact_aside]` (`includes/contact.php`,
+- ellada-map **1.12.0** live (backups έως 1.11.12). 1.12.0: σελίδα Συνταγές — `includes/recipes-archive.php`:
+  `[ellada_archive_intro]`, `[ellada_recipe_filters]` (κατηγορία + `?perioxi=` `?diatrofi=` `?xronos=30|60`, noindex όταν
+  φιλτράρεται), `[ellada_recipe_discover min=12]`, meta `_ellada_total_time`. Κάρτες: σήμα διατροφής, δυσκολία,
+  placeholder με το πιατάκι (`public/plate-mark.svg`). Προεπισκόπηση template: `?ellada_tpl=<id>` για editors
+  (το template δημοσιευμένο **χωρίς conditions** + meta `_ellada_preview_of`). Draft αρχείου συνταγών = **630** (→ 122).
+- ellada-map 1.11.12: 1.11.11–12: `[ellada_contact_aside]` (`includes/contact.php`,
   κάρτες θεμάτων + email, `?thema=syntagi|topos|lathos|synergasia` επιλέγει το πεδίο `topic` της φόρμας)·
   απενεργοποιημένο το wp-emoji (φόρτωνε από s.w.org) στο `includes/privacy.php`.
 - **Νέα σελίδα Επικοινωνία live** (137): θέμα (`topic`, μπαίνει στο subject του email), πορτοκαλί κουμπί,

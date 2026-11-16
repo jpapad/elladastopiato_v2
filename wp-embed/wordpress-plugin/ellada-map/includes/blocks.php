@@ -374,11 +374,19 @@ function ellada_recipe_card( $post_id ) {
 	$cat   = is_array( $cats ) && $cats ? $cats[0]->name : '';
 	$total = (int) get_post_meta( $post_id, 'prep_time', true ) + (int) get_post_meta( $post_id, 'cook_time', true );
 	$loc   = (int) get_post_meta( $post_id, 'location', true );
-	$meta  = array_filter( array( ellada_minutes( $total ), $loc ? get_the_title( $loc ) : '' ) );
+	$diffs = array( 'easy' => 'Εύκολη', 'medium' => 'Μέτρια', 'hard' => 'Απαιτητική' );
+	$diff  = ellada_select_value( get_post_meta( $post_id, 'difficulty', true ) );
+	$meta  = array_filter( array( ellada_minutes( $total ), isset( $diffs[ $diff ] ) ? $diffs[ $diff ] : '', $loc ? get_the_title( $loc ) : '' ) );
+	// Σήμα διατροφής πάνω στη φωτογραφία (π.χ. «Νηστίσιμο»).
+	$diets = get_the_terms( $post_id, 'recipe_diet' );
+	$badge = is_array( $diets ) && $diets ? '<span class="ellada-card__badge">' . esc_html( $diets[0]->name ) . '</span>' : '';
+	// Χωρίς φωτογραφία: το πιατάκι του λογότυπου και η κατηγορία.
+	$ph = '<span class="ellada-card__placeholder" aria-hidden="true"><span class="ellada-card__ph-mark"></span>'
+		. ( $cat ? '<span class="ellada-card__ph-label">' . esc_html( $cat ) . '</span>' : '' ) . '</span>';
 	return sprintf(
 		'<article class="ellada-card"><a href="%1$s" class="ellada-card__link"><div class="ellada-card__media">%2$s</div><div class="ellada-card__body">%3$s<h3 class="ellada-card__title">%4$s</h3>%5$s</div></a></article>',
 		esc_url( get_permalink( $post_id ) ),
-		$img ? $img : '<span class="ellada-card__placeholder" aria-hidden="true"></span>',
+		( $img ? $img : $ph ) . $badge,
 		$cat ? '<p class="ellada-card__eyebrow">' . esc_html( $cat ) . '</p>' : '',
 		esc_html( get_the_title( $post_id ) ),
 		$meta ? '<p class="ellada-card__meta">' . esc_html( implode( ' · ', $meta ) ) . '</p>' : ''

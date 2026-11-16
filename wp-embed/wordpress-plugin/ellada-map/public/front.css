@@ -691,3 +691,65 @@ html body .ellada-contact-form .elementor-field-type-acceptance input[type="chec
 html body .ellada-contact-form .elementor-field-type-acceptance label { font-size: 14px; line-height: 1.5; color: var(--ellada-muted); }
 html body .ellada-contact-form .elementor-field-type-acceptance label a { color: var(--ellada-ink); text-decoration: underline; }
 html body .ellada-contact-form .ellada-contact-note { margin: 0; font-size: 13px; line-height: 1.4; color: var(--ellada-muted); }
+
+/* ═════════════════════ Κάρτες συνταγών: φωτογραφία, placeholder, σήμα διατροφής ═════════════════════ */
+html body .ellada-card__media { position: relative; }
+/* Το Elementor βάζει img { height: auto } — η φωτογραφία πρέπει να γεμίζει όλη την κάρτα. */
+html body .ellada-card__media img.ellada-card__img { width: 100%; height: 100%; max-width: none; object-fit: cover; }
+html body .ellada-card__placeholder {
+	position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+	width: 100%; height: 100%;
+	background:
+		radial-gradient(circle at 1px 1px, rgba(245, 244, 242, .07) 1px, transparent 0) 0 0 / 14px 14px,
+		radial-gradient(120% 90% at 20% 10%, color-mix(in srgb, var(--ellada-accent) 28%, transparent), transparent 60%),
+		var(--ellada-dark);
+}
+html body .ellada-card__ph-mark {
+	width: 34%; max-width: 96px; aspect-ratio: 1; background: url("plate-mark.svg") center / contain no-repeat;
+	opacity: .9; transition: transform .35s ease;
+}
+html body .ellada-card__link:hover .ellada-card__ph-mark { transform: rotate(-8deg) scale(1.04); }
+html body .ellada-card__ph-label {
+	font-family: "Commissioner", sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+	color: rgba(245, 244, 242, .55);
+}
+html body .ellada-card__badge {
+	position: absolute; top: 12px; left: 12px; padding: 5px 10px; border-radius: 999px;
+	background: rgba(255, 255, 255, .94); color: #2F6B2F; font-family: "Commissioner", sans-serif;
+	font-size: 11px; font-weight: 700; letter-spacing: .04em; line-height: 1.2; box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
+}
+
+/* ═════════════════════ Αρχείο συνταγών: εισαγωγή + φίλτρα ═════════════════════ */
+html body .ellada-aintro { max-width: 62ch; margin: 0 0 4px; font-family: "Commissioner", sans-serif; }
+html body .ellada-aintro__text { margin: 0 0 10px; font-size: 18px; line-height: 1.55; color: var(--ellada-muted); }
+html body .ellada-aintro__count {
+	margin: 0; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ellada-accent-deep);
+}
+html body .ellada-rfilters { display: grid; gap: 14px; font-family: "Commissioner", sans-serif; }
+html body .ellada-rfilters__form { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px 12px; margin: 0; }
+html body .ellada-rfilters__field { display: grid; gap: 4px; min-width: 170px; }
+html body .ellada-rfilters__field span {
+	font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ellada-muted);
+}
+html body .ellada-rfilters__field select {
+	appearance: none; -webkit-appearance: none; height: 40px; padding: 0 36px 0 14px; border: 1px solid var(--ellada-line);
+	border-radius: 999px; background: var(--ellada-surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5l5-5' fill='none' stroke='%23151311' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") right 14px center no-repeat;
+	color: var(--ellada-ink); font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+}
+html body .ellada-rfilters__field select:hover, html body .ellada-rfilters__field select:focus-visible { border-color: var(--ellada-accent); outline: none; }
+html body .ellada-rfilters__btn {
+	height: 40px; padding: 0 18px; border: 0; border-radius: 999px; background: var(--ellada-accent); color: #fff; font-weight: 700; cursor: pointer;
+}
+html body .ellada-rfilters__clear {
+	align-self: center; padding: 10px 4px 0; font-size: 13px; font-weight: 600; color: var(--ellada-accent-deep); text-decoration: underline;
+}
+@media (max-width: 767px) {
+	/* Κατηγορίες σε μία γραμμή με οριζόντιο scroll. */
+	html body .ellada-rfilters__cats { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-right: -24px; padding-right: 24px; }
+	html body .ellada-rfilters__cats::-webkit-scrollbar { display: none; }
+	html body .ellada-rfilters__cats .ellada-chip { flex: 0 0 auto; }
+	html body .ellada-rfilters__form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	html body .ellada-rfilters__field { min-width: 0; }
+	html body .ellada-rfilters__field select { width: 100%; }
+}
+html body .ellada-discover { display: grid; gap: 48px; margin: 8px 0 48px; }

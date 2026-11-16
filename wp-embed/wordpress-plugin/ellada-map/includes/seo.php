@@ -118,7 +118,7 @@ function ellada_meta_data() {
 		}
 		$data['image'] = $img ? $img : '';
 	} elseif ( is_post_type_archive( 'ellada_recipe' ) ) {
-		$data['description'] = 'Παραδοσιακές συνταγές από όλη την Ελλάδα, οργανωμένες ανά περιοχή και κατηγορία.';
+		$data['description'] = function_exists( 'ellada_recipes_intro_text' ) ? ellada_recipes_intro_text() : 'Παραδοσιακές συνταγές από όλη την Ελλάδα, οργανωμένες ανά περιοχή και κατηγορία.';
 		$data['url']         = get_post_type_archive_link( 'ellada_recipe' );
 	} elseif ( is_post_type_archive( 'ellada_collection' ) ) {
 		$data['description'] = 'Επιμελημένες λίστες συνταγών για γιορτές, εποχές και τη νηστεία.';
