@@ -649,6 +649,6 @@ html body .ellada-footer-legal a:hover, html body .ellada-footer-legal a:focus-v
 	html body .ellada-footer__col--wide .ellada-footer__list { column-gap: 20px; }
 }
 /* Το widget του Elementor που κρατά τις στήλες μεγαλώνει δίπλα στο λογότυπο. */
-.ellada-footer-widget { flex: 1 1 560px; max-width: 800px; }
-.ellada-footer-legal-widget { margin-left: auto; }
-@media (max-width: 1024px) { .ellada-footer-legal-widget { margin-left: 0; flex-basis: 100%; } }
+html body .elementor-element.ellada-footer-widget { flex: 1 1 560px; width: auto; max-width: 800px; }
+html body .elementor-element.ellada-footer-legal-widget { margin-left: auto; width: auto; }
+@media (max-width: 1024px) { html body .elementor-element.ellada-footer-legal-widget { margin-left: 0; flex-basis: 100%; } }

@@ -56,10 +56,10 @@
 ## Πρόοδος
 - Κείμενα live: Κρήτη (140), Χανιά 292, Ρέθυμνο 291, Ηράκλειο 289, Λασίθι 290 και οι 24 δήμοι
   της Κρήτης — 32 URLs τοποθεσιών στο sitemap.
-- ellada-map **1.11.6** live (backups έως 1.11.5). 1.11.4–1.11.6: shortcodes footer
+- ellada-map **1.11.7** live (backups έως 1.11.6). 1.11.4–1.11.6: shortcodes footer
   `[ellada_footer_links]`, `[ellada_footer_legal]` (`includes/footer.php`) — editors βλέπουν και drafts.
-- Draft footer: Elementor template **624** «Footer — νέο (πρόχειρο)», χωρίς conditions. Το live footer
-  είναι το **71** (`include/general`). Νομικά σε draft: σελίδα 3 «Απόρρητο & cookies» (`/politiki-aporritou/`),
+- **Footer live** = Elementor template **624** (`include/general`). Το παλιό **71** είναι χωρίς conditions
+  (rollback: conditions πίσω στο 71, άδειες στο 624, regenerate conditions cache). Νομικά **δημοσιευμένα**: σελίδα 3 «Απόρρητο & cookies» (`/politiki-aporritou/`),
   623 «Όροι χρήσης» (`/oroi-xrisis/`), 137 «Επικοινωνία» (φόρμα → info@elladastopiato.gr).
   Υπεύθυνος επεξεργασίας στο απόρρητο: Ιωάννης Παπαδημητρίου.
 - ellada-map 1.11.3: ο χάρτης δείχνει ονόματα σε ονομαστική (πίνακας νομών στο
@@ -71,7 +71,7 @@
 - Χριστουγεννιάτικη συλλογή 197 χρειάζεται συνταγές.
 - Συνταγές 141, 142 χρειάζονται φωτογραφίες.
 - Αργότερα: σελίδες οικισμών, διαδρομές, πανηγύρια, αγγλική έκδοση.
-- Footer: μετά από έγκριση → publish 3/623/137, conditions του 624 = `include/general`, 71 χωρίς conditions (rollback).
+- Δοκιμαστικό μήνυμα στη φόρμα επικοινωνίας — έλεγχος ότι το mailbox info@ λαμβάνει.
 - Social links στο footer όταν ο χρήστης δώσει λογαριασμούς.
 - Φόρμα επικοινωνίας: αυτόματη διαγραφή μηνυμάτων > 12 μηνών (το υπόσχεται το απόρρητο).
 - Σε αναμονή: Search Console, Reach/newsletter.
