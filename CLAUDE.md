@@ -61,6 +61,8 @@
   απενεργοποιημένο το wp-emoji (φόρτωνε από s.w.org) στο `includes/privacy.php`.
 - **Νέα σελίδα Επικοινωνία live** (137): θέμα (`topic`, μπαίνει στο subject του email), πορτοκαλί κουμπί,
   κάρτες, χρόνος απάντησης. Παλιό περιεχόμενο στο meta `_elementor_data_backup_2026_11_16` της 137.
+  Email φόρμας: plain text (θέμα/όνομα/email/μήνυμα), metadata μόνο date/time/page_url — χωρίς IP, user agent,
+  «Powered by Elementor» (spam + απόρρητο). From: info@ «Ελλάδα στο Πιάτο».
 - ellada-map 1.11.10: **SMTP ενεργό και επιβεβαιωμένο** (τα email φτάνουν στα
   εισερχόμενα). 1.11.10: νέος κωδικός ενεργοποιεί αυτόματα το SMTP. 1.11.9: SMTP μέσω smtp.hostinger.com:465 ως info@
   (`includes/mail.php`, σελίδα Ρυθμίσεις → Email του site, option `ellada_smtp`, ή σταθερές ELLADA_SMTP_* στο wp-config).
