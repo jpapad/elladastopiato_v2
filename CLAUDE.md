@@ -56,7 +56,8 @@
 ## Πρόοδος
 - Κείμενα live: Κρήτη (140), Χανιά 292, Ρέθυμνο 291, Ηράκλειο 289, Λασίθι 290 και οι 24 δήμοι
   της Κρήτης — 32 URLs τοποθεσιών στο sitemap.
-- ellada-map **1.11.7** live (backups έως 1.11.6). 1.11.4–1.11.6: shortcodes footer
+- ellada-map **1.11.8** live (backups έως 1.11.7). 1.11.8: μηνύματα φόρμας (Elementor `wp_e_submissions`)
+  χωρίς IP/user agent και διαγραφή μετά από 12 μήνες — cron `ellada_submissions_cleanup` (daily, `includes/privacy.php`). 1.11.4–1.11.6: shortcodes footer
   `[ellada_footer_links]`, `[ellada_footer_legal]` (`includes/footer.php`) — editors βλέπουν και drafts.
 - **Footer live** = Elementor template **624** (`include/general`). Το παλιό **71** είναι χωρίς conditions
   (rollback: conditions πίσω στο 71, άδειες στο 624, regenerate conditions cache). Νομικά **δημοσιευμένα**: σελίδα 3 «Απόρρητο & cookies» (`/politiki-aporritou/`),
@@ -73,7 +74,6 @@
 - Αργότερα: σελίδες οικισμών, διαδρομές, πανηγύρια, αγγλική έκδοση.
 - Δοκιμαστικό μήνυμα στη φόρμα επικοινωνίας — έλεγχος ότι το mailbox info@ λαμβάνει.
 - Social links στο footer όταν ο χρήστης δώσει λογαριασμούς.
-- Φόρμα επικοινωνίας: αυτόματη διαγραφή μηνυμάτων > 12 μηνών (το υπόσχεται το απόρρητο).
 - Σε αναμονή: Search Console, Reach/newsletter.
 
 > Ενημέρωνε τις ενότητες «Πρόοδος» και «Εκκρεμότητες» όταν κάτι ολοκληρώνεται.
