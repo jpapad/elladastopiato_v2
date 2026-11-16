@@ -617,3 +617,38 @@ html body .ellada-hub span { color: #A8A099; }
 	html body .ellada-glance dd { font-size: 24px; }
 	html body .ellada-guidebox { gap: 36px; }
 }
+
+/* ═════════════════════ Footer ([ellada_footer_links], [ellada_footer_legal]) ═════════════════════ */
+/* «html body» για να κερδίζει τα χρώματα links/τίτλων του Elementor Kit. */
+html body .ellada-footer {
+	display: grid; grid-template-columns: minmax(140px, auto) minmax(0, 2fr) minmax(140px, auto); gap: 40px 56px;
+	font-family: "Commissioner", sans-serif;
+}
+html body .ellada-footer__title {
+	margin: 0 0 14px; font-family: "Commissioner", sans-serif; font-size: 12px; font-weight: 700; line-height: 1.2;
+	letter-spacing: .14em; text-transform: uppercase; color: var(--ellada-accent);
+}
+html body .ellada-footer__list { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+html body .ellada-footer__col--wide .ellada-footer__list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; }
+html body .ellada-footer__list a {
+	color: #C9C4BE; font-family: "Commissioner", sans-serif; font-size: 15px; font-weight: 400; line-height: 1.4;
+	text-decoration: none; transition: color .15s;
+}
+html body .ellada-footer-legal ul { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 6px 24px; }
+html body .ellada-footer-legal a {
+	color: #8F8983; font-family: "Commissioner", sans-serif; font-size: 13px; font-weight: 400; text-decoration: none; transition: color .15s;
+}
+html body .ellada-footer__list a:hover, html body .ellada-footer__list a:focus-visible,
+html body .ellada-footer-legal a:hover, html body .ellada-footer-legal a:focus-visible { color: var(--ellada-accent); }
+@media (max-width: 1024px) {
+	html body .ellada-footer { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	html body .ellada-footer__col--wide { grid-column: 1 / -1; grid-row: 2; }
+}
+@media (max-width: 600px) {
+	html body .ellada-footer { gap: 32px 24px; }
+	html body .ellada-footer__col--wide .ellada-footer__list { column-gap: 20px; }
+}
+/* Το widget του Elementor που κρατά τις στήλες μεγαλώνει δίπλα στο λογότυπο. */
+.ellada-footer-widget { flex: 1 1 560px; max-width: 800px; }
+.ellada-footer-legal-widget { margin-left: auto; }
+@media (max-width: 1024px) { .ellada-footer-legal-widget { margin-left: 0; flex-basis: 100%; } }
