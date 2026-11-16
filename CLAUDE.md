@@ -60,7 +60,8 @@
   `[ellada_archive_intro]`, `[ellada_recipe_filters]` (κατηγορία + `?perioxi=` `?diatrofi=` `?xronos=30|60`, noindex όταν
   φιλτράρεται), `[ellada_recipe_discover min=12]`, meta `_ellada_total_time`. Κάρτες: σήμα διατροφής, δυσκολία,
   placeholder με το πιατάκι (`public/plate-mark.svg`). Προεπισκόπηση template: `?ellada_tpl=<id>` για editors
-  (το template δημοσιευμένο **χωρίς conditions** + meta `_ellada_preview_of`). Draft αρχείου συνταγών = **630** (→ 122).
+  (το template δημοσιευμένο **χωρίς conditions** + meta `_ellada_preview_of`). **Νέα σελίδα Συνταγές live** στο template 122
+  (παλιό περιεχόμενο στο meta `_elementor_data_backup_2026_11_16` της 122).
 - ellada-map 1.11.12: 1.11.11–12: `[ellada_contact_aside]` (`includes/contact.php`,
   κάρτες θεμάτων + email, `?thema=syntagi|topos|lathos|synergasia` επιλέγει το πεδίο `topic` της φόρμας)·
   απενεργοποιημένο το wp-emoji (φόρτωνε από s.w.org) στο `includes/privacy.php`.
@@ -85,7 +86,8 @@
 ## Εκκρεμότητες / επόμενα
 - Κείμενα για άλλη περιφέρεια.
 - Προσθήκη `/odigos/` στο μενού «Κεντρικό μενού» (id 3).
-- Χριστουγεννιάτικη συλλογή 197 χρειάζεται συνταγές.
+- Χριστουγεννιάτικη συλλογή 197 χρειάζεται συνταγές (πρόταση: μελομακάρονα, κουραμπιέδες, χριστόψωμο,
+  λαχανοντολμάδες, γαλοπούλα γεμιστή, βασιλόπιτα — ο χρήστης δεν έχει αποφασίσει ακόμα).
 - Συνταγές 141, 142 χρειάζονται φωτογραφίες.
 - Αργότερα: σελίδες οικισμών, διαδρομές, πανηγύρια, αγγλική έκδοση.
 - Social links στο footer όταν ο χρήστης δώσει λογαριασμούς.
