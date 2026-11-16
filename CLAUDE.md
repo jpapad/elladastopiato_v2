@@ -59,8 +59,8 @@
 - ellada-map **1.11.12** live (backups έως 1.11.11). 1.11.11–12: `[ellada_contact_aside]` (`includes/contact.php`,
   κάρτες θεμάτων + email, `?thema=syntagi|topos|lathos|synergasia` επιλέγει το πεδίο `topic` της φόρμας)·
   απενεργοποιημένο το wp-emoji (φόρτωνε από s.w.org) στο `includes/privacy.php`.
-- Νέα σελίδα Επικοινωνία σε **draft 629** (`epikoinonia-neo`): θέμα, πορτοκαλί κουμπί, κάρτες, χρόνος απάντησης.
-  Μετά την έγκριση: `_elementor_data` του 629 → 137, διαγραφή 629.
+- **Νέα σελίδα Επικοινωνία live** (137): θέμα (`topic`, μπαίνει στο subject του email), πορτοκαλί κουμπί,
+  κάρτες, χρόνος απάντησης. Παλιό περιεχόμενο στο meta `_elementor_data_backup_2026_11_16` της 137.
 - ellada-map 1.11.10: **SMTP ενεργό και επιβεβαιωμένο** (τα email φτάνουν στα
   εισερχόμενα). 1.11.10: νέος κωδικός ενεργοποιεί αυτόματα το SMTP. 1.11.9: SMTP μέσω smtp.hostinger.com:465 ως info@
   (`includes/mail.php`, σελίδα Ρυθμίσεις → Email του site, option `ellada_smtp`, ή σταθερές ELLADA_SMTP_* στο wp-config).
