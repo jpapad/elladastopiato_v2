@@ -94,7 +94,8 @@ if ( is_admin() ) {
 			update_option(
 				ELLADA_SMTP_OPTION,
 				array(
-					'enabled' => ! empty( $_POST['enabled'] ),
+					// Νέος κωδικός = ενεργοποίηση (αλλιώς εύκολα ξεχνιέται το κουτάκι).
+					'enabled' => ! empty( $_POST['enabled'] ) || '' !== $pass,
 					'user'    => $user ? $user : 'info@elladastopiato.gr',
 					'pass'    => '' !== $pass ? $pass : ( $old['pass'] ?? '' ), // κενό = κράτα τον παλιό
 				),
@@ -167,7 +168,8 @@ function ellada_smtp_page() {
 			<?php wp_nonce_field( 'ellada_smtp_save' ); ?>
 			<table class="form-table" role="presentation">
 				<tr><th scope="row">Ενεργό</th>
-					<td><label><input type="checkbox" name="enabled" value="1" <?php checked( ! empty( $o['enabled'] ) ); ?>> Αποστολή μέσω SMTP</label></td></tr>
+					<td><label><input type="checkbox" name="enabled" value="1" <?php checked( ! empty( $o['enabled'] ) ); ?>> Αποστολή μέσω SMTP</label>
+						<p class="description">Ενεργοποιείται αυτόματα όταν γράψεις νέο κωδικό. Ξετσέκαρέ το για να γυρίσεις στην προεπιλεγμένη αποστολή.</p></td></tr>
 				<tr><th scope="row"><label for="ellada-smtp-user">Λογαριασμός</label></th>
 					<td><input id="ellada-smtp-user" type="email" name="user" class="regular-text" value="<?php echo esc_attr( $o['user'] ?? 'info@elladastopiato.gr' ); ?>"></td></tr>
 				<tr><th scope="row"><label for="ellada-smtp-pass">Κωδικός mailbox</label></th>
