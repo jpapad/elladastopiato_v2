@@ -102,6 +102,10 @@ function ellada_meta_data() {
 		if ( in_array( $pt, array( 'ellada_recipe', 'ellada_location', 'ellada_collection', 'ellada_point' ), true ) ) {
 			$txt = get_post_meta( $id, 'short_description', true );
 		}
+		// Σελίδα του οδηγού με κείμενο: η αρχή του κειμένου είναι η καλύτερη περιγραφή.
+		if ( ! $txt && 'ellada_location' === $pt ) {
+			$txt = (string) get_post_meta( $id, 'guide_intro', true );
+		}
 		if ( ! $txt ) {
 			$txt = has_excerpt( $id ) ? get_the_excerpt( $id ) : get_post_field( 'post_content', $id );
 		}

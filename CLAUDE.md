@@ -56,12 +56,12 @@
 ## Πρόοδος
 - Κείμενα live: Κρήτη (140), Χανιά 292, Ρέθυμνο 291, Ηράκλειο 289, Λασίθι 290 και οι 24 δήμοι
   της Κρήτης — 32 URLs τοποθεσιών στο sitemap.
-- ellada-map **1.15.1** live (backups έως 1.15.0). 1.15.x: οδηγός v2 πίσω από flag **`guide_v2`** (κλειστό·
-  `?ellada_preview=1`), `includes/guide-v2.php`: `[ellada_guide_hub2]` (νέο /odigos/: hero + «Πού πάτε;» μέσω
+- ellada-map **1.15.2** live (backups έως 1.15.1). **`guide_v2` ΑΝΟΙΧΤΟ**· meta description τόπων = αρχή του `guide_intro`.
+  1.15.x: οδηγός v2 πίσω από flag **`guide_v2`**, `includes/guide-v2.php`: `[ellada_guide_hub2]` (νέο /odigos/: hero + «Πού πάτε;» μέσω
   `ellada/v1/search` + χάρτης-links, «Ξεκινήστε από εδώ», 13 περιφέρειες σε details, CTA), `[ellada_guide_hero]` (widget
   `loc-ghero` στο template 118· backup meta `_elementor_data_backup_2026_11_17`), «… : ο οδηγός γράφεται» σε σελίδες
-  χωρίς `guide_intro`, BreadcrumbList, `public/prefectures-mini.json`. Draft νέου /odigos/ = σελίδα **639** (`odigos-neo`,
-  template elementor_header_footer).
+  χωρίς `guide_intro`, BreadcrumbList, `public/prefectures-mini.json`. **Νέο /odigos/ live** (619 με `[ellada_guide_hub2]`, template
+  elementor_header_footer· backup meta `_ellada_content_backup_2026_11_17`).
 - ellada-map 1.14.1: 1.14.x: αρχική — `includes/home-v2.php`: `[ellada_home_guide]`
   (περιφέρειες με `guide_intro`, μικρός χάρτης + αριθμοί οδηγού), `[ellada_home_submit]` (→ Επικοινωνία ?thema=),
   WebSite+SearchAction+Organization στην αρχική· μετρητές χάρτη = τόποι οδηγού όταν συνταγές < 20 (`home.php`)·
