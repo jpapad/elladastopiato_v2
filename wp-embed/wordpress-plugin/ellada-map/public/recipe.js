@@ -177,7 +177,111 @@
 		});
 	}
 
+	/* ── Μαγειρεύω τώρα: η οθόνη μένει αναμμένη, τονίζεται το επόμενο βήμα ── */
+	function nextStep() {
+		var items = document.querySelectorAll('.ellada-steps.is-tools li');
+		var found = false;
+		items.forEach(function (li) {
+			var on = !found && !li.classList.contains('is-done') && document.body.classList.contains('ellada-cooking');
+			li.classList.toggle('is-next', on);
+			if (on) found = true;
+		});
+	}
+
+	function cook(btn) {
+		var lock = null;
+		var label = btn.querySelector('[data-cook-label]');
+		function request() {
+			if (!('wakeLock' in navigator)) return Promise.resolve(false);
+			return navigator.wakeLock.request('screen').then(function (l) {
+				lock = l;
+				return true;
+			}, function () {
+				return false;
+			});
+		}
+		function set(on) {
+			document.body.classList.toggle('ellada-cooking', on);
+			btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+			if (label) label.textContent = on ? 'Τέλος μαγειρέματος' : 'Μαγειρεύω τώρα';
+			nextStep();
+			if (on) {
+				request().then(function (ok) {
+					toast(ok ? 'Η οθόνη θα μείνει αναμμένη όσο μαγειρεύετε.' : 'Η συσκευή σας δεν επιτρέπει να μένει αναμμένη η οθόνη.');
+				});
+				var target = document.getElementById('ylika');
+				if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			} else if (lock) {
+				lock.release().catch(function () {});
+				lock = null;
+			}
+		}
+		btn.addEventListener('click', function () {
+			set(btn.getAttribute('aria-pressed') !== 'true');
+		});
+		// Η κλειδαριά χάνεται όταν η καρτέλα κρύβεται — ξαναζητιέται όταν επιστρέψετε.
+		document.addEventListener('visibilitychange', function () {
+			if (document.visibilityState === 'visible' && document.body.classList.contains('ellada-cooking')) request();
+		});
+		document.addEventListener('click', function (e) {
+			if (e.target.closest('.ellada-steps__n')) setTimeout(nextStep, 0);
+		});
+	}
+
+	var toastEl = null;
+	function toast(msg) {
+		if (!toastEl) {
+			toastEl = document.createElement('div');
+			toastEl.className = 'ellada-toast';
+			toastEl.setAttribute('role', 'status');
+			document.body.appendChild(toastEl);
+		}
+		toastEl.textContent = msg;
+		toastEl.classList.add('is-on');
+		clearTimeout(toastEl._t);
+		toastEl._t = setTimeout(function () {
+			toastEl.classList.remove('is-on');
+		}, 3200);
+	}
+
+	/* ── Λίστα για ψώνια: τα υλικά με τις τρέχουσες ποσότητες ── */
+	function shopping(btn) {
+		btn.addEventListener('click', function () {
+			var sec = btn.closest('.ellada-ingredients');
+			var title = btn.getAttribute('data-title') || document.title;
+			var serv = sec.querySelector('.ellada-serv output');
+			var lines = [title + (serv ? ' (' + serv.textContent + ' μερίδες)' : '')];
+			sec.querySelectorAll('.ellada-ingredients__group, li').forEach(function (el) {
+				if (el.classList.contains('ellada-ingredients__group')) {
+					lines.push('', el.textContent.trim() + ':');
+					return;
+				}
+				var q = el.querySelector('.ellada-ingredients__qty');
+				var item = el.querySelector('.ellada-ingredients__item');
+				var text = ((q ? q.textContent.trim() + ' ' : '') + (item ? item.textContent : el.textContent)).replace(/\s+/g, ' ').trim();
+				if (text) lines.push('• ' + text);
+			});
+			lines.push('', location.origin + location.pathname);
+			var text = lines.join('\n');
+			if (navigator.share && window.matchMedia('(pointer: coarse)').matches) {
+				navigator.share({ title: 'Λίστα για ψώνια: ' + title, text: text }).catch(function () {});
+				return;
+			}
+			if (navigator.clipboard) {
+				navigator.clipboard.writeText(text).then(function () {
+					toast('Η λίστα αντιγράφηκε — επικολλήστε τη όπου θέλετε.');
+				}, function () {
+					window.prompt('Αντιγράψτε τη λίστα:', text);
+				});
+			} else {
+				window.prompt('Αντιγράψτε τη λίστα:', text);
+			}
+		});
+	}
+
 	function init() {
+		document.querySelectorAll('[data-ellada-cook]').forEach(cook);
+		document.querySelectorAll('[data-ellada-shop]').forEach(shopping);
 		var ing = document.querySelector('.ellada-ingredients.is-tools');
 		if (ing) {
 			servings(ing);

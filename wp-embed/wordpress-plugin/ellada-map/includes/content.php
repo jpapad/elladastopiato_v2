@@ -373,6 +373,9 @@ function ellada_recipe_schema( $post_id ) {
 		}
 	}
 
+	/** Επεκτάσεις (π.χ. suitableForDiet) από άλλα κομμάτια του plugin. */
+	$data = apply_filters( 'ellada_recipe_schema', $data, $post_id );
+
 	return array_filter(
 		$data,
 		function ( $v ) {

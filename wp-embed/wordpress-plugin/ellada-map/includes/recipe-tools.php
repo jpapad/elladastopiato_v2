@@ -53,7 +53,7 @@ function ellada_recipe_actions_html( $id ) {
 	return sprintf(
 		'<div class="ellada-ractions" data-url="%1$s" data-title="%2$s">
 			<a class="ellada-ractions__btn is-primary" href="#ylika"><span aria-hidden="true">↓</span> Στη συνταγή</a>
-			<button type="button" class="ellada-ractions__btn" data-ellada-print><span aria-hidden="true">⎙</span> Εκτύπωση</button>
+			%5$s<button type="button" class="ellada-ractions__btn" data-ellada-print><span aria-hidden="true">⎙</span> Εκτύπωση</button>
 			<div class="ellada-share">
 				<button type="button" class="ellada-ractions__btn" data-ellada-share aria-expanded="false" aria-controls="ellada-share-%3$d"><span aria-hidden="true">↗</span> Κοινοποίηση</button>
 				<div class="ellada-share__menu" id="ellada-share-%3$d" hidden>%4$s<button type="button" data-ellada-copy>Αντιγραφή συνδέσμου</button></div>
@@ -62,7 +62,10 @@ function ellada_recipe_actions_html( $id ) {
 		esc_url( $url ),
 		esc_attr( $title ),
 		$id,
-		$links
+		$links,
+		function_exists( 'ellada_recipe_v2' ) && ellada_recipe_v2()
+			? '<button type="button" class="ellada-ractions__btn is-cook" data-ellada-cook aria-pressed="false"><span aria-hidden="true">◉</span> <span data-cook-label>Μαγειρεύω τώρα</span></button>'
+			: ''
 	);
 }
 
@@ -114,6 +117,10 @@ add_filter(
 		ellada_recipe_tools_assets();
 		if ( 'ellada_recipe_facts' === $tag ) {
 			return $output . ellada_recipe_actions_html( $id );
+		}
+		// Νέα σελίδα συνταγής: παραλλαγές + στατικός «τόπος» αντί για τον διαδραστικό χάρτη.
+		if ( function_exists( 'ellada_recipe_v2' ) && ellada_recipe_v2() ) {
+			return $output . ellada_recipe_variations_html( $id ) . ellada_recipe_place_html( $id );
 		}
 		return $output . ellada_recipe_area_html( $id );
 	},

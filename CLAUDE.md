@@ -56,7 +56,13 @@
 ## Πρόοδος
 - Κείμενα live: Κρήτη (140), Χανιά 292, Ρέθυμνο 291, Ηράκλειο 289, Λασίθι 290 και οι 24 δήμοι
   της Κρήτης — 32 URLs τοποθεσιών στο sitemap.
-- ellada-map **1.12.0** live (backups έως 1.11.12). 1.12.0: σελίδα Συνταγές — `includes/recipes-archive.php`:
+- ellada-map **1.13.0** live (backups έως 1.12.0· στο repo 1.13.1 = μικρή διόρθωση JS, δεν έχει ανέβει).
+  1.13.x: σελίδα συνταγής v2 πίσω από flag **`recipe_v2`** (κλειστό· προεπισκόπηση `?ellada_preview=1`), `includes/recipe-v2.php`:
+  διαδρομή `[ellada_recipe_crumbs]` (widget `recipe-crumbs` στο template 109, κενό όσο είναι κλειστό) + BreadcrumbList,
+  «Ο τόπος της συνταγής» με στατικό χάρτη (`public/regions-mini.json`), ACF `story` και `variations` (group_ellada_recipe),
+  «Μαγειρεύω τώρα» (Wake Lock) και «Λίστα για ψώνια» στο `public/recipe.js`, φωτογραφία πρώτη στο κινητό, suitableForDiet.
+  Backup template 109: meta `_elementor_data_backup_2026_11_17`. Story/variations γραμμένα σε 141, 143 (κρυφά μέχρι το flag).
+- ellada-map 1.12.0: 1.12.0: σελίδα Συνταγές — `includes/recipes-archive.php`:
   `[ellada_archive_intro]`, `[ellada_recipe_filters]` (κατηγορία + `?perioxi=` `?diatrofi=` `?xronos=30|60`, noindex όταν
   φιλτράρεται), `[ellada_recipe_discover min=12]`, meta `_ellada_total_time`. Κάρτες: σήμα διατροφής, δυσκολία,
   placeholder με το πιατάκι (`public/plate-mark.svg`). Προεπισκόπηση template: `?ellada_tpl=<id>` για editors
@@ -88,7 +94,8 @@
 - Προσθήκη `/odigos/` στο μενού «Κεντρικό μενού» (id 3).
 - Χριστουγεννιάτικη συλλογή 197 χρειάζεται συνταγές (πρόταση: μελομακάρονα, κουραμπιέδες, χριστόψωμο,
   λαχανοντολμάδες, γαλοπούλα γεμιστή, βασιλόπιτα — ο χρήστης δεν έχει αποφασίσει ακόμα).
-- Συνταγές 141, 142 χρειάζονται φωτογραφίες.
+- Συνταγές 141, 142 χρειάζονται φωτογραφίες. Διορθωμένα κείμενα 141/142/143 περιμένουν έγκριση.
+- Άνοιγμα `recipe_v2` (ellada_features) μετά την έγκριση + deploy 1.13.1.
 - Αργότερα: σελίδες οικισμών, διαδρομές, πανηγύρια, αγγλική έκδοση.
 - Social links στο footer όταν ο χρήστης δώσει λογαριασμούς.
 - Σε αναμονή: Search Console, Reach/newsletter.
