@@ -62,7 +62,7 @@
   «Ολόκληρη συνταγή» στη Γρήγορη συμπλήρωση (`ellada_quick_parse_full`), «Νηστίσιμη;» στο «Τι λείπει» (`ellada_fasting_hint`),
   μεγέθη ellada-1x1/4x3/16x9. Πίσω από flag **`recipe_v3`** (ΚΛΕΙΣΤΟ): «Το έφτιαξα!» (REST `ellada/v1/made/<id>`, meta `_ellada_made`),
   ♥ Αγαπημένα (localStorage `ellada-favs`, REST `ellada/v1/cards`), σελίδα 649 «Οι συνταγές μου» (draft, `[ellada_my_recipes]`),
-  schema image σε αναλογίες, αυτόματη OG εικόνα (GD, `uploads/ellada-og/`, fonts στο `assets/fonts/`).
+  schema image σε αναλογίες, αυτόματη OG εικόνα (GD, `uploads/ellada-og/`, fonts στο `public/fonts/`).
 - ellada-map 1.17.1: 1.17.x: διαχειριστικό (`includes/admin-ux.php`): απλή οθόνη αντί για
   Gutenberg σε recipe/location/point/collection (πεδία ACF κάτω από τον τίτλο), χωρίς κουτί κειμένου στις συνταγές,
   οδηγία τίτλου ανά τύπο (priority 99, μετά το ACF), παραδείγματα στα άδεια πεδία, κουτί «Τι λείπει» στο πλάι.

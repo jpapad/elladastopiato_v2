@@ -427,7 +427,7 @@ function ellada_og_card_url( $id ) {
 	}
 	imagefilledrectangle( $im, 0, $h - 14, $w, $h, $or );
 
-	$fonts = ELLADA_MAP_DIR . 'assets/fonts/';
+	$fonts = ELLADA_MAP_DIR . 'public/fonts/';
 	$big   = $fonts . 'FiraSansExtraCondensed_800ExtraBold.ttf';
 	$small = $fonts . 'Commissioner_600SemiBold.ttf';
 
