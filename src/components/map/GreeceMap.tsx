@@ -106,14 +106,15 @@ const accent = (alpha: number) =>
 /** Φόντο χάρτη: --ellada-bg ή το αρχικό σχεδόν μαύρο. */
 const BG = 'var(--ellada-bg, #0a0a0a)'
 
+/* Πιο φωτεινά από πριν: σε σκούρο φόντο οι περιοχές χάνονταν. */
 const LEVEL_STYLE = [
-  { fill: 'rgba(255,255,255,0.04)', stroke: 'rgba(255,255,255,0.18)', strokeWidth: 0.5 },
-  { fill: accent(0.06), stroke: accent(0.35), strokeWidth: 0.8 },
-  { fill: accent(0.08), stroke: accent(0.45), strokeWidth: 1 },
-  { fill: accent(0.05), stroke: accent(0.25), strokeWidth: 1.2 },
+  { fill: 'rgba(255,255,255,0.10)', stroke: 'rgba(255,255,255,0.32)', strokeWidth: 0.6 },
+  { fill: accent(0.12), stroke: accent(0.5), strokeWidth: 0.8 },
+  { fill: accent(0.14), stroke: accent(0.55), strokeWidth: 1 },
+  { fill: accent(0.08), stroke: accent(0.35), strokeWidth: 1.2 },
 ]
-/** Περιοχές με περιεχόμενο στο WordPress (σελίδα ή τοπικά σημεία) φαίνονται λίγο πιο έντονα. */
-const CONTENT_FILL = accent(0.16)
+/** Περιοχές με περιεχόμενο στο WordPress (σελίδα ή τοπικά σημεία) ξεχωρίζουν καθαρά. */
+const CONTENT_FILL = accent(0.42)
 
 const DEFAULT_TEXTS: Required<MapTexts> = {
   hintRegions: 'Κάντε κλικ σε περιφέρεια για εξερεύνηση',
@@ -209,10 +210,27 @@ export default function GreeceMap({
     settlements,
     loadSettlements,
     geoError,
+    ensureGeo,
     locationIndex,
     points: allPoints,
     wpStatus,
   } = useMapData({ apiRoot, endpoints, geoUrls })
+
+  /* Νομοί/δήμοι: φορτώνονται μόλις χρειαστούν (ή λίγο πριν, για να μην περιμένει ο επισκέπτης). */
+  useEffect(() => {
+    if (startPlace) ensureGeo('municipalities')
+    else if (startRegion) ensureGeo('prefectures')
+  }, [startPlace, startRegion, ensureGeo])
+  const warmUp = useCallback(() => ensureGeo('prefectures'), [ensureGeo])
+  // Χωρίς αλληλεπίδραση: οι νομοί έρχονται όταν η σελίδα ησυχάσει, ώστε να μην καθυστερούν το πρώτο φόρτωμα.
+  useEffect(() => {
+    const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number }
+    const t = window.setTimeout(() => {
+      if (w.requestIdleCallback) w.requestIdleCallback(warmUp, { timeout: 4000 })
+      else warmUp()
+    }, 3000)
+    return () => window.clearTimeout(t)
+  }, [warmUp])
 
   /** Μόνο οι τύποι σημείων που επιτρέπουν οι ρυθμίσεις. */
   const points = useMemo(
@@ -230,6 +248,10 @@ export default function GreeceMap({
     })
 
   const [level, setLevel] = useState(0)
+  // Μόλις ανοίξει περιφέρεια, έρχονται και οι δήμοι (για το επόμενο κλικ).
+  useEffect(() => {
+    if (level >= 1) ensureGeo('municipalities')
+  }, [level, ensureGeo])
   const [projConfig, setProjConfig] = useState<ProjConfig>(GREECE_PROJ)
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null)
   const [selectedPref, setSelectedPref] = useState<string | null>(null)
@@ -613,6 +635,9 @@ export default function GreeceMap({
     <div
       className="bg-[var(--ellada-bg,#0a0a0a)] text-white border border-white/5 shadow-2xl relative flex flex-col overflow-hidden min-h-[var(--ellada-h-m)] sm:min-h-[var(--ellada-h)]"
       style={sizeVars}
+      onPointerEnter={warmUp}
+      onTouchStart={warmUp}
+      onFocusCapture={warmUp}
     >
       {/* ── top bar ── */}
       <div className="flex items-center justify-between gap-4 px-8 pt-8 pb-3 z-10">

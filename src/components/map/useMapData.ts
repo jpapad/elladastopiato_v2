@@ -62,18 +62,45 @@ export function useMapData({ apiRoot, endpoints, geoUrls }: MapDataConfig) {
   )
   const [wpError, setWpError] = useState<string | null>(null)
 
-  /* ── γεωγραφία (στατικά αρχεία) ── */
+  /*
+   * ── γεωγραφία (στατικά αρχεία) ──
+   * Οι περιφέρειες φορτώνονται αμέσως. Νομοί (~425 KB) και δήμοι (~280 KB) μόνο όταν χρειαστούν
+   * (ensureGeo): όταν ο επισκέπτης πλησιάσει τον χάρτη, ανοίξει περιφέρεια ή υπάρχουν τοπικά σημεία.
+   */
+  const [needPrefectures, setNeedPrefectures] = useState(false)
+  const [needMunicipalities, setNeedMunicipalities] = useState(false)
+  const ensureGeo = useCallback((layer: 'prefectures' | 'municipalities') => {
+    setNeedPrefectures(true)
+    if (layer === 'municipalities') setNeedMunicipalities(true)
+  }, [])
+
+  useEffect(() => {
+    if (!needPrefectures) return
+    let alive = true
+    loadJson<GeoCollection>(geoUrls.prefectures)
+      .then((g) => alive && setPrefectures(rewindCollection(g)))
+      .catch((e) => alive && setGeoError(e instanceof Error ? e.message : String(e)))
+    return () => {
+      alive = false
+    }
+  }, [needPrefectures, geoUrls.prefectures])
+
+  useEffect(() => {
+    if (!needMunicipalities) return
+    let alive = true
+    loadJson<GeoCollection>(geoUrls.municipalities)
+      .then((g) => alive && setMunicipalities(rewindCollection(g)))
+      .catch((e) => alive && setGeoError(e instanceof Error ? e.message : String(e)))
+    return () => {
+      alive = false
+    }
+  }, [needMunicipalities, geoUrls.municipalities])
+
   useEffect(() => {
     let alive = true
     const fail = (e: unknown) => alive && setGeoError(e instanceof Error ? e.message : String(e))
     loadJson<GeoCollection>(geoUrls.regions)
       .then((g) => alive && setRegions(rewindCollection(g)))
-      .catch(fail)
-    loadJson<GeoCollection>(geoUrls.prefectures)
-      .then((g) => alive && setPrefectures(rewindCollection(g)))
-      .catch(fail)
-    loadJson<GeoCollection>(geoUrls.municipalities)
-      .then((g) => alive && setMunicipalities(rewindCollection(g)))
       .catch(fail)
     if (geoUrls.settlements) {
       // Οι οικισμοί δεν είναι απαραίτητοι: αν αποτύχουν, ο χάρτης δουλεύει χωρίς αυτούς.
@@ -84,7 +111,7 @@ export function useMapData({ apiRoot, endpoints, geoUrls }: MapDataConfig) {
     return () => {
       alive = false
     }
-  }, [geoUrls.regions, geoUrls.prefectures, geoUrls.municipalities, geoUrls.settlements])
+  }, [geoUrls.regions, geoUrls.settlements])
 
   /* ── WordPress REST + ACF ── */
   const endpointsKey = JSON.stringify(endpoints ?? {})
@@ -128,6 +155,11 @@ export function useMapData({ apiRoot, endpoints, geoUrls }: MapDataConfig) {
     [settlementIndex, geoUrls.settlements],
   )
 
+  // Τα τοπικά σημεία τοποθετούνται σε νομό/δήμο από τη γεωμετρία τους.
+  useEffect(() => {
+    if (rawPoints.length) ensureGeo('municipalities')
+  }, [rawPoints.length, ensureGeo])
+
   const locationIndex: LocationIndex = useMemo(() => buildLocationIndex(locations), [locations])
 
   const points: PlacedPoint[] = useMemo(() => {
@@ -151,6 +183,7 @@ export function useMapData({ apiRoot, endpoints, geoUrls }: MapDataConfig) {
     settlementsReady: !!settlementIndex,
     loadSettlements,
     geoError,
+    ensureGeo,
     locationIndex,
     points,
     wpStatus,

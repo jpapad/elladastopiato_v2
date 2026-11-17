@@ -56,7 +56,12 @@
 ## Πρόοδος
 - Κείμενα live: Κρήτη (140), Χανιά 292, Ρέθυμνο 291, Ηράκλειο 289, Λασίθι 290 και οι 24 δήμοι
   της Κρήτης — 32 URLs τοποθεσιών στο sitemap.
-- ellada-map **1.13.1** live (backups έως 1.13.0). **`recipe_v2` ΑΝΟΙΧΤΟ** (ellada_features).
+- ellada-map **1.14.1** live (backups έως 1.14.0). 1.14.x: αρχική — `includes/home-v2.php`: `[ellada_home_guide]`
+  (περιφέρειες με `guide_intro`, μικρός χάρτης + αριθμοί οδηγού), `[ellada_home_submit]` (→ Επικοινωνία ?thema=),
+  WebSite+SearchAction+Organization στην αρχική· μετρητές χάρτη = τόποι οδηγού όταν συνταγές < 20 (`home.php`)·
+  χάρτης: πιο φωτεινά χρώματα, νομοί/δήμοι φορτώνουν μόνο όταν χρειαστούν (`src/components/map/useMapData.ts`).
+  Συνταγή εβδομάδας = 141 (option `ellada_featured_recipe`). Draft νέας αρχικής = σελίδα **637** (`arxiki-neo`).
+- ellada-map 1.13.1: **`recipe_v2` ΑΝΟΙΧΤΟ** (ellada_features).
   1.13.x: σελίδα συνταγής v2 πίσω από flag **`recipe_v2`**, `includes/recipe-v2.php`:
   διαδρομή `[ellada_recipe_crumbs]` (widget `recipe-crumbs` στο template 109, κενό όσο είναι κλειστό) + BreadcrumbList,
   «Ο τόπος της συνταγής» με στατικό χάρτη (`public/regions-mini.json`), ACF `story` και `variations` (group_ellada_recipe),

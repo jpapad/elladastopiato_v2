@@ -829,3 +829,73 @@ html body .ellada-toast.is-on { opacity: 1; transform: translate(-50%, 0); }
 @media print {
 	.ellada-rplace, .ellada-ingredients__shop, .ellada-rcrumbs, .ellada-toast { display: none !important; }
 }
+
+/* ═════════════════════ Αρχική: οδηγός, «στείλτε μας», συνταγή εβδομάδας χωρίς φωτογραφία ═════════════════════ */
+html body .ellada-feat__media .ellada-card__ph-mark { max-width: 150px; }
+html body .ellada-feat__media .ellada-card__ph-label { font-size: 12px; }
+
+html body .ellada-hguide { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 24px; font-family: "Commissioner", sans-serif; }
+html body .ellada-hguide__card {
+	display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 24px; align-items: center; padding: 32px;
+	background: var(--ellada-dark); color: #F5F4F2; border-radius: var(--ellada-radius); text-decoration: none;
+	transition: transform .2s ease, box-shadow .2s ease;
+}
+html body .ellada-hguide__card:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(10, 10, 10, .18); color: #F5F4F2; }
+html body .ellada-hguide__eyebrow { margin: 0 0 10px; font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--ellada-accent); }
+html body .ellada-hguide__title {
+	margin: 0; font-family: "Fira Sans Extra Condensed", "Commissioner", sans-serif; font-weight: 800; text-transform: uppercase;
+	font-size: clamp(2.4rem, 1.6rem + 2.6vw, 4rem); line-height: .9; color: #F5F4F2;
+}
+html body .ellada-hguide__lead { margin: 14px 0 0; font-size: 15px; line-height: 1.6; color: rgba(245, 244, 242, .75); max-width: 46ch; }
+html body .ellada-hguide__places { margin: 14px 0 0; font-size: 13px; font-weight: 600; color: rgba(245, 244, 242, .55); }
+html body .ellada-hguide__more {
+	display: inline-block; margin-top: 22px; padding: 4px 0; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+	color: #F5F4F2; border-bottom: 2px solid var(--ellada-accent);
+}
+html body .ellada-hguide__card:hover .ellada-hguide__more { color: var(--ellada-accent); }
+html body .ellada-hguide__map { display: block; width: 100%; height: auto; max-height: 280px; }
+html body .ellada-hguide__map .is-other path { fill: #2A2724; stroke: #0A0A0A; stroke-width: .6; }
+html body .ellada-hguide__map .is-on { fill: var(--ellada-accent); stroke: #0A0A0A; stroke-width: .6; }
+html body .ellada-hguide__all {
+	display: flex; flex-direction: column; padding: 28px; border: 1px solid var(--ellada-line); border-radius: var(--ellada-radius);
+	background: var(--ellada-surface); color: var(--ellada-ink); text-decoration: none; transition: border-color .2s;
+}
+html body .ellada-hguide__all:hover { border-color: var(--ellada-accent); color: var(--ellada-ink); }
+html body .ellada-hguide__all .ellada-hguide__eyebrow { color: var(--ellada-accent-deep); }
+html body .ellada-hguide__all dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 6px 0 0; }
+html body .ellada-hguide__all dt { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ellada-muted); }
+html body .ellada-hguide__all dd {
+	margin: 4px 0 0; font-family: "Fira Sans Extra Condensed", "Commissioner", sans-serif; font-weight: 800; font-size: 40px; line-height: 1; color: var(--ellada-ink);
+}
+html body .ellada-hguide__note { margin: 18px 0 0; font-size: 14px; line-height: 1.55; color: var(--ellada-muted); }
+html body .ellada-hguide__all .ellada-hguide__more { margin-top: auto; padding-top: 22px; color: var(--ellada-ink); align-self: flex-start; }
+@media (max-width: 1024px) {
+	html body .ellada-hguide { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 767px) {
+	html body .ellada-hguide__card { grid-template-columns: minmax(0, 1fr); padding: 24px; }
+	html body .ellada-hguide__map { order: -1; max-width: 320px; margin: 0 auto; }
+}
+
+html body .ellada-hsubmit {
+	display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 32px; align-items: center; padding: 48px;
+	background: var(--ellada-accent); color: var(--ellada-dark); border-radius: var(--ellada-radius); font-family: "Commissioner", sans-serif;
+}
+html body .ellada-hsubmit .ellada-sh__eyebrow { color: var(--ellada-dark); opacity: .7; }
+html body .ellada-hsubmit__title {
+	margin: 0; font-family: "Fira Sans Extra Condensed", "Commissioner", sans-serif; font-weight: 800; text-transform: uppercase;
+	font-size: clamp(2.2rem, 1.5rem + 2.4vw, 3.6rem); line-height: .92; color: var(--ellada-dark);
+}
+html body .ellada-hsubmit__title strong { color: #F5F4F2; font-weight: 800; }
+html body .ellada-hsubmit__lead { margin: 16px 0 0; max-width: 52ch; font-size: 17px; line-height: 1.55; color: var(--ellada-dark); }
+html body .ellada-hsubmit__actions { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+html body .ellada-hsubmit__btn {
+	display: inline-flex; align-items: center; gap: 10px; padding: 16px 26px; border-radius: 999px; background: var(--ellada-dark); color: #F5F4F2;
+	font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; text-decoration: none; transition: transform .15s;
+}
+html body .ellada-hsubmit__btn:hover { transform: translateY(-1px); color: var(--ellada-accent); }
+html body .ellada-hsubmit__link { font-size: 14px; font-weight: 700; color: var(--ellada-dark); text-decoration: underline; text-underline-offset: 3px; }
+html body .ellada-hsubmit__link:hover { color: #F5F4F2; }
+@media (max-width: 767px) {
+	html body .ellada-hsubmit { grid-template-columns: minmax(0, 1fr); padding: 28px 24px; }
+}

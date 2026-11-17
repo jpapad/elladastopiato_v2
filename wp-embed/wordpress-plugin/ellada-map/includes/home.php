@@ -13,6 +13,9 @@
 
 defined( 'ABSPATH' ) || exit;
 
+/** Από πόσες συνταγές και πάνω η αρχική δείχνει τους αριθμούς συνταγών (αντί για τον οδηγό). */
+const ELLADA_HOME_RECIPE_STATS_MIN = 20;
+
 /* ═════════════════════ Συνταγή της εβδομάδας ═════════════════════ */
 
 function ellada_featured_recipe_id() {
@@ -162,15 +165,29 @@ add_shortcode(
 		ellada_front_style();
 		$a['num'] = ellada_section_num( $a['num'] );
 		$c        = ellada_home_counts();
+		// Με λίγες συνταγές οι αριθμοί «3 συνταγές · 3/13» δείχνουν άδειο site: τότε δείχνουμε τον οδηγό.
+		if ( $c['recipes'] < ELLADA_HOME_RECIPE_STATS_MIN && function_exists( 'ellada_guide_place_counts' ) ) {
+			$g     = ellada_guide_place_counts();
+			$stats = sprintf(
+				'<div><dt>Τόποι στον οδηγό</dt><dd>%s</dd></div><div><dt>Περιφέρειες</dt><dd>%d</dd></div>',
+				esc_html( number_format_i18n( $g['total'] ) ),
+				$g['region']
+			);
+		} else {
+			$stats = sprintf(
+				'<div><dt>Συνταγές</dt><dd>%d</dd></div><div><dt>Περιφέρειες με περιεχόμενο</dt><dd>%d<span>/%d</span></dd></div>',
+				$c['recipes'],
+				$c['regions'],
+				$c['total']
+			);
+		}
 		return sprintf(
-			'<div class="ellada-mapintro"><span class="ellada-sh__num">%s</span><p class="ellada-sh__eyebrow">%s</p><h2 class="ellada-mapintro__title">%s</h2><p class="ellada-mapintro__text">%s</p><dl class="ellada-mapintro__stats"><div><dt>Συνταγές</dt><dd>%d</dd></div><div><dt>Περιφέρειες με περιεχόμενο</dt><dd>%d<span>/%d</span></dd></div></dl></div>',
+			'<div class="ellada-mapintro"><span class="ellada-sh__num">%s</span><p class="ellada-sh__eyebrow">%s</p><h2 class="ellada-mapintro__title">%s</h2><p class="ellada-mapintro__text">%s</p><dl class="ellada-mapintro__stats">%s</dl></div>',
 			esc_html( $a['num'] ),
 			esc_html( $a['eyebrow'] ),
 			wp_kses( $a['title'], array( 'strong' => array(), 'br' => array() ) ),
 			esc_html( $a['text'] ),
-			$c['recipes'],
-			$c['regions'],
-			$c['total']
+			$stats
 		);
 	}
 );
@@ -210,7 +227,7 @@ add_shortcode(
 		return sprintf(
 			'<article class="ellada-feat"><a class="ellada-feat__media" href="%1$s" tabindex="-1" aria-hidden="true">%2$s</a><div class="ellada-feat__body"><p class="ellada-feat__eyebrow">%3$s</p>%4$s<h3 class="ellada-feat__title"><a href="%1$s">%5$s</a></h3>%6$s%7$s<a class="ellada-feat__btn" href="%1$s">Δείτε τη συνταγή <span aria-hidden="true">→</span></a></div></article>',
 			esc_url( $url ),
-			$img ? $img : '<span class="ellada-card__placeholder"></span>',
+			$img ? $img : '<span class="ellada-card__placeholder" aria-hidden="true"><span class="ellada-card__ph-mark"></span>' . ( is_array( $cats ) && $cats ? '<span class="ellada-card__ph-label">' . esc_html( $cats[0]->name ) . '</span>' : '' ) . '</span>',
 			esc_html( $a['eyebrow'] ),
 			$place ? '<p class="ellada-feat__place">' . esc_html( implode( ' · ', $place ) ) . '</p>' : '',
 			esc_html( get_the_title( $id ) ),
