@@ -899,3 +899,141 @@ html body .ellada-hsubmit__link:hover { color: #F5F4F2; }
 @media (max-width: 767px) {
 	html body .ellada-hsubmit { grid-template-columns: minmax(0, 1fr); padding: 28px 24px; }
 }
+
+/* ═════════════════════ Ταξιδιωτικός οδηγός v2 ═════════════════════ */
+html body .ellada-ghub { font-family: "Commissioner", sans-serif; color: var(--ellada-ink); }
+html body .ellada-ghub__wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; box-sizing: border-box; }
+html body .ellada-ghub__eyebrow { margin: 0 0 14px; font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--ellada-accent); }
+html body .ellada-ghub__eyebrow.is-dark { color: var(--ellada-accent-deep); }
+html body .ellada-ghub__title, html body .ellada-ghub__h {
+	margin: 0; font-family: "Fira Sans Extra Condensed", "Commissioner", sans-serif; font-weight: 800; text-transform: uppercase; line-height: .9;
+}
+html body .ellada-ghub__title strong, html body .ellada-ghub__h strong { color: var(--ellada-accent); font-weight: 800; }
+html body .ellada-ghub__title { font-size: clamp(3rem, 2rem + 4vw, 6rem); color: #F5F4F2; }
+html body .ellada-ghub__h { font-size: clamp(2.4rem, 1.8rem + 2.4vw, 4rem); color: var(--ellada-ink); margin-bottom: 32px; }
+
+/* Hero */
+html body .ellada-ghub__hero { background: var(--ellada-dark); color: #F5F4F2; padding: 72px 0 80px; }
+html body .ellada-ghub__hero-in { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+html body .ellada-ghub__lead { margin: 22px 0 0; max-width: 52ch; font-size: 18px; line-height: 1.6; color: rgba(245, 244, 242, .75); }
+html body .ellada-ghub__stats { display: grid; grid-template-columns: repeat(4, auto); justify-content: start; gap: 12px 36px; margin: 32px 0 0; }
+html body .ellada-ghub__stats dt { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(245, 244, 242, .5); }
+html body .ellada-ghub__stats dd { margin: 6px 0 0; font-family: "Fira Sans Extra Condensed", "Commissioner", sans-serif; font-weight: 800; font-size: 40px; line-height: 1; color: #F5F4F2; }
+html body .ellada-gsearch { position: relative; margin: 36px 0 0; max-width: 520px; }
+html body .ellada-gsearch label { display: block; margin-bottom: 8px; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ellada-accent); }
+html body .ellada-gsearch__box { display: flex; background: #F5F4F2; border-radius: 999px; padding: 6px; }
+html body .ellada-gsearch__box input {
+	flex: 1; min-width: 0; height: 46px; padding: 0 18px; border: 0; background: transparent; color: var(--ellada-ink);
+	font: 500 16px/1 "Commissioner", sans-serif; outline: none; box-shadow: none;
+}
+html body .ellada-gsearch__box button {
+	flex: 0 0 46px; height: 46px; padding: 0; border: 0; border-radius: 50%; background: var(--ellada-accent); color: var(--ellada-dark);
+	font-size: 20px; font-weight: 800; cursor: pointer;
+}
+html body .ellada-gsearch__res { position: absolute; z-index: 20; left: 0; right: 0; top: calc(100% + 8px); }
+html body .ellada-gsearch__res:empty { display: none; }
+html body .ellada-gsearch__res ul, html body .ellada-gsearch__res p {
+	margin: 0; padding: 6px; list-style: none; background: var(--ellada-surface); border-radius: 16px; box-shadow: 0 18px 40px rgba(0, 0, 0, .3);
+}
+html body .ellada-gsearch__res p { padding: 16px 18px; color: var(--ellada-muted); font-size: 14px; }
+html body .ellada-gsearch__res a { display: grid; gap: 2px; padding: 10px 14px; border-radius: 10px; color: var(--ellada-ink); text-decoration: none; }
+html body .ellada-gsearch__res a:hover, html body .ellada-gsearch__res a:focus-visible { background: #F5F4F2; }
+html body .ellada-gsearch__res strong { font-size: 15px; }
+html body .ellada-gsearch__res span { font-size: 13px; color: var(--ellada-muted); }
+html body .ellada-ghub__map { margin: 0; }
+html body .ellada-ghub__map svg { display: block; width: 100%; height: auto; max-height: 520px; }
+html body .ellada-ghub__map path { stroke: #0A0A0A; stroke-width: .6; transition: fill .15s; }
+html body .ellada-ghub__map .is-off path { fill: #3A3632; }
+html body .ellada-ghub__map .is-on path { fill: var(--ellada-accent); }
+html body .ellada-ghub__map a:hover path, html body .ellada-ghub__map a:focus-visible path { fill: #F5F4F2; }
+html body .ellada-ghub__map figcaption { display: flex; align-items: center; gap: 8px; justify-content: center; margin-top: 12px; font-size: 12px; color: rgba(245, 244, 242, .6); }
+html body .ellada-ghub__map figcaption span { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+html body .ellada-ghub__map figcaption .is-on { background: var(--ellada-accent); }
+html body .ellada-ghub__map figcaption .is-off { background: #3A3632; margin-left: 12px; }
+
+/* Ενότητες */
+html body .ellada-ghub__sec { padding: 80px 0; background: #F5F4F2; }
+html body .ellada-ghub__sec.is-alt { background: var(--ellada-surface); }
+html body .ellada-ghub__start { display: grid; gap: 16px; }
+html body .ellada-ghub__subs { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+html body .ellada-ghub__sub {
+	display: grid; grid-template-columns: 72px 1fr; gap: 14px; align-items: start; padding: 18px; border: 1px solid var(--ellada-line);
+	border-radius: 14px; background: var(--ellada-surface); color: var(--ellada-ink); text-decoration: none; transition: border-color .15s, transform .15s;
+}
+html body .ellada-ghub__sub:hover { border-color: var(--ellada-accent); transform: translateY(-1px); color: var(--ellada-ink); }
+html body .ellada-ghub__sub-map { width: 72px; height: auto; }
+html body .ellada-ghub__sub-map .is-other path { fill: #E4E1DD; stroke: #fff; stroke-width: .5; }
+html body .ellada-ghub__sub-map .is-on { fill: var(--ellada-accent); }
+html body .ellada-ghub__sub-eyebrow { margin: 0 0 4px; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ellada-muted); }
+html body .ellada-ghub__sub h4 { margin: 0; font-size: 18px; font-weight: 800; color: var(--ellada-ink); }
+html body .ellada-ghub__sub p:last-child { margin: 6px 0 0; font-size: 14px; line-height: 1.5; color: var(--ellada-muted); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* Όλοι οι τόποι */
+html body .ellada-gall { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: start; }
+html body .ellada-gall__reg { border: 1px solid var(--ellada-line); border-radius: 14px; background: var(--ellada-surface); overflow: hidden; }
+html body .ellada-gall__reg.is-on { border-color: var(--ellada-accent); }
+html body .ellada-gall__reg summary {
+	display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; padding: 16px 18px; cursor: pointer; list-style: none; background: #FAF9F7;
+}
+html body .ellada-gall__reg summary::-webkit-details-marker { display: none; }
+html body .ellada-gall__reg summary::after { content: "+"; margin-left: auto; font-size: 20px; font-weight: 700; color: var(--ellada-muted); }
+html body .ellada-gall__reg[open] summary::after { content: "−"; }
+html body .ellada-gall__name { font-family: "Fira Sans Extra Condensed", "Commissioner", sans-serif; font-weight: 800; font-size: 22px; text-transform: uppercase; color: var(--ellada-ink); }
+html body .ellada-gall__sum { flex-basis: 100%; font-size: 12px; color: var(--ellada-muted); }
+html body .ellada-gall__reg ul { margin: 0; padding: 4px 18px 8px; list-style: none; }
+html body .ellada-gall__reg li a, html body .ellada-gall__reg li > span {
+	display: flex; align-items: center; gap: 8px; padding: 9px 0; border-bottom: 1px solid var(--ellada-line); color: var(--ellada-ink); text-decoration: none; font-size: 15px; font-weight: 600;
+}
+html body .ellada-gall__reg li:last-child a { border-bottom: 0; }
+html body .ellada-gall__reg li a:hover span:first-child { color: var(--ellada-accent-deep); }
+html body .ellada-gall__n { margin-left: auto; font-size: 12px; font-weight: 500; color: var(--ellada-muted); }
+html body .ellada-gall__more { display: block; padding: 12px 18px 16px; font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ellada-accent-deep); text-decoration: none; }
+html body .ellada-gbadge {
+	display: inline-block; padding: 3px 8px; border-radius: 999px; background: var(--ellada-accent); color: var(--ellada-dark);
+	font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; line-height: 1.3;
+}
+@media (max-width: 1024px) {
+	html body .ellada-ghub__hero-in { grid-template-columns: minmax(0, 1fr); }
+	html body .ellada-ghub__map { max-width: 520px; margin: 0 auto; }
+	html body .ellada-gall { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 767px) {
+	html body .ellada-ghub__hero { padding: 48px 0 56px; }
+	html body .ellada-ghub__stats { grid-template-columns: repeat(2, auto); }
+	html body .ellada-ghub__stats dd { font-size: 32px; }
+	html body .ellada-ghub__sec { padding: 56px 0; }
+	html body .ellada-gall { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Σελίδες τόπων: hero */
+html body.ellada-guide-v2 .s-loc-hero-in { position: relative; }
+html body .ellada-ghero { font-family: "Commissioner", sans-serif; }
+html body .ellada-ghero__meta { margin: 0; font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ellada-accent); }
+html body .ellada-ghero__map { display: block; width: 100%; max-width: 240px; height: auto; margin-top: 20px; }
+html body .ellada-ghero__map .is-other path { fill: #2A2724; stroke: #0A0A0A; stroke-width: .6; }
+html body .ellada-ghero__map .is-on { fill: var(--ellada-accent); stroke: #0A0A0A; stroke-width: .4; }
+@media (min-width: 1025px) {
+	html body.ellada-guide-v2 .s-loc-hero-in { padding-right: 340px; min-height: 260px; }
+	html body .ellada-ghero__map { position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 300px; max-width: 300px; margin: 0; }
+}
+/* Άδειες ενότητες (χωρίς κάρτες) δεν αφήνουν κενό. */
+html body.ellada-guide-v2 .s-loc-points:not(:has(.ellada-card, .ellada-point)),
+html body.ellada-guide-v2 .s-loc-recipes:not(:has(.ellada-card)) { display: none; }
+
+/* Ο οδηγός γράφεται */
+html body .ellada-gpending {
+	margin: 32px 0; padding: 32px; border-radius: var(--ellada-radius); background: var(--ellada-dark); color: #F5F4F2; font-family: "Commissioner", sans-serif;
+}
+html body .ellada-gpending__eyebrow { margin: 0 0 10px; font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--ellada-accent); }
+html body .ellada-gpending__title {
+	margin: 0 0 12px; font-family: "Fira Sans Extra Condensed", "Commissioner", sans-serif; font-weight: 800; text-transform: uppercase;
+	font-size: clamp(1.8rem, 1.3rem + 1.6vw, 2.6rem); line-height: .95; color: #F5F4F2;
+}
+html body .ellada-gpending p { margin: 0; max-width: 60ch; font-size: 16px; line-height: 1.6; color: rgba(245, 244, 242, .75); }
+html body .ellada-gpending__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; margin-top: 22px; }
+html body .ellada-gpending__btn {
+	display: inline-flex; padding: 14px 22px; border-radius: 999px; background: var(--ellada-accent); color: var(--ellada-dark);
+	font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; text-decoration: none;
+}
+html body .ellada-gpending__btn:hover { color: var(--ellada-dark); background: #F5F4F2; }
+html body .ellada-gpending__link { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #F5F4F2; text-decoration: none; border-bottom: 2px solid var(--ellada-accent); padding: 4px 0; }
