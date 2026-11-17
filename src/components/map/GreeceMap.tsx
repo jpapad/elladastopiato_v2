@@ -77,6 +77,8 @@ export type GreeceMapProps = MapDataConfig & {
   startRegion?: string
   /** Άνοιγμα κατευθείαν σε έναν οικισμό: «ΝΟΜΟΣ|Δήμος|id» (π.χ. από την αναζήτηση του site). */
   startPlace?: string
+  /** Χωρίς την κάρτα της περιοχής στο άνοιγμα (π.χ. όταν ο χάρτης είναι μέσα στη σελίδα της ίδιας περιοχής). */
+  hideStartCard?: boolean
   /** Εμφάνιση περιοχών χωρίς περιεχόμενο (default 'normal'). */
   emptyAreas?: EmptyAreas
   /** Αλλαγές στα κείμενα του χάρτη. */
@@ -187,6 +189,7 @@ export default function GreeceMap({
   legend = false,
   startRegion,
   startPlace,
+  hideStartCard = false,
   emptyAreas = 'normal',
   texts,
 }: GreeceMapProps) {
@@ -258,7 +261,7 @@ export default function GreeceMap({
   const [selectedMuni, setSelectedMuni] = useState<GeoFeature | null>(null)
   const [selectedPointId, setSelectedPointId] = useState<number | null>(null)
   const [selectedSettlementId, setSelectedSettlementId] = useState<number | null>(null)
-  const [cardDismissed, setCardDismissed] = useState(false)
+  const [cardDismissed, setCardDismissed] = useState(hideStartCard)
 
   const [hovered, setHovered] = useState<{ kind: string; name: string; meta?: string } | null>(null)
   const [direction, setDirection] = useState(1)

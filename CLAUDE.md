@@ -56,7 +56,13 @@
 ## Πρόοδος
 - Κείμενα live: Κρήτη (140), Χανιά 292, Ρέθυμνο 291, Ηράκλειο 289, Λασίθι 290 και οι 24 δήμοι
   της Κρήτης — 32 URLs τοποθεσιών στο sitemap.
-- ellada-map **1.15.2** live (backups έως 1.15.1). **`guide_v2` ΑΝΟΙΧΤΟ**· meta description τόπων = αρχή του `guide_intro`.
+- ellada-map **1.16.1** live (backups έως 1.16.0). 1.16.x: σελίδα τόπου v3 πίσω από flag **`guide_v3`** (κλειστό·
+  `?ellada_preview=1`), `includes/guide-v3.php`: hero = περιφέρεια σε μεγέθυνση με νομούς-links, μενού πλοήγησης,
+  «Τι να φάτε» (νέο ACF `dishes`: «Πιάτο | φράση», link σε συνταγή), «Τοπικά προϊόντα» (`local_products`: «Όνομα | σημείωση»),
+  «Πότε & πώς» (`best_time_to_visit`, νέο ACF `food_calendar`: «Εποχή | τι», `how_to_get_there`, `travel_tips` ανά γραμμή),
+  νομοί σε κάρτες, CTA συνταγών, χάρτης χωρίς κάρτα (`data-hide-card`), TouristDestination. Πρόχειρα κείμενα:
+  meta `_preview_<πεδίο>` (φαίνονται μόνο σε preview). Κρήτη (140): πρόχειρα γραμμένα, περιμένουν έγκριση.
+- ellada-map 1.15.2: **`guide_v2` ΑΝΟΙΧΤΟ**· meta description τόπων = αρχή του `guide_intro`.
   1.15.x: οδηγός v2 πίσω από flag **`guide_v2`**, `includes/guide-v2.php`: `[ellada_guide_hub2]` (νέο /odigos/: hero + «Πού πάτε;» μέσω
   `ellada/v1/search` + χάρτης-links, «Ξεκινήστε από εδώ», 13 περιφέρειες σε details, CTA), `[ellada_guide_hero]` (widget
   `loc-ghero` στο template 118· backup meta `_elementor_data_backup_2026_11_17`), «… : ο οδηγός γράφεται» σε σελίδες

@@ -10,6 +10,7 @@
  *   data-api                 Ρίζα REST API (rest_url()), π.χ. https://elladastopiato.gr/wp-json/
  *   data-geo                 URL φακέλου με regions.json / prefectures.json / municipalities.json
  *   data-settlements="true"  Πόλεις και χωριά: στον νομό οι πόλεις, στον δήμο όλοι (settlements/, ανά νομό)
+ *   data-hide-card="true"   Ο χάρτης ανοίγει χωρίς την κάρτα της περιοχής εκκίνησης
  *   data-start-place         Άνοιγμα σε οικισμό: «ΝΟΜΟΣ|Δήμος|id». Και από τη διεύθυνση: ?topos=…
  *   data-title               Τίτλος (default «Εξερεύνηση»)
  *   data-height              Ελάχιστο ύψος σε px (default 600)
@@ -53,6 +54,7 @@ export type EmbedConfig = {
   legend?: boolean
   startRegion?: string
   startPlace?: string
+  hideStartCard?: boolean
   emptyAreas?: EmptyAreas
   texts?: MapTexts
 }
@@ -169,6 +171,7 @@ function readConfig(el: HTMLElement): EmbedConfig {
     pointTypes: pointTypes.length ? pointTypes : undefined,
     legend: d.legend === 'true' || d.legend === '1',
     startRegion: d.startRegion || undefined,
+    hideStartCard: d.hideCard === 'true',
     // Μόνο ο πρώτος χάρτης της σελίδας ακούει τη διεύθυνση (?topos=ΝΟΜΟΣ|Δήμος|id).
     startPlace:
       d.startPlace ||
@@ -236,6 +239,7 @@ export function mount(el: HTMLElement, overrides: EmbedConfig = {}) {
         legend={config.legend}
         startRegion={config.startRegion}
         startPlace={config.startPlace}
+        hideStartCard={config.hideStartCard}
         emptyAreas={config.emptyAreas}
         texts={config.texts}
         onSelect={onSelect}

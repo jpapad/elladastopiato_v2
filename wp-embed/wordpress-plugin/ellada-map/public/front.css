@@ -1037,3 +1037,84 @@ html body .ellada-gpending__btn {
 }
 html body .ellada-gpending__btn:hover { color: var(--ellada-dark); background: #F5F4F2; }
 html body .ellada-gpending__link { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #F5F4F2; text-decoration: none; border-bottom: 2px solid var(--ellada-accent); padding: 4px 0; }
+
+/* ═════════════════════ Σελίδα τόπου v3 ═════════════════════ */
+/* Hero: η περιφέρεια σε μεγέθυνση */
+html body .ellada-gzoom { display: block; width: 100%; max-width: 360px; height: auto; max-height: 240px; margin-top: 20px; }
+html body .ellada-gzoom path { stroke: #0A0A0A; stroke-width: .25; vector-effect: non-scaling-stroke; transition: fill .15s; }
+html body .ellada-gzoom .is-on path { fill: var(--ellada-accent); }
+html body .ellada-gzoom .is-off path { fill: #3A3632; }
+html body .ellada-gzoom a:hover path, html body .ellada-gzoom a:focus-visible path { fill: #F5F4F2; }
+@media (min-width: 1025px) {
+	html body .ellada-ghero .ellada-gzoom { position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 340px; max-width: 340px; margin: 0; }
+}
+
+/* Μενού πλοήγησης */
+html body .ellada-gnav {
+	position: sticky; top: 0; z-index: 15; margin: -8px 0 28px; padding: 10px 0; background: color-mix(in srgb, #F5F4F2 92%, transparent);
+	backdrop-filter: blur(6px); border-bottom: 1px solid var(--ellada-line); font-family: "Commissioner", sans-serif;
+}
+html body .ellada-gnav ul { display: flex; gap: 6px; margin: 0; padding: 0; list-style: none; overflow-x: auto; scrollbar-width: none; }
+html body .ellada-gnav ul::-webkit-scrollbar { display: none; }
+html body .ellada-gnav a {
+	display: inline-block; padding: 8px 14px; border-radius: 999px; white-space: nowrap; font-size: 13px; font-weight: 700;
+	color: var(--ellada-ink); text-decoration: none; border: 1px solid transparent;
+}
+html body .ellada-gnav a:hover, html body .ellada-gnav a:focus-visible { border-color: var(--ellada-accent); color: var(--ellada-accent-deep); }
+html body #me-mia-matia, html body #ti-na-fate, html body #pote, html body #topoi, html body #syntages, html body #xartis { scroll-margin-top: 80px; }
+
+/* Τι να φάτε */
+html body .ellada-gfood { margin: 48px 0 0; font-family: "Commissioner", sans-serif; }
+html body .ellada-gfood__h { margin: 28px 0 14px; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ellada-muted); }
+html body .ellada-gdishes { margin: 16px 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+html body .ellada-gdishes li > a, html body .ellada-gdishes li > div {
+	display: grid; gap: 6px; height: 100%; box-sizing: border-box; padding: 16px 18px; border: 1px solid var(--ellada-line);
+	border-radius: 14px; background: var(--ellada-surface); color: var(--ellada-ink); text-decoration: none;
+}
+html body .ellada-gdishes li.has-recipe > a { border-color: color-mix(in srgb, var(--ellada-accent) 45%, var(--ellada-line)); }
+html body .ellada-gdishes li > a:hover { border-color: var(--ellada-accent); }
+html body .ellada-gdishes strong { font-size: 16px; font-weight: 800; }
+html body .ellada-gdishes span { font-size: 14px; line-height: 1.5; color: var(--ellada-muted); }
+html body .ellada-gdishes em { font-style: normal; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ellada-accent-deep); }
+html body .ellada-gproducts { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+html body .ellada-gproducts li {
+	display: inline-flex; flex-direction: column; padding: 10px 14px; border-radius: 12px; background: var(--ellada-dark); color: #F5F4F2;
+}
+html body .ellada-gproducts strong { font-size: 14px; font-weight: 700; }
+html body .ellada-gproducts span { font-size: 12px; color: rgba(245, 244, 242, .65); }
+
+/* Πότε & πώς */
+html body .ellada-gwhen { margin: 48px 0 0; font-family: "Commissioner", sans-serif; }
+html body .ellada-gwhen__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; margin-top: 16px; }
+html body .ellada-gwhen__best { margin: 0; padding: 16px 18px; border-radius: 14px; background: var(--ellada-accent); color: var(--ellada-dark); font-size: 18px; font-weight: 800; }
+html body .ellada-gwhen__best span { display: block; margin-bottom: 4px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; opacity: .75; }
+html body .ellada-gcal { margin: 0; padding: 0; list-style: none; border-left: 2px solid var(--ellada-accent); }
+html body .ellada-gcal li { display: grid; gap: 2px; padding: 0 0 14px 18px; position: relative; }
+html body .ellada-gcal li::before { content: ""; position: absolute; left: -7px; top: 5px; width: 12px; height: 12px; border-radius: 50%; background: var(--ellada-accent); box-shadow: 0 0 0 3px #F5F4F2; }
+html body .ellada-gcal__when { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--ellada-ink); }
+html body .ellada-gcal__what { font-size: 15px; line-height: 1.55; color: var(--ellada-muted); }
+html body .ellada-gwhen__text p { margin: 0 0 10px; font-size: 16px; line-height: 1.65; color: var(--ellada-ink); }
+html body .ellada-gtips { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+html body .ellada-gtips li { position: relative; padding-left: 22px; font-size: 15px; line-height: 1.6; }
+html body .ellada-gtips li::before { content: "→"; position: absolute; left: 0; color: var(--ellada-accent-deep); font-weight: 700; }
+@media (max-width: 767px) {
+	html body .ellada-gwhen__grid { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+}
+
+/* Οι νομοί σε κάρτες */
+html body .ellada-gprefs { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-top: 16px; }
+html body .ellada-gpref {
+	display: grid; grid-template-columns: 96px 1fr; gap: 16px; align-items: start; padding: 18px; border: 1px solid var(--ellada-line);
+	border-radius: 14px; background: var(--ellada-surface); color: var(--ellada-ink); text-decoration: none; transition: border-color .15s, transform .15s;
+}
+html body .ellada-gpref:hover { border-color: var(--ellada-accent); transform: translateY(-1px); color: var(--ellada-ink); }
+html body .ellada-gpref .ellada-gzoom { width: 96px; max-width: 96px; margin: 0; }
+html body .ellada-gpref .ellada-gzoom .is-off path { fill: #E4E1DD; }
+html body .ellada-gpref .ellada-gzoom path { stroke: #fff; }
+html body .ellada-gpref h3 { margin: 0; font-family: "Fira Sans Extra Condensed", "Commissioner", sans-serif; font-size: 24px; font-weight: 800; text-transform: uppercase; color: var(--ellada-ink); }
+html body .ellada-gpref p:last-child { margin: 6px 0 0; font-size: 14px; line-height: 1.5; color: var(--ellada-muted); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* Συνταγές της περιοχής */
+html body .ellada-grecipes { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; margin-top: 24px; font-family: "Commissioner", sans-serif; }
+html body .ellada-grecipes__all { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ellada-ink); text-decoration: none; border-bottom: 2px solid var(--ellada-accent); padding: 4px 0; }
+html body .ellada-grecipes__send { font-size: 14px; font-weight: 600; color: var(--ellada-accent-deep); }

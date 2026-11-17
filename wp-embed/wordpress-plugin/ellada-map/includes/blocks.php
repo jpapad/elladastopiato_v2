@@ -357,6 +357,8 @@ add_shortcode(
 		$args = array(
 			'start_region' => $area['region'],
 			'height'       => isset( $atts['height'] ) ? $atts['height'] : '',
+			// Μέσα στη σελίδα της ίδιας περιοχής η κάρτα «Ο γαστρονομικός οδηγός» περισσεύει.
+			'hide_card'    => function_exists( 'ellada_guide_v3' ) && ellada_guide_v3(),
 		);
 		// Δήμος ή χωριό: ο χάρτης ανοίγει κατευθείαν εκεί.
 		if ( function_exists( 'ellada_feature' ) && ellada_feature( 'guide' ) && $area['municipality'] && false !== strpos( $area['municipality'], '|' ) ) {

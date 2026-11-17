@@ -765,6 +765,16 @@ function ellada_guide_install_fields() {
 		'field_ellada_loc_intro'
 	);
 	$add(
+		array_merge( $base, array( 'key' => 'field_ellada_loc_dishes', 'label' => 'Τι να φάτε', 'name' => 'dishes', 'type' => 'textarea', 'rows' => 8, 'new_lines' => '', 'instructions' => 'Ένα πιάτο ανά γραμμή: «Πιάτο | μία φράση». Αν υπάρχει συνταγή με το ίδιο όνομα, γίνεται link.' ) ),
+		$loc_group,
+		'field_ellada_loc_why'
+	);
+	$add(
+		array_merge( $base, array( 'key' => 'field_ellada_loc_food_calendar', 'label' => 'Γαστρονομικό ημερολόγιο', 'name' => 'food_calendar', 'type' => 'textarea', 'rows' => 5, 'new_lines' => '', 'instructions' => 'Μία εποχή ανά γραμμή: «Εποχή | τι τρώγεται».' ) ),
+		$loc_group,
+		'field_ellada_loc_dishes'
+	);
+	$add(
 		array_merge( $base, array( 'key' => 'field_ellada_pt_when', 'label' => 'Πότε γίνεται', 'name' => 'event_when', 'type' => 'text', 'instructions' => 'π.χ. «14–15 Αυγούστου» ή «Κάθε Σάββατο του Οκτωβρίου».', 'conditional_logic' => array( array( array( 'field' => 'field_ellada_pt_type', 'operator' => '==', 'value' => 'festival' ) ) ) ) ),
 		$pt_group,
 		'field_ellada_pt_type'
