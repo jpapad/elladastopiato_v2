@@ -182,6 +182,7 @@ add_action(
 					'url'   => $home,
 					'logo'  => $logo ? array( '@type' => 'ImageObject', 'url' => $logo, 'width' => 512, 'height' => 512 ) : null,
 					'email' => 'info@elladastopiato.gr',
+					'description' => wp_specialchars_decode( get_bloginfo( 'description' ), ENT_QUOTES ),
 				)
 			),
 		);

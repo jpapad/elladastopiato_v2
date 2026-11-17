@@ -56,8 +56,11 @@
 ## Πρόοδος
 - Κείμενα live: Κρήτη (140), Χανιά 292, Ρέθυμνο 291, Ηράκλειο 289, Λασίθι 290 και οι 24 δήμοι
   της Κρήτης — 32 URLs τοποθεσιών στο sitemap.
-- ellada-map **1.19.0** live (backups έως 1.18.2). 1.19.0: `includes/trust.php` — ACF συνταγής `recipe_kind` (traditional|variation|modern),
-  `sources` («Τίτλος | URL» ανά γραμμή), `verified_by`, `verified_on`· ACF τόπου `sources`. Πίσω από flag **`trust`** (ΚΛΕΙΣΤΟ): σήμα είδους
+- ellada-map **1.19.1** live (backups έως 1.19.0). **Κεντρικό μήνυμα** (1.19.1): «Ανακαλύπτουμε την Ελλάδα μέσα από τις γεύσεις, τις παραδόσεις
+  και τους ανθρώπους της» — blogdescription (παλιό στο option `ellada_blogdescription_backup_2026_11_17`), footer 624 (`footer-tagline`,
+  backup `_elementor_data_backup_2026_11_17`), αρχική 163 `home2-lead` (backup `_elementor_data_backup_2026_11_17b`), meta description αρχικής (`seo.php`).
+  1.19.0: `includes/trust.php` — ACF συνταγής `recipe_kind` (traditional|variation|modern),
+  `sources` («Τίτλος | URL» ανά γραμμή), `verified_by`, `verified_on`· ACF τόπου `sources`. Flag **`trust`** ΑΝΟΙΧΤΟ: σήμα είδους
   δίπλα στη διαδρομή, κουτί «Σχετικά με τη συνταγή» μετά τα βήματα, «Πηγές» + «Βρήκατε λάθος; Πείτε μας» σε τόπους με κείμενο →
   Επικοινωνία `?thema=lathos&selida=<id>` (το μήνυμα γεμίζει με τίτλο + URL)· schema `citation`. «Τι λείπει»: Είδος/Πηγές.
   `best_time_to_visit` είναι SELECT (all_year|spring|summer|autumn|winter) — όχι ελεύθερο κείμενο.
@@ -124,6 +127,7 @@
   `src/components/map/geo.ts`) και φορτώνει μόνο τα απαραίτητα ACF πεδία. Backup 1.11.2 υπάρχει.
 
 ## Εκκρεμότητες / επόμενα
+- Επόμενο: ενότητα «Οι γεύσεις που χάνονται» (σήμα, μαρτυρίες, κάλεσμα). Πηγές/είδος για 141–143 όταν τα δώσει ο χρήστης.
 - Κείμενα για άλλη περιφέρεια (η Κρήτη και οι 4 νομοί της είναι πλήρεις).
 - Συνταγές από το πλάνο περιεχομένου (3 ανά περιφέρεια, πρώτα Χριστούγεννα/Σαρακοστή) — λίστα «Συνταγές που λείπουν» στο admin.
 - Φωτογραφία εξωφύλλου (`cover_image`) για Κρήτη/νομούς όταν ο χρήστης δώσει δικές του.
