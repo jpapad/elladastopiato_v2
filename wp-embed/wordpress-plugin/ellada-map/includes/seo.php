@@ -120,6 +120,9 @@ function ellada_meta_data() {
 			$cover = (int) get_post_meta( $id, 'cover_image', true );
 			$img   = $cover ? wp_get_attachment_image_url( $cover, 'large' ) : '';
 		}
+		if ( ! $img && function_exists( 'ellada_recipe_v3' ) && ellada_recipe_v3() && in_array( $pt, array( 'ellada_recipe', 'ellada_location' ), true ) ) {
+			$img = ellada_og_card_url( $id ); // αυτόματη εικόνα κοινοποίησης
+		}
 		$data['image'] = $img ? $img : '';
 	} elseif ( is_post_type_archive( 'ellada_recipe' ) ) {
 		$data['description'] = function_exists( 'ellada_recipes_intro_text' ) ? ellada_recipes_intro_text() : 'Παραδοσιακές συνταγές από όλη την Ελλάδα, οργανωμένες ανά περιοχή και κατηγορία.';

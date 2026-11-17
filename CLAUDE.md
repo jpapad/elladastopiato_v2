@@ -56,7 +56,14 @@
 ## Πρόοδος
 - Κείμενα live: Κρήτη (140), Χανιά 292, Ρέθυμνο 291, Ηράκλειο 289, Λασίθι 290 και οι 24 δήμοι
   της Κρήτης — 32 URLs τοποθεσιών στο sitemap.
-- ellada-map **1.17.1** live (backups έως 1.17.0). 1.17.x: διαχειριστικό (`includes/admin-ux.php`): απλή οθόνη αντί για
+- ellada-map **1.18.2** live (backups έως 1.17.1). 1.18.x: `includes/recipes-v3.php` — διαχειριστικό (ενεργό): taxonomy `recipe_occasion`
+  (περιστάσεις· συλλογές γεμίζουν από το «Θέμα»: christmas→xristougenna+protoxronia κ.λπ., filter `ellada_recipe_query_args`),
+  Συνταγές → «Συνταγές που λείπουν» (πιάτα `dishes` χωρίς συνταγή, «Νέα συνταγή» με `?ellada_title=&ellada_location=`),
+  «Ολόκληρη συνταγή» στη Γρήγορη συμπλήρωση (`ellada_quick_parse_full`), «Νηστίσιμη;» στο «Τι λείπει» (`ellada_fasting_hint`),
+  μεγέθη ellada-1x1/4x3/16x9. Πίσω από flag **`recipe_v3`** (ΚΛΕΙΣΤΟ): «Το έφτιαξα!» (REST `ellada/v1/made/<id>`, meta `_ellada_made`),
+  ♥ Αγαπημένα (localStorage `ellada-favs`, REST `ellada/v1/cards`), σελίδα 649 «Οι συνταγές μου» (draft, `[ellada_my_recipes]`),
+  schema image σε αναλογίες, αυτόματη OG εικόνα (GD, `uploads/ellada-og/`, fonts στο `assets/fonts/`).
+- ellada-map 1.17.1: 1.17.x: διαχειριστικό (`includes/admin-ux.php`): απλή οθόνη αντί για
   Gutenberg σε recipe/location/point/collection (πεδία ACF κάτω από τον τίτλο), χωρίς κουτί κειμένου στις συνταγές,
   οδηγία τίτλου ανά τύπο (priority 99, μετά το ACF), παραδείγματα στα άδεια πεδία, κουτί «Τι λείπει» στο πλάι.
 - ellada-map 1.16.1: **`guide_v3` ΑΝΟΙΧΤΟ**. 1.16.x: σελίδα τόπου v3 πίσω από flag **`guide_v3`**, `includes/guide-v3.php`: hero = περιφέρεια σε μεγέθυνση με νομούς-links, μενού πλοήγησης,

@@ -1118,3 +1118,22 @@ html body .ellada-gpref p:last-child { margin: 6px 0 0; font-size: 14px; line-he
 html body .ellada-grecipes { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; margin-top: 24px; font-family: "Commissioner", sans-serif; }
 html body .ellada-grecipes__all { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ellada-ink); text-decoration: none; border-bottom: 2px solid var(--ellada-accent); padding: 4px 0; }
 html body .ellada-grecipes__send { font-size: 14px; font-weight: 600; color: var(--ellada-accent-deep); }
+
+/* ═════ Συνταγές v3: Το έφτιαξα! · Αγαπημένα · Οι συνταγές μου ═════ */
+html body .ellada-made { margin: 28px 0 0; padding: 20px 22px; border: 1px dashed var(--ellada-line, #e4e0da); border-radius: 14px; display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; background: var(--ellada-surface, #faf8f5); }
+html body .ellada-made__btn { font: inherit; font-weight: 700; cursor: pointer; padding: 11px 20px; border-radius: 999px; border: 2px solid var(--ellada-accent); background: var(--ellada-accent); color: var(--ellada-dark); }
+html body .ellada-made__btn:hover, html body .ellada-made__btn:focus-visible { background: var(--ellada-dark); border-color: var(--ellada-dark); color: #F5F4F2; }
+html body .ellada-made__btn.is-done { background: transparent; color: var(--ellada-accent-deep); cursor: default; }
+html body .ellada-made__count { margin: 0; color: var(--ellada-muted, #6b655e); font-size: .95em; }
+html body .ellada-ractions__btn.is-fav[aria-pressed="true"] { border-color: var(--ellada-accent); color: var(--ellada-accent-deep); }
+html body .ellada-ractions__btn.is-fav [aria-hidden] { color: var(--ellada-accent); }
+html body .ellada-fav-note { align-self: center; font-size: .9em; font-weight: 600; color: var(--ellada-accent-deep); text-decoration: none; }
+html body .ellada-myrecipes .ellada-cards:empty, html body .ellada-myrecipes.has-favs .ellada-myrecipes__empty { display: none; }
+html body .ellada-myrecipes__empty { padding: 28px; border: 1px dashed var(--ellada-line, #e4e0da); border-radius: 14px; text-align: center; color: var(--ellada-muted, #6b655e); }
+html body .ellada-myrecipes__more { margin-top: 24px; font-weight: 600; }
+html body .ellada-myrecipes__more a { color: var(--ellada-accent-deep); }
+@media print { html body .ellada-made, html body .ellada-fav-note { display: none !important; } }
+html body.ellada-page-mine main.site-main { max-width: 1200px; margin: 0 auto; padding: 48px 20px 72px; }
+html body.ellada-page-mine .page-header h1 { margin: 0 0 12px; }
+html body .ellada-myrecipes { margin-top: 28px; }
+html body .ellada-myrecipes a { text-decoration: none; }

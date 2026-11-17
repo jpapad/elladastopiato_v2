@@ -279,6 +279,79 @@
 		});
 	}
 
+	/* ── Το έφτιαξα! (ένα κλικ ανά συσκευή, χωρίς προσωπικά δεδομένα) ── */
+	function madeLabel(n) {
+		return n ? (n === 1 ? 'Την έφτιαξε 1 άτομο' : 'Την έφτιαξαν ' + n.toLocaleString('el-GR') + ' άτομα') : 'Γίνετε οι πρώτοι που θα τη φτιάξουν';
+	}
+	function made(box) {
+		var id = box.getAttribute('data-ellada-made');
+		var url = box.getAttribute('data-endpoint');
+		var btn = box.querySelector('button');
+		var count = box.querySelector('[data-made-count]');
+		var key = 'ellada-made-' + id;
+		function done() {
+			btn.disabled = true;
+			btn.classList.add('is-done');
+			btn.querySelector('[data-made-label]').textContent = 'Την έφτιαξα ✓';
+		}
+		if (store(key)) done();
+		// Ο μετρητής από τον server (η σελίδα μπορεί να είναι σε cache).
+		fetch(url, { credentials: 'omit' }).then(function (r) { return r.json(); }).then(function (d) {
+			if (d && typeof d.count === 'number') count.textContent = madeLabel(d.count);
+		}).catch(function () {});
+		btn.addEventListener('click', function () {
+			if (store(key)) return;
+			store(key, 1);
+			done();
+			fetch(url, { method: 'POST', credentials: 'omit' }).then(function (r) { return r.json(); }).then(function (d) {
+				if (d && typeof d.count === 'number') count.textContent = madeLabel(d.count) + ' — ευχαριστούμε!';
+			}).catch(function () {});
+		});
+	}
+
+	/* ── Αγαπημένα (μόνο σε αυτή τη συσκευή) ── */
+	function favs() {
+		var f = store('ellada-favs');
+		return Array.isArray(f) ? f : [];
+	}
+	function fav(btn) {
+		var id = parseInt(btn.getAttribute('data-ellada-fav'), 10);
+		var page = btn.getAttribute('data-page');
+		function paint() {
+			var on = favs().indexOf(id) !== -1;
+			btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+			btn.querySelector('[aria-hidden]').textContent = on ? '♥' : '♡';
+			btn.querySelector('[data-fav-label]').textContent = on ? 'Στις αγαπημένες' : 'Αγαπημένη';
+		}
+		paint();
+		btn.addEventListener('click', function () {
+			var f = favs();
+			var i = f.indexOf(id);
+			if (i === -1) f.unshift(id);
+			else f.splice(i, 1);
+			store('ellada-favs', f.slice(0, 60));
+			paint();
+			if (i === -1 && page && !btn.parentNode.querySelector('.ellada-fav-note')) {
+				var a = document.createElement('a');
+				a.className = 'ellada-fav-note';
+				a.href = page;
+				a.textContent = 'Οι συνταγές μου →';
+				btn.insertAdjacentElement('afterend', a);
+			}
+		});
+	}
+	function myRecipes(box) {
+		var ids = favs();
+		if (!ids.length) return;
+		box.classList.add('has-favs');
+		fetch(box.getAttribute('data-endpoint') + '?ids=' + ids.join(','), { credentials: 'omit' })
+			.then(function (r) { return r.json(); })
+			.then(function (d) {
+				if (d && d.html) box.querySelector('.ellada-cards').innerHTML = d.html;
+				else box.classList.remove('has-favs');
+			}).catch(function () { box.classList.remove('has-favs'); });
+	}
+
 	function init() {
 		document.querySelectorAll('[data-ellada-cook]').forEach(cook);
 		document.querySelectorAll('[data-ellada-shop]').forEach(shopping);
@@ -290,6 +363,9 @@
 		var st = document.querySelector('.ellada-steps.is-tools');
 		if (st) steps(st, ing ? ing.getAttribute('data-recipe') : location.pathname);
 		document.querySelectorAll('.ellada-ractions').forEach(actions);
+		document.querySelectorAll('[data-ellada-made]').forEach(made);
+		document.querySelectorAll('[data-ellada-fav]').forEach(fav);
+		document.querySelectorAll('.ellada-myrecipes').forEach(myRecipes);
 	}
 
 	if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

@@ -105,6 +105,11 @@ function ellada_admin_checklist( $post ) {
 		$add( (bool) array_filter( (array) get_post_meta( $id, 'allergens', true ) ), 'Αλλεργιογόνα', '', true );
 		$add( '' !== $meta( 'story' ), 'Η ιστορία της συνταγής', '', true );
 		$add( '' !== $meta( 'variations' ), 'Παραλλαγές', '', true );
+		$occ = get_the_terms( $id, 'recipe_occasion' );
+		$add( is_array( $occ ) && $occ, 'Περίσταση', is_array( $occ ) && $occ ? implode( ', ', wp_list_pluck( $occ, 'name' ) ) : 'γιορτή/εποχή → Συλλογές', true );
+		if ( function_exists( 'ellada_fasting_hint' ) && ellada_fasting_hint( $id ) ) {
+			$rows[] = array( 'no', 'Νηστίσιμη;', 'χωρίς ζωικά υλικά — «Νηστίσιμο» στη Διατροφή, αν ισχύει' );
+		}
 	} elseif ( 'ellada_location' === $post->post_type ) {
 		$intro = '' !== $meta( 'guide_intro' );
 		$add( '' !== $meta( 'map_level' ), 'Επίπεδο & θέση στον χάρτη' );
@@ -123,7 +128,7 @@ function ellada_admin_checklist( $post ) {
 		$add( (bool) $meta( 'cover_image' ), 'Φωτογραφία', '', true );
 		$add( '' !== $meta( 'external_url' ), 'Σύνδεσμος', '', true );
 	} elseif ( 'ellada_collection' === $post->post_type ) {
-		$n = count( array_filter( (array) get_post_meta( $id, 'recipes', true ) ) );
+		$n = function_exists( 'ellada_collection_recipe_ids' ) ? count( ellada_collection_recipe_ids( $id ) ) : count( array_filter( (array) get_post_meta( $id, 'recipes', true ) ) );
 		$add( has_post_thumbnail( $id ), 'Φωτογραφία' );
 		$add( '' !== $meta( 'short_description' ), 'Σύντομη περιγραφή' );
 		$add( $n > 0, 'Συνταγές', $n ? (string) $n : '' );

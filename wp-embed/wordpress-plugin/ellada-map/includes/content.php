@@ -260,7 +260,7 @@ function ellada_recipe_query_args( $source, $post_id, $limit = 12, $post_type = 
 		default: // latest
 			$args['orderby'] = 'date';
 	}
-	return $args;
+	return apply_filters( 'ellada_recipe_query_args', $args, $source, $post_id );
 }
 
 /**

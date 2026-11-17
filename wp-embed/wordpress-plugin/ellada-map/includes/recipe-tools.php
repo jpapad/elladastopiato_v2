@@ -63,9 +63,9 @@ function ellada_recipe_actions_html( $id ) {
 		esc_attr( $title ),
 		$id,
 		$links,
-		function_exists( 'ellada_recipe_v2' ) && ellada_recipe_v2()
+		( function_exists( 'ellada_recipe_v2' ) && ellada_recipe_v2()
 			? '<button type="button" class="ellada-ractions__btn is-cook" data-ellada-cook aria-pressed="false"><span aria-hidden="true">◉</span> <span data-cook-label>Μαγειρεύω τώρα</span></button>'
-			: ''
+			: '') . apply_filters( 'ellada_recipe_actions_extra', '', $id )
 	);
 }
 
@@ -149,6 +149,7 @@ add_action(
 
 function ellada_quick_box() {
 	wp_nonce_field( 'ellada_quick', 'ellada_quick_nonce' );
+	do_action( 'ellada_quick_box_top' );
 	?>
 	<p>Επικολλήστε τη συνταγή όπως είναι γραμμένη. Με την αποθήκευση, τα υλικά και τα βήματα μπαίνουν στα αντίστοιχα πεδία πιο κάτω.</p>
 	<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px">
