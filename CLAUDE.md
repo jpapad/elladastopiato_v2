@@ -60,8 +60,8 @@
   (περιστάσεις· συλλογές γεμίζουν από το «Θέμα»: christmas→xristougenna+protoxronia κ.λπ., filter `ellada_recipe_query_args`),
   Συνταγές → «Συνταγές που λείπουν» (πιάτα `dishes` χωρίς συνταγή, «Νέα συνταγή» με `?ellada_title=&ellada_location=`),
   «Ολόκληρη συνταγή» στη Γρήγορη συμπλήρωση (`ellada_quick_parse_full`), «Νηστίσιμη;» στο «Τι λείπει» (`ellada_fasting_hint`),
-  μεγέθη ellada-1x1/4x3/16x9. Πίσω από flag **`recipe_v3`** (ΚΛΕΙΣΤΟ): «Το έφτιαξα!» (REST `ellada/v1/made/<id>`, meta `_ellada_made`),
-  ♥ Αγαπημένα (localStorage `ellada-favs`, REST `ellada/v1/cards`), σελίδα 649 «Οι συνταγές μου» (draft, `[ellada_my_recipes]`),
+  μεγέθη ellada-1x1/4x3/16x9. Flag **`recipe_v3`** ΑΝΟΙΧΤΟ: «Το έφτιαξα!» (REST `ellada/v1/made/<id>`, meta `_ellada_made`),
+  ♥ Αγαπημένα (localStorage `ellada-favs`, REST `ellada/v1/cards`), σελίδα 649 «Οι συνταγές μου» (`/oi-syntages-mou/`, δημοσιευμένη, `[ellada_my_recipes]`)· απόρρητο (3) ενημερωμένο (backup meta `_ellada_content_backup_2026_11_17`),
   schema image σε αναλογίες, αυτόματη OG εικόνα (GD, `uploads/ellada-og/`, fonts στο `public/fonts/`).
 - ellada-map 1.17.1: 1.17.x: διαχειριστικό (`includes/admin-ux.php`): απλή οθόνη αντί για
   Gutenberg σε recipe/location/point/collection (πεδία ACF κάτω από τον τίτλο), χωρίς κουτί κειμένου στις συνταγές,
@@ -70,7 +70,7 @@
   «Τι να φάτε» (νέο ACF `dishes`: «Πιάτο | φράση», link σε συνταγή), «Τοπικά προϊόντα» (`local_products`: «Όνομα | σημείωση»),
   «Πότε & πώς» (`best_time_to_visit`, νέο ACF `food_calendar`: «Εποχή | τι», `how_to_get_there`, `travel_tips` ανά γραμμή),
   νομοί σε κάρτες, CTA συνταγών, χάρτης χωρίς κάρτα (`data-hide-card`), TouristDestination. Πρόχειρα κείμενα:
-  meta `_preview_<πεδίο>` (φαίνονται μόνο σε preview). Κρήτη (140): **live** dishes/local_products/best_time/
+  meta `_preview_<πεδίο>` (φαίνονται μόνο σε preview). Κρήτη (140) και νομοί 289/290/291/292: **live** dishes/local_products/best_time/
   food_calendar/how_to_get_there/travel_tips (παλιά: meta `_ellada_guide_backup_2026_11_17`).
 - ellada-map 1.15.2: **`guide_v2` ΑΝΟΙΧΤΟ**· meta description τόπων = αρχή του `guide_intro`.
   1.15.x: οδηγός v2 πίσω από flag **`guide_v2`**, `includes/guide-v2.php`: `[ellada_guide_hub2]` (νέο /odigos/: hero + «Πού πάτε;» μέσω
@@ -119,7 +119,8 @@
   `src/components/map/geo.ts`) και φορτώνει μόνο τα απαραίτητα ACF πεδία. Backup 1.11.2 υπάρχει.
 
 ## Εκκρεμότητες / επόμενα
-- Κείμενα για άλλη περιφέρεια. Επόμενο: τα νέα πεδία (dishes, local_products, food_calendar κ.λπ.) για τους 4 νομούς της Κρήτης.
+- Κείμενα για άλλη περιφέρεια (η Κρήτη και οι 4 νομοί της είναι πλήρεις).
+- Συνταγές από το πλάνο περιεχομένου (3 ανά περιφέρεια, πρώτα Χριστούγεννα/Σαρακοστή) — λίστα «Συνταγές που λείπουν» στο admin.
 - Φωτογραφία εξωφύλλου (`cover_image`) για Κρήτη/νομούς όταν ο χρήστης δώσει δικές του.
 - Χριστουγεννιάτικη συλλογή 197 χρειάζεται συνταγές (πρόταση: μελομακάρονα, κουραμπιέδες, χριστόψωμο,
   λαχανοντολμάδες, γαλοπούλα γεμιστή, βασιλόπιτα — ο χρήστης δεν έχει αποφασίσει ακόμα).
