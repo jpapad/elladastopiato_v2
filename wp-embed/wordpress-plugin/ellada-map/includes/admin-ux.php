@@ -105,6 +105,9 @@ function ellada_admin_checklist( $post ) {
 		$add( (bool) array_filter( (array) get_post_meta( $id, 'allergens', true ) ), 'Αλλεργιογόνα', '', true );
 		$add( '' !== $meta( 'story' ), 'Η ιστορία της συνταγής', '', true );
 		$add( '' !== $meta( 'variations' ), 'Παραλλαγές', '', true );
+		$kind = $meta( 'recipe_kind' );
+		$add( '' !== $kind, 'Είδος συνταγής', '', true );
+		$add( '' !== $meta( 'sources' ), 'Πηγές', 'traditional' === $kind && '' === $meta( 'sources' ) ? 'απαραίτητες για «Παραδοσιακή»' : '', 'traditional' !== $kind );
 		$occ = get_the_terms( $id, 'recipe_occasion' );
 		$add( is_array( $occ ) && $occ, 'Περίσταση', is_array( $occ ) && $occ ? implode( ', ', wp_list_pluck( $occ, 'name' ) ) : 'γιορτή/εποχή → Συλλογές', true );
 		if ( function_exists( 'ellada_fasting_hint' ) && ellada_fasting_hint( $id ) ) {
@@ -121,6 +124,7 @@ function ellada_admin_checklist( $post ) {
 		$add( '' !== $meta( 'how_to_get_there' ), 'Πώς θα έρθετε', '', true );
 		$add( '' !== $meta( 'travel_tips' ), 'Συμβουλές', '', true );
 		$add( (bool) $meta( 'cover_image' ), 'Φωτογραφία εξωφύλλου', '', true );
+		$add( '' !== $meta( 'sources' ), 'Πηγές', '', true );
 	} elseif ( 'ellada_point' === $post->post_type ) {
 		$add( '' !== $meta( 'point_type' ), 'Τύπος σημείου' );
 		$add( '' !== $meta( 'lat' ) && '' !== $meta( 'lng' ), 'Θέση στον χάρτη' );
