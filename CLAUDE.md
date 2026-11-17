@@ -56,7 +56,10 @@
 ## Πρόοδος
 - Κείμενα live: Κρήτη (140), Χανιά 292, Ρέθυμνο 291, Ηράκλειο 289, Λασίθι 290 και οι 24 δήμοι
   της Κρήτης — 32 URLs τοποθεσιών στο sitemap.
-- ellada-map **1.16.1** live (backups έως 1.16.0). **`guide_v3` ΑΝΟΙΧΤΟ**. 1.16.x: σελίδα τόπου v3 πίσω από flag **`guide_v3`**, `includes/guide-v3.php`: hero = περιφέρεια σε μεγέθυνση με νομούς-links, μενού πλοήγησης,
+- ellada-map **1.17.1** live (backups έως 1.17.0). 1.17.x: διαχειριστικό (`includes/admin-ux.php`): απλή οθόνη αντί για
+  Gutenberg σε recipe/location/point/collection (πεδία ACF κάτω από τον τίτλο), χωρίς κουτί κειμένου στις συνταγές,
+  οδηγία τίτλου ανά τύπο (priority 99, μετά το ACF), παραδείγματα στα άδεια πεδία, κουτί «Τι λείπει» στο πλάι.
+- ellada-map 1.16.1: **`guide_v3` ΑΝΟΙΧΤΟ**. 1.16.x: σελίδα τόπου v3 πίσω από flag **`guide_v3`**, `includes/guide-v3.php`: hero = περιφέρεια σε μεγέθυνση με νομούς-links, μενού πλοήγησης,
   «Τι να φάτε» (νέο ACF `dishes`: «Πιάτο | φράση», link σε συνταγή), «Τοπικά προϊόντα» (`local_products`: «Όνομα | σημείωση»),
   «Πότε & πώς» (`best_time_to_visit`, νέο ACF `food_calendar`: «Εποχή | τι», `how_to_get_there`, `travel_tips` ανά γραμμή),
   νομοί σε κάρτες, CTA συνταγών, χάρτης χωρίς κάρτα (`data-hide-card`), TouristDestination. Πρόχειρα κείμενα:
