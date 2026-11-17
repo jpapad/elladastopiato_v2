@@ -152,7 +152,7 @@ add_filter(
 			$kinds = ellada_recipe_kinds();
 			$kind  = (string) get_post_meta( $id, 'recipe_kind', true );
 			if ( isset( $kinds[ $kind ] ) ) {
-				$output = '<div class="ellada-rcrumbs-row">' . $output . sprintf( '<span class="ellada-kind is-%1$s" title="%3$s">%2$s</span>', esc_attr( $kind ), esc_html( $kinds[ $kind ][0] ), esc_attr( $kinds[ $kind ][1] ) ) . '</div>';
+				$output = '<div class="ellada-rcrumbs-row">' . $output . '<span class="ellada-kinds">' . sprintf( '<span class="ellada-kind is-%1$s" title="%3$s">%2$s</span>', esc_attr( $kind ), esc_html( $kinds[ $kind ][0] ), esc_attr( $kinds[ $kind ][1] ) ) . '</span></div>';
 			}
 			return $output;
 		}
