@@ -34,11 +34,12 @@
 - Build: `npm run wp-map:build` → `wp-embed/dist/ellada-map.zip`.
 - Deploy:
   1. Upload του zip στο `wp-content/novamira-sandbox/<name>.zip` (`create-upload-link` με `path`).
-  2. Έλεγχος sha256 + PHP `token_get_all` check, backup της τρέχουσας έκδοσης στο
+  2. Έλεγχος sha256 + PHP `token_get_all` check + **διπλές συναρτήσεις** (`^function name` σε όλα τα .php του zip), backup της τρέχουσας έκδοσης στο
      `wp-content/ellada-map-backups/ellada-map-backup-<παλιά έκδοση>`.
   3. `require` των `wp-admin/includes/file.php`, `plugin.php`, `class-wp-upgrader.php` και
      `Plugin_Upgrader::install($zip, ['overwrite_package' => true])`.
   4. `opcache_reset()`, `do_action('litespeed_purge_all')`, `unlink` του zip.
+  5. Loopback GET της αρχικής· αν δεν είναι 200 → επαναφορά του backup αμέσως.
 
 ## Τουριστικός οδηγός (LIVE)
 - Feature flags: option `ellada_features` → `guide=1`, `recipe_tools=1`.
@@ -56,7 +57,14 @@
 ## Πρόοδος
 - Κείμενα live: Κρήτη (140), Χανιά 292, Ρέθυμνο 291, Ηράκλειο 289, Λασίθι 290 και οι 24 δήμοι
   της Κρήτης — 32 URLs τοποθεσιών στο sitemap.
-- ellada-map **1.20.0** live (backups έως 1.19.1). 1.20.0: `includes/lost.php` — «Οι γεύσεις που χάνονται»: CPT `ellada_testimony`
+- ellada-map **1.21.1** live (backups έως 1.21.0-fixed). 1.21.x: `includes/seo-app.php` — μενού **SEO** (admin): ανάλυση σελίδων του sitemap
+  (loopback, βήματα, option `ellada_seo_pages`/`_last`/`_history`, cron `ellada_seo_daily` 04:10 + `ellada_seo_continue`), Ευκαιρίες
+  (γιορτές μέσω `ellada_orthodox_easter()` του season.php, πιάτα χωρίς συνταγή, τόποι χωρίς οδηγό, ορφανές), Τεχνικά (404 log χωρίς IP:
+  `ellada_404_log`), Google (Search Console API με service account: `define('ELLADA_GSC_KEY_FILE', …)` στο wp-config — ΟΧΙ ακόμα),
+  εβδομαδιαία αναφορά `ellada_seo_weekly` (Δευτέρα 08:20, option `ellada_seo_settings`). Πρώτος βαθμός: 94/100 (45 σελίδες).
+  **Μάθημα:** η 1.21.0 είχε διπλή `ellada_orthodox_easter` → 500 σε όλο το site (ο χρήστης έσβησε το require από File Manager).
+  Deploy πλέον: έλεγχος διπλών `^function` σε όλο το zip + loopback GET της αρχικής μετά την εγκατάσταση και αυτόματο rollback αν ≠ 200.
+- ellada-map 1.20.0: 1.20.0: `includes/lost.php` — «Οι γεύσεις που χάνονται»: CPT `ellada_testimony`
   (Μαρτυρίες, slug `martyries`, local ACF: testimony, person, age, year, place, place_text, recipes, recorded_by, **consent** — χωρίς consent
   δεν εμφανίζεται πουθενά), local ACF πλαϊνό σε recipe/point: `endangered`, `endangered_note`. Flag **`lost`** (ΚΛΕΙΣΤΟ): σήμα
   «Γεύση που χάνεται» στη διαδρομή (μέσα στο `.ellada-kinds`), σημείωση + «Μαρτυρίες» πριν την Εκτέλεση, σελίδα 659
@@ -143,6 +151,7 @@
 - Νέες συνταγές από τον χρήστη: ξαναγράφονται στο δικό μας ύφος (όχι αντιγραφή κειμένου/φωτογραφιών τρίτων).
 - Αργότερα: σελίδες οικισμών, διαδρομές, πανηγύρια, αγγλική έκδοση.
 - Social links στο footer όταν ο χρήστης δώσει λογαριασμούς.
-- Σε αναμονή: Search Console, Reach/newsletter.
+- Search Console: ο χρήστης επαλήθευσε την ιδιοκτησία· εκκρεμεί service account + κλειδί στο wp-config για την καρτέλα Google.
+- Σε αναμονή: Reach/newsletter.
 
 > Ενημέρωνε τις ενότητες «Πρόοδος» και «Εκκρεμότητες» όταν κάτι ολοκληρώνεται.
