@@ -1180,3 +1180,4 @@ html body .ellada-lost__tms .ellada-testimony { margin: 0; }
 html body .ellada-lost__empty { padding: 28px; border: 1px dashed var(--ellada-line, #e4e0da); border-radius: 14px; text-align: center; color: var(--ellada-muted, #6b655e); margin: 0 0 40px; }
 html body .ellada-lost__cta { margin-top: 24px; }
 @media (max-width: 600px) { html body .ellada-testimony blockquote, html body .ellada-testimony figcaption { padding-left: 0; margin-left: 0; } html body .ellada-testimony blockquote::before { position: static; display: block; height: 28px; } }
+html body .screen-reader-text { border: 0; clip: rect(1px, 1px, 1px, 1px); clip-path: inset(50%); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute !important; width: 1px; word-wrap: normal !important; }

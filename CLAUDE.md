@@ -57,7 +57,11 @@
 ## Πρόοδος
 - Κείμενα live: Κρήτη (140), Χανιά 292, Ρέθυμνο 291, Ηράκλειο 289, Λασίθι 290 και οι 24 δήμοι
   της Κρήτης — 32 URLs τοποθεσιών στο sitemap.
-- ellada-map **1.21.1** live (backups έως 1.21.0-fixed). 1.21.x: `includes/seo-app.php` — μενού **SEO** (admin): ανάλυση σελίδων του sitemap
+- ellada-map **1.22.0** live (backups έως 1.21.1). 1.22.0: `includes/seo-titles.php` — flag **`seo_titles`** (ΚΛΕΙΣΤΟ, περιμένει έγκριση):
+  τίτλοι Google ανά τύπο (`ellada_seo_title_for`, ≤65 χαρ., «συνταγή από την <περιφέρεια>» μέσω `ellada_region_from`), περιγραφές για
+  Χάρτη/Επικοινωνία/κατηγορίες/τόπους χωρίς κείμενο (filter `ellada_meta_data` στο seo.php), canonical σε κατηγορίες, H1 (screen-reader) στον Χάρτη.
+  Εκκρεμεί: δεύτερο H1 αρχικής (`h3c-title` στο 163) → h2.
+- ellada-map 1.21.1: 1.21.x: `includes/seo-app.php` — μενού **SEO** (admin): ανάλυση σελίδων του sitemap
   (loopback, βήματα, option `ellada_seo_pages`/`_last`/`_history`, cron `ellada_seo_daily` 04:10 + `ellada_seo_continue`), Ευκαιρίες
   (γιορτές μέσω `ellada_orthodox_easter()` του season.php, πιάτα χωρίς συνταγή, τόποι χωρίς οδηγό, ορφανές), Τεχνικά (404 log χωρίς IP:
   `ellada_404_log`), Google (Search Console API με service account: `define('ELLADA_GSC_KEY_FILE', …)` στο wp-config — ΟΧΙ ακόμα),

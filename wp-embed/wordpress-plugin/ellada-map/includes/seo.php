@@ -145,7 +145,7 @@ function ellada_meta_data() {
 	if ( ! $data['image'] && get_option( 'site_icon' ) ) {
 		$data['image'] = get_site_icon_url( 512 );
 	}
-	return $data;
+	return apply_filters( 'ellada_meta_data', $data );
 }
 
 add_action(
