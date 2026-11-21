@@ -76,6 +76,17 @@ function ellada_palettes() {
 		}
 	}
 	$all['petrol2'] = $p2;
+	// Ίδια με την petrol2, με το πιο σκούρο πετρόλ #174C4B.
+	$swap3 = array( '#1D514E' => '#174C4B', '#153E3C' => '#123C3B', '#2A625F' => '#235B59', '#33706C' => '#2C6866', '29,81,78' => '23,76,75' );
+	$p3    = $p2;
+	$p3['name'] = 'Πετρόλ #174C4B & ζεστό χρυσό';
+	foreach ( array( 'vars', 'hex', 'rgb' ) as $g ) {
+		foreach ( $p3[ $g ] as $k3 => $v ) {
+			$p3[ $g ][ $k3 ] = strtr( $v, $swap3 );
+		}
+	}
+	$all['petrol3'] = $p3;
+	$all['petrol2']['name'] = 'Πετρόλ #1D514E & ζεστό χρυσό';
 	return $all;
 }
 
@@ -231,7 +242,7 @@ add_action(
 					return $html;
 				}
 				list( $html ) = ellada_palette_swap( $html, $pal );
-				$bar = '<div id="ellada-pal-bar" style="position:fixed;left:12px;bottom:12px;z-index:99999;background:#1D514E;color:#F6F2E9;font:600 12px/1.3 system-ui,sans-serif;padding:8px 12px;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.25)">Προεπισκόπηση παλέτας: ' . esc_html( $pal['name'] ) . ' · <a style="color:#C5A46D" href="' . esc_url( add_query_arg( 'ellada_palette', 'petrol' ) ) . '">χρυσό άμμου</a> · <a style="color:#D29A48" href="' . esc_url( add_query_arg( 'ellada_palette', 'petrol2' ) ) . '">ζεστό χρυσό</a> · <a style="color:#F6F2E9;opacity:.8" href="' . esc_url( add_query_arg( 'ellada_palette', 'off' ) ) . '">κανονικά χρώματα</a></div>';
+				$bar = '<div id="ellada-pal-bar" style="position:fixed;left:12px;bottom:12px;z-index:99999;background:#1D514E;color:#F6F2E9;font:600 12px/1.3 system-ui,sans-serif;padding:8px 12px;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.25)">Προεπισκόπηση παλέτας: ' . esc_html( $pal['name'] ) . ' · <a style="color:#D29A48" href="' . esc_url( add_query_arg( 'ellada_palette', 'petrol2' ) ) . '">1 · #1D514E</a> · <a style="color:#D29A48" href="' . esc_url( add_query_arg( 'ellada_palette', 'petrol3' ) ) . '">2 · #174C4B</a> · <a style="color:#F6F2E9;opacity:.8" href="' . esc_url( add_query_arg( 'ellada_palette', 'off' ) ) . '">κανονικά χρώματα</a></div>';
 				return str_ireplace( '</body>', '<style id="ellada-palette-preview">' . ellada_palette_stylesheet( $key ) . '</style>' . $bar . '</body>', $html );
 			}
 		);
