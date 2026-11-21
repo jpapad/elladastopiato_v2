@@ -55,6 +55,7 @@ export type EmbedConfig = {
   startRegion?: string
   startPlace?: string
   hideStartCard?: boolean
+  colorsV2?: boolean
   emptyAreas?: EmptyAreas
   texts?: MapTexts
 }
@@ -172,6 +173,7 @@ function readConfig(el: HTMLElement): EmbedConfig {
     legend: d.legend === 'true' || d.legend === '1',
     startRegion: d.startRegion || undefined,
     hideStartCard: d.hideCard === 'true',
+    colorsV2: d.mapColors === 'v2',
     // Μόνο ο πρώτος χάρτης της σελίδας ακούει τη διεύθυνση (?topos=ΝΟΜΟΣ|Δήμος|id).
     startPlace:
       d.startPlace ||
@@ -200,6 +202,11 @@ export function mount(el: HTMLElement, overrides: EmbedConfig = {}) {
   const geoBase = (config.geoBase || fallbackGeoBase).replace(/\/?$/, '/')
 
   // Μη έγκυρα χρώματα αγνοούνται και μένουν τα προεπιλεγμένα.
+  // Χρώματα χάρτη v2: η κάρτα πληροφοριών σε σκούρο πετρόλ αντί για μαύρο.
+  if (config.colorsV2) {
+    el.style.setProperty('--ellada-map-card', 'rgba(18,60,59,0.94)')
+    el.style.setProperty('--ellada-map-card-btn', 'rgba(23,76,75,0.9)')
+  }
   if (isColor(config.accent)) el.style.setProperty('--ellada-accent', config.accent)
   else el.style.removeProperty('--ellada-accent')
   if (isColor(config.background)) el.style.setProperty('--ellada-bg', config.background)
@@ -240,6 +247,7 @@ export function mount(el: HTMLElement, overrides: EmbedConfig = {}) {
         startRegion={config.startRegion}
         startPlace={config.startPlace}
         hideStartCard={config.hideStartCard}
+        colorsV2={config.colorsV2}
         emptyAreas={config.emptyAreas}
         texts={config.texts}
         onSelect={onSelect}

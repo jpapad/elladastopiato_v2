@@ -31,7 +31,7 @@ export default function InfoCard({ data, onClose, external }: Props) {
       exit={{ opacity: 0, y: 16 }}
       transition={{ duration: 0.25 }}
       // Κινητό: κάτω από τον χάρτη (στη ροή). Desktop: πάνω στον χάρτη, κάτω αριστερά.
-      className="relative mx-4 mb-2 sm:absolute sm:mx-0 sm:mb-0 sm:left-4 sm:bottom-4 sm:w-80 z-20 rounded-3xl border border-white/10 bg-black/80 backdrop-blur-xl text-white overflow-hidden shadow-2xl"
+      className="relative mx-4 mb-2 sm:absolute sm:mx-0 sm:mb-0 sm:left-4 sm:bottom-4 sm:w-80 z-20 rounded-3xl border border-white/10 bg-[var(--ellada-map-card,rgba(0,0,0,0.8))] backdrop-blur-xl text-white overflow-hidden shadow-2xl"
       aria-live="polite"
     >
       {data.image && (
@@ -51,7 +51,7 @@ export default function InfoCard({ data, onClose, external }: Props) {
         type="button"
         onClick={onClose}
         aria-label="Κλείσιμο"
-        className="absolute top-3 right-3 flex h-7 w-7 items-center justify-center rounded-full bg-black/60 text-white/60 hover:text-white transition-colors"
+        className="absolute top-3 right-3 flex h-7 w-7 items-center justify-center rounded-full bg-[var(--ellada-map-card-btn,rgba(0,0,0,0.6))] text-white/60 hover:text-white transition-colors"
       >
         <X className="h-3.5 w-3.5" />
       </button>

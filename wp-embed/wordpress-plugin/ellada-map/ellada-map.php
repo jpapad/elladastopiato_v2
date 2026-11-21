@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Ελλάδα στο Πιάτο — Διαδραστικός Χάρτης
  * Description:       Διαδραστικός χάρτης (Περιφέρειες → Νομοί → Δήμοι → Τοπικά Σημεία) με δεδομένα από το WordPress REST API και ACF Pro. Widget Elementor «Χάρτης Ελλάδας», shortcode [ellada_map] και ρυθμίσεις στο Ρυθμίσεις → Χάρτης Ελλάδας.
- * Version:           1.24.0
+ * Version:           1.24.2
  * Requires at least: 6.3
  * Requires PHP:      7.4
  * Author:            Ελλάδα στο Πιάτο
@@ -12,7 +12,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'ELLADA_MAP_VERSION', '1.24.0' );
+define( 'ELLADA_MAP_VERSION', '1.24.2' );
 define( 'ELLADA_MAP_FILE', __FILE__ );
 define( 'ELLADA_MAP_DIR', plugin_dir_path( __FILE__ ) );
 define( 'ELLADA_MAP_OPTION', 'ellada_map_settings' );
@@ -267,6 +267,7 @@ function ellada_map_render( array $args = array() ) {
 		'data-start-region'       => $start_region,
 		'data-start-place'        => $start_place,
 		'data-hide-card'          => ! empty( $args['hide_card'] ) ? 'true' : '',
+		'data-map-colors'         => function_exists( 'ellada_feature' ) && ellada_feature( 'map_v2' ) ? 'v2' : '',
 		'data-empty-areas'        => 'normal' !== $empty_areas ? $empty_areas : '',
 		'data-texts'              => $texts ? wp_json_encode( $texts, JSON_UNESCAPED_UNICODE ) : '',
 		'data-locations-endpoint' => sanitize_title( isset( $args['locations'] ) ? $args['locations'] : '' ),

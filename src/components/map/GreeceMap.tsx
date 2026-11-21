@@ -79,6 +79,8 @@ export type GreeceMapProps = MapDataConfig & {
   startPlace?: string
   /** Χωρίς την κάρτα της περιοχής στο άνοιγμα (π.χ. όταν ο χάρτης είναι μέσα στη σελίδα της ίδιας περιοχής). */
   hideStartCard?: boolean
+  /** Χρώματα χάρτη v2: συμπαγές χρυσό για περιεχόμενο, ορατό πετρόλ για τα υπόλοιπα, υπόμνημα. */
+  colorsV2?: boolean
   /** Εμφάνιση περιοχών χωρίς περιεχόμενο (default 'normal'). */
   emptyAreas?: EmptyAreas
   /** Αλλαγές στα κείμενα του χάρτη. */
@@ -117,6 +119,22 @@ const LEVEL_STYLE = [
 ]
 /** Περιοχές με περιεχόμενο στο WordPress (σελίδα ή τοπικά σημεία) ξεχωρίζουν καθαρά. */
 const CONTENT_FILL = accent(0.72)
+
+/**
+ * Χρώματα χάρτη v2 (prop `colorsV2`): τρία επίπεδα που διαβάζονται αμέσως —
+ * χρυσό = υπάρχει περιεχόμενο, πετρόλ = έρχεται σύντομα, κεραμιδί = εκεί που πατάτε.
+ * Ρυθμίζονται και με μεταβλητές CSS --ellada-map-*.
+ */
+const CREAM = (a: number) => `rgba(246,242,233,${a})`
+const V2 = {
+  idle: { fill: 'var(--ellada-map-idle, #2c6866)', stroke: CREAM(0.25), strokeWidth: 0.7 },
+  idleHover: { fill: 'var(--ellada-map-idle-hover, #357a77)', stroke: CREAM(0.6), strokeWidth: 1.2 },
+  // Σύνορα σε σκούρο πετρόλ: μέσα σε μια περιφέρεια με πολλούς «χρυσούς» νομούς φαίνονται τα όριά τους.
+  content: { fill: 'var(--ellada-map-content, #d29a48)', stroke: 'rgba(18,60,59,0.55)', strokeWidth: 0.8 },
+  contentHover: { fill: 'var(--ellada-map-content-hover, #ddb06c)', stroke: CREAM(0.95), strokeWidth: 1.4 },
+  pressed: 'var(--ellada-map-here, #d97745)',
+  hint: 'var(--ellada-map-hint, #a9bdb8)',
+}
 
 const DEFAULT_TEXTS: Required<MapTexts> = {
   hintRegions: 'Κάντε κλικ σε περιφέρεια για εξερεύνηση',
@@ -190,6 +208,7 @@ export default function GreeceMap({
   startRegion,
   startPlace,
   hideStartCard = false,
+  colorsV2 = false,
   emptyAreas = 'normal',
   texts,
 }: GreeceMapProps) {
@@ -757,12 +776,21 @@ export default function GreeceMap({
                           else if (level === 1) handlePrefectureClick(geo)
                           else if (level === 2) handleMunicipalityClick(geo)
                         }
-                        const base = {
-                          fill: hasContent ? CONTENT_FILL : empty ? EMPTY_STYLE.fill : style.fill,
-                          stroke: empty ? EMPTY_STYLE.stroke : style.stroke,
-                          strokeWidth: style.strokeWidth,
-                          outline: 'none',
-                        }
+                        const v2Base = hasContent ? V2.content : V2.idle
+                        const base = colorsV2 && clickableLevel
+                          ? {
+                              fill: empty ? EMPTY_STYLE.fill : v2Base.fill,
+                              stroke: empty ? EMPTY_STYLE.stroke : v2Base.stroke,
+                              strokeWidth: v2Base.strokeWidth,
+                              outline: 'none',
+                            }
+                          : {
+                              fill: hasContent ? CONTENT_FILL : empty ? EMPTY_STYLE.fill : style.fill,
+                              stroke: empty ? EMPTY_STYLE.stroke : style.stroke,
+                              strokeWidth: style.strokeWidth,
+                              outline: 'none',
+                            }
+                        const v2Hover = hasContent ? V2.contentHover : V2.idleHover
                         return (
                           <Geography
                             key={geo.rsmKey}
@@ -792,7 +820,9 @@ export default function GreeceMap({
                             }}
                             style={{
                               default: { ...base, cursor: interactive ? 'pointer' : 'default' },
-                              hover: interactive
+                              hover: interactive && colorsV2
+                                ? { ...v2Hover, outline: 'none', cursor: 'pointer' }
+                                : interactive
                                 ? {
                                     fill: accent(0.4),
                                     stroke: ACCENT,
@@ -802,7 +832,9 @@ export default function GreeceMap({
                                     filter: `drop-shadow(0 0 8px ${accent(0.6)})`,
                                   }
                                 : base,
-                              pressed: interactive
+                              pressed: interactive && colorsV2
+                                ? { fill: V2.pressed, stroke: CREAM(1), strokeWidth: 1.4, outline: 'none' }
+                                : interactive
                                 ? {
                                     fill: ACCENT,
                                     outline: 'none',
@@ -1023,7 +1055,22 @@ export default function GreeceMap({
 
       {/* ── footer hint ── */}
       <div className="flex flex-col items-center gap-1 border-t border-white/5 py-3 z-10">
-        <p className="px-4 text-center text-white/20 text-[8px] uppercase tracking-[0.25em] sm:tracking-[0.4em] font-bold italic">
+        {colorsV2 && level < 3 && wpStatus === 'ready' && (
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1 px-4 pb-1 text-[11px] font-semibold" style={{ color: V2.hint }}>
+            <span className="inline-flex items-center gap-2">
+              <span aria-hidden="true" className="inline-block h-2.5 w-2.5 rounded-full" style={{ background: V2.content.fill }} />
+              Οδηγός &amp; συνταγές
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <span aria-hidden="true" className="inline-block h-2.5 w-2.5 rounded-full" style={{ background: V2.idle.fill, boxShadow: `inset 0 0 0 1px ${CREAM(0.35)}` }} />
+              Έρχεται σύντομα
+            </span>
+          </div>
+        )}
+        <p
+          className={colorsV2 ? 'px-4 text-center text-[10px] uppercase tracking-[0.2em] font-bold' : 'px-4 text-center text-white/20 text-[8px] uppercase tracking-[0.25em] sm:tracking-[0.4em] font-bold italic'}
+          style={colorsV2 ? { color: V2.hint } : undefined}
+        >
           {levelHint[level]}
         </p>
         {wpStatus === 'loading' && (
