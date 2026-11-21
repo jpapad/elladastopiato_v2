@@ -21,14 +21,14 @@ function ellada_palettes() {
 			'name' => 'Πετρόλ & χρυσό',
 			'vars' => array(
 				'--e-global-color-primary'   => '#C5A46D',
-				'--e-global-color-secondary' => '#28545A',
+				'--e-global-color-secondary' => '#1D514E',
 				'--e-global-color-text'      => '#343B39',
 				'--e-global-color-accent'    => '#58615E',
 				'--ellada-accent'            => '#C5A46D',
-				'--ellada-dark'              => '#28545A',
+				'--ellada-dark'              => '#1D514E',
 				'--ellada-ink'               => '#343B39',
 				'--ellada-muted'             => '#58615E',
-				'--ellada-accent-deep'       => '#28545A',
+				'--ellada-accent-deep'       => '#1D514E',
 				'--ellada-line'              => '#D7DFD8',
 				'--ellada-surface'           => '#FFFDF8',
 			),
@@ -38,13 +38,13 @@ function ellada_palettes() {
 				'#FB923C' => '#D3B886',
 				'#FE882E' => '#D3B886',
 				'#FDBA8C' => '#E2D2B2',
-				'#C2410C' => '#28545A', // βαθύ πορτοκαλί (κείμενο σε ανοιχτό) → πετρόλ
-				'#9A3F0B' => '#1F4247',
-				'#0A0A0A' => '#28545A', // μαύρο (header/footer/σκούρα μπλοκ) → πετρόλ
+				'#C2410C' => '#1D514E', // βαθύ πορτοκαλί (κείμενο σε ανοιχτό) → πετρόλ
+				'#9A3F0B' => '#153E3C',
+				'#0A0A0A' => '#1D514E', // μαύρο (header/footer/σκούρα μπλοκ) → πετρόλ
 				'#151311' => '#343B39', // κείμενο → ανθρακί
 				'#1C1A18' => '#343B39',
-				'#2A2724' => '#346670', // γραμμές πάνω στο σκούρο
-				'#3A3632' => '#3D717B',
+				'#2A2724' => '#2A625F', // γραμμές πάνω στο σκούρο
+				'#3A3632' => '#33706C',
 				'#F5F4F2' => '#F6F2E9', // φόντο → κρεμ
 				'#FAF8F5' => '#F9F6EF',
 				'#FAF9F7' => '#F9F6EF',
@@ -61,7 +61,7 @@ function ellada_palettes() {
 			'rgb'  => array(
 				'249,115,22' => '197,164,109',
 				'245,244,242' => '246,242,233',
-				'10,10,10'   => '40,84,90',
+				'10,10,10'   => '29,81,78',
 				'21,19,17'   => '52,59,57',
 			),
 		),
@@ -212,7 +212,7 @@ function ellada_palette_stylesheet( $key ) {
 		$css .= ellada_palette_css_overrides( (string) file_get_contents( $f ), $pal ); // phpcs:ignore WordPress.WP.AlternativeFunctions
 	}
 	// Ο χάρτης (React) βάζει χρώματα με inline style σε μορφή rgb().
-	$css .= '[style*="rgb(10, 10, 10)"]{background-color:#28545A !important}';
+	$css .= '[style*="rgb(10, 10, 10)"]{background-color:#1D514E !important}';
 	set_transient( $tkey, $css, DAY_IN_SECONDS );
 	return $css;
 }
@@ -231,7 +231,7 @@ add_action(
 					return $html;
 				}
 				list( $html ) = ellada_palette_swap( $html, $pal );
-				$bar = '<div id="ellada-pal-bar" style="position:fixed;left:12px;bottom:12px;z-index:99999;background:#28545A;color:#F6F2E9;font:600 12px/1.3 system-ui,sans-serif;padding:8px 12px;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.25)">Προεπισκόπηση παλέτας: ' . esc_html( $pal['name'] ) . ' · <a style="color:#C5A46D" href="' . esc_url( add_query_arg( 'ellada_palette', 'petrol' ) ) . '">χρυσό άμμου</a> · <a style="color:#D29A48" href="' . esc_url( add_query_arg( 'ellada_palette', 'petrol2' ) ) . '">ζεστό χρυσό</a> · <a style="color:#F6F2E9;opacity:.8" href="' . esc_url( add_query_arg( 'ellada_palette', 'off' ) ) . '">κανονικά χρώματα</a></div>';
+				$bar = '<div id="ellada-pal-bar" style="position:fixed;left:12px;bottom:12px;z-index:99999;background:#1D514E;color:#F6F2E9;font:600 12px/1.3 system-ui,sans-serif;padding:8px 12px;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.25)">Προεπισκόπηση παλέτας: ' . esc_html( $pal['name'] ) . ' · <a style="color:#C5A46D" href="' . esc_url( add_query_arg( 'ellada_palette', 'petrol' ) ) . '">χρυσό άμμου</a> · <a style="color:#D29A48" href="' . esc_url( add_query_arg( 'ellada_palette', 'petrol2' ) ) . '">ζεστό χρυσό</a> · <a style="color:#F6F2E9;opacity:.8" href="' . esc_url( add_query_arg( 'ellada_palette', 'off' ) ) . '">κανονικά χρώματα</a></div>';
 				return str_ireplace( '</body>', '<style id="ellada-palette-preview">' . ellada_palette_stylesheet( $key ) . '</style>' . $bar . '</body>', $html );
 			}
 		);
