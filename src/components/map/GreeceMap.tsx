@@ -100,13 +100,13 @@ const variants = {
 
 /**
  * Χρώμα τονισμού. Ρυθμίζεται με τη μεταβλητή CSS --ellada-accent (π.χ. από το plugin του
- * WordPress)· αν δεν οριστεί, μένει το πορτοκαλί (#f97316) του αρχικού σχεδίου.
+ * WordPress)· αν δεν οριστεί, μένει το χρυσό (#d29a48) της παλέτας.
  */
-const ACCENT = 'var(--ellada-accent, #f97316)'
+const ACCENT = 'var(--ellada-accent, #d29a48)'
 const accent = (alpha: number) =>
   `color-mix(in srgb, ${ACCENT} ${Math.round(alpha * 100)}%, transparent)`
 /** Φόντο χάρτη: --ellada-bg ή το αρχικό σχεδόν μαύρο. */
-const BG = 'var(--ellada-bg, #0a0a0a)'
+const BG = 'var(--ellada-bg, #174c4b)'
 
 /* Πιο φωτεινά από πριν: σε σκούρο φόντο οι περιοχές χάνονταν. */
 const LEVEL_STYLE = [
@@ -116,7 +116,7 @@ const LEVEL_STYLE = [
   { fill: accent(0.08), stroke: accent(0.35), strokeWidth: 1.2 },
 ]
 /** Περιοχές με περιεχόμενο στο WordPress (σελίδα ή τοπικά σημεία) ξεχωρίζουν καθαρά. */
-const CONTENT_FILL = accent(0.42)
+const CONTENT_FILL = accent(0.72)
 
 const DEFAULT_TEXTS: Required<MapTexts> = {
   hintRegions: 'Κάντε κλικ σε περιφέρεια για εξερεύνηση',
@@ -609,7 +609,7 @@ export default function GreeceMap({
   if (geoError && !regions) {
     return (
       <div
-        className="bg-[var(--ellada-bg,#0a0a0a)] border border-white/5 p-8 flex items-center justify-center min-h-[var(--ellada-h-m)] sm:min-h-[var(--ellada-h)]"
+        className="bg-[var(--ellada-bg,#174c4b)] border border-white/5 p-8 flex items-center justify-center min-h-[var(--ellada-h-m)] sm:min-h-[var(--ellada-h)]"
         style={sizeVars}
       >
         <p className="text-white/40 text-xs uppercase tracking-widest text-center">
@@ -624,7 +624,7 @@ export default function GreeceMap({
   if (!regions) {
     return (
       <div
-        className="bg-[var(--ellada-bg,#0a0a0a)] border border-white/5 p-8 flex items-center justify-center min-h-[var(--ellada-h-m)] sm:min-h-[var(--ellada-h)]"
+        className="bg-[var(--ellada-bg,#174c4b)] border border-white/5 p-8 flex items-center justify-center min-h-[var(--ellada-h-m)] sm:min-h-[var(--ellada-h)]"
         style={sizeVars}
       >
         <div className="text-orange-500 animate-pulse font-bold tracking-widest uppercase text-xs">
@@ -636,7 +636,7 @@ export default function GreeceMap({
 
   return (
     <div
-      className="bg-[var(--ellada-bg,#0a0a0a)] text-white border border-white/5 shadow-2xl relative flex flex-col overflow-hidden min-h-[var(--ellada-h-m)] sm:min-h-[var(--ellada-h)]"
+      className="bg-[var(--ellada-bg,#174c4b)] text-white border border-white/5 shadow-2xl relative flex flex-col overflow-hidden min-h-[var(--ellada-h-m)] sm:min-h-[var(--ellada-h)]"
       style={sizeVars}
       onPointerEnter={warmUp}
       onTouchStart={warmUp}

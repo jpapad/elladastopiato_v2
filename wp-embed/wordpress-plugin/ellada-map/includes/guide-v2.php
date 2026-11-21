@@ -264,7 +264,7 @@ add_shortcode(
 		}
 		$cover = (int) get_post_meta( $id, 'cover_image', true );
 		$img   = $cover ? wp_get_attachment_image_url( $cover, 'full' ) : '';
-		$style = $img ? '<style>.s-loc-hero{background:linear-gradient(90deg,rgba(10,10,10,.92) 0%,rgba(10,10,10,.7) 45%,rgba(10,10,10,.25) 100%),url("' . esc_url( $img ) . '") center/cover no-repeat!important}</style>' : '';
+		$style = $img ? '<style>.s-loc-hero{background:linear-gradient(90deg,rgba(23,76,75,.92) 0%,rgba(23,76,75,.7) 45%,rgba(23,76,75,.25) 100%),url("' . esc_url( $img ) . '") center/cover no-repeat!important}</style>' : '';
 		$map   = $img ? '' : apply_filters( 'ellada_guide_hero_map', ellada_guide_mini_svg( $c['region'], 'region' === $c['level'] ? '' : $c['pref'] ), $c );
 		return $style . '<div class="ellada-ghero"><p class="ellada-ghero__meta">' . esc_html( implode( ' · ', array_filter( $bits ) ) ) . '</p>' . $map . '</div>';
 	}

@@ -1106,7 +1106,7 @@ add_action(
 		.ellada-seo .es-big small{font-size:16px;color:#787c82;font-weight:400}
 		.ellada-seo .es-sub{margin:0;color:#646970}
 		.ellada-seo .es-stat .es-big{font-size:26px}
-		.ellada-seo .es-spark{margin-top:8px}.ellada-seo .es-spark polyline{fill:none;stroke:#f97316;stroke-width:2}
+		.ellada-seo .es-spark{margin-top:8px}.ellada-seo .es-spark polyline{fill:none;stroke:#d29a48;stroke-width:2}
 		.ellada-seo .es-todo{margin:0 0 20px 1.4em}.ellada-seo .es-todo li{margin:0 0 12px}
 		.ellada-seo .es-links{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:4px;font-size:12px}
 		.ellada-seo .es-n{display:inline-block;min-width:20px;padding:0 6px;border-radius:10px;background:#f0f0f1;text-align:center;font-size:12px}

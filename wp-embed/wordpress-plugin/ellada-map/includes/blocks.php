@@ -64,7 +64,7 @@ function ellada_point_color( $type ) {
 		return $s['type_colors'][ $type ];
 	}
 	$sug = ellada_map_suggested_type_colors();
-	return isset( $sug[ $type ] ) ? $sug[ $type ] : '#F97316';
+	return isset( $sug[ $type ] ) ? $sug[ $type ] : '#D29A48';
 }
 
 function ellada_select_value( $v ) {

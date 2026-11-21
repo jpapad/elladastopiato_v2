@@ -398,7 +398,7 @@ function ellada_og_card_url( $id ) {
 		return '';
 	}
 	$up   = wp_upload_dir();
-	$key  = substr( md5( $title . '|' . $eyebrow . '|' . $sub . '|v2' ), 0, 10 );
+	$key  = substr( md5( $title . '|' . $eyebrow . '|' . $sub . '|v3' ), 0, 10 );
 	$rel  = 'ellada-og/' . $type . '-' . $id . '-' . $key . '.png';
 	$path = trailingslashit( $up['basedir'] ) . $rel;
 	$url  = trailingslashit( $up['baseurl'] ) . $rel;
@@ -413,13 +413,13 @@ function ellada_og_card_url( $id ) {
 	$w    = 1200;
 	$h    = 630;
 	$im   = imagecreatetruecolor( $w, $h );
-	$dark = imagecolorallocate( $im, 10, 10, 10 );
-	$or   = imagecolorallocate( $im, 249, 115, 22 );
-	$wh   = imagecolorallocate( $im, 245, 244, 242 );
-	$mu   = imagecolorallocate( $im, 160, 154, 148 );
+	$dark = imagecolorallocate( $im, 23, 76, 75 );
+	$or   = imagecolorallocate( $im, 210, 154, 72 );
+	$wh   = imagecolorallocate( $im, 246, 242, 233 );
+	$mu   = imagecolorallocate( $im, 169, 189, 184 );
 	imagefilledrectangle( $im, 0, 0, $w, $h, $dark );
 	// Διακριτικές τελείες στο φόντο.
-	$dot = imagecolorallocate( $im, 28, 26, 24 );
+	$dot = imagecolorallocate( $im, 31, 88, 86 );
 	for ( $x = 12; $x < $w; $x += 28 ) {
 		for ( $y = 12; $y < $h; $y += 28 ) {
 			imagefilledellipse( $im, $x, $y, 3, 3, $dot );

@@ -16,7 +16,7 @@
  *   data-height              Ελάχιστο ύψος σε px (default 600)
  *   data-locations-endpoint  REST base τοποθεσιών (default locations)
  *   data-points-endpoint     REST base τοπικών σημείων (default local-points)
- *   data-accent              Χρώμα τονισμού: hex (#f97316) ή var(--…) (default πορτοκαλί)
+ *   data-accent              Χρώμα τονισμού: hex (#d29a48) ή var(--…) (default χρυσό)
  *   data-bg                  Χρώμα φόντου (hex ή var(--…))
  *   data-height-mobile       Ελάχιστο ύψος σε κινητά (px)
  *   data-radius              Στρογγυλάδα γωνιών (px)

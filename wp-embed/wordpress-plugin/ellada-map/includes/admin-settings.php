@@ -535,14 +535,14 @@ function ellada_map_tab_look() {
 		<tr>
 			<th scope="row"><label for="ellada-accent">Χρώμα τονισμού</label></th>
 			<td>
-				<input id="ellada-accent" class="ellada-color" type="text" name="<?php echo ellada_map_name( '[accent]' ); ?>" value="<?php echo esc_attr( $s['accent'] ); ?>" data-default-color="#f97316">
+				<input id="ellada-accent" class="ellada-color" type="text" name="<?php echo ellada_map_name( '[accent]' ); ?>" value="<?php echo esc_attr( $s['accent'] ); ?>" data-default-color="#d29a48">
 				<p class="description">Επιλεγμένες περιοχές, κουμπιά, τίτλοι και πινέζες χωρίς δικό τους χρώμα.</p>
 			</td>
 		</tr>
 		<tr>
 			<th scope="row"><label for="ellada-bg">Φόντο</label></th>
 			<td>
-				<input id="ellada-bg" class="ellada-color" type="text" name="<?php echo ellada_map_name( '[background]' ); ?>" value="<?php echo esc_attr( $s['background'] ); ?>" data-default-color="#0a0a0a">
+				<input id="ellada-bg" class="ellada-color" type="text" name="<?php echo ellada_map_name( '[background]' ); ?>" value="<?php echo esc_attr( $s['background'] ); ?>" data-default-color="#174c4b">
 				<p class="description">Μόνο σκούρα χρώματα — τα κείμενα του χάρτη είναι λευκά.</p>
 			</td>
 		</tr>

@@ -57,7 +57,15 @@
 ## Πρόοδος
 - Κείμενα live: Κρήτη (140), Χανιά 292, Ρέθυμνο 291, Ηράκλειο 289, Λασίθι 290 και οι 24 δήμοι
   της Κρήτης — 32 URLs τοποθεσιών στο sitemap.
-- ellada-map **1.23.4** live (backups έως 1.23.3). 1.23.4: δύο προεπισκοπήσεις για σύγκριση — `?ellada_palette=petrol2` (πετρόλ #1D514E)
+- **ΝΕΑ ΠΑΛΕΤΑ LIVE (21/11)** — πετρόλ **#174C4B**, χρυσό **#D29A48**, φόντο **#F6F2E9**, φασκόμηλο **#D7DFD8**, ανθρακί **#343B39**
+  (+ #58615E απαλό κείμενο, #DDB06C hover χρυσού, #123C3B σκούρο hover, #235B59/#2C6866 γραμμές σε σκούρο, #F9F6EF/#FAF8F2 ανοιχτές επιφάνειες).
+  Αλλαγές: κώδικας (front.css, plate-mark.svg, PHP, χάρτης `GreeceMap.tsx` με CONTENT_FILL accent(0.72)) στην 1.24.0· Elementor kit 9
+  `_elementor_page_settings` (backup meta `_ellada_palette_backup_2026_11_21`) και **`_elementor_global_variables`** (οι V4 μεταβλητές
+  --Accent/--Dark/--Ink…· backup `_ellada_gvars_backup_2026_11_21`)· `_elementor_data` των 70/176/624/163/137 (backup `_ellada_palette_backup_2026_11_21`).
+  Νέο λογότυπο 664 (`ellada-brand/ellada-logo-header-petrol@2x.png`, αντί για 157 στα 70/176/624), site icon 665, OG 666
+  (παλιά στο option `ellada_brand_backup_2026_11_21`). Το ροζ border του «Βρείτε συνταγή» διορθώθηκε. Το `palette-preview.php` μένει (μόνο editors).
+- ellada-map **1.24.0** live (backups έως 1.23.4).
+- ellada-map 1.23.4: 1.23.4: δύο προεπισκοπήσεις για σύγκριση — `?ellada_palette=petrol2` (πετρόλ #1D514E)
   και `?ellada_palette=petrol3` (πετρόλ #174C4B), αλλιώς ίδιες (#D29A48 · #F6F2E9 · #D7DFD8 · #343B39).
   1.23.3: 1.23.3: πετρόλ προεπισκόπησης → **#1D514E** (hover #153E3C, γραμμές σε σκούρο #2A625F/#33706C).
   Τρέχουσα παλέτα χρήστη (petrol2): #1D514E · #D29A48 · #F6F2E9 · #D7DFD8 · #343B39. 1.23.x: `includes/contact-v2.php` + CSS `body.ellada-cv2` — σύγχρονη φόρμα Επικοινωνίας
