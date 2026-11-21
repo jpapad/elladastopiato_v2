@@ -130,8 +130,8 @@ const V2 = {
   idle: { fill: 'var(--ellada-map-idle, #2c6866)', stroke: CREAM(0.25), strokeWidth: 0.7 },
   idleHover: { fill: 'var(--ellada-map-idle-hover, #357a77)', stroke: CREAM(0.6), strokeWidth: 1.2 },
   // Σύνορα σε σκούρο πετρόλ: μέσα σε μια περιφέρεια με πολλούς «χρυσούς» νομούς φαίνονται τα όριά τους.
-  content: { fill: 'var(--ellada-map-content, #d29a48)', stroke: 'rgba(18,60,59,0.55)', strokeWidth: 0.8 },
-  contentHover: { fill: 'var(--ellada-map-content-hover, #ddb06c)', stroke: CREAM(0.95), strokeWidth: 1.4 },
+  content: { fill: 'color-mix(in srgb, var(--ellada-map-content, #d29a48) 85%, transparent)', stroke: 'rgba(18,60,59,0.55)', strokeWidth: 0.8 },
+  contentHover: { fill: 'color-mix(in srgb, var(--ellada-map-content-hover, #ddb06c) 95%, transparent)', stroke: CREAM(0.95), strokeWidth: 1.4 },
   pressed: 'var(--ellada-map-here, #d97745)',
   hint: 'var(--ellada-map-hint, #a9bdb8)',
 }
