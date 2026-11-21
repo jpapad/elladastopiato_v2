@@ -122,7 +122,7 @@ const CONTENT_FILL = accent(0.72)
 
 /**
  * Χρώματα χάρτη v2 (prop `colorsV2`): τρία επίπεδα που διαβάζονται αμέσως —
- * χρυσό = υπάρχει περιεχόμενο, πετρόλ = έρχεται σύντομα, κεραμιδί = εκεί που πατάτε.
+ * κεραμιδί (όπως το λογότυπο) = υπάρχει περιεχόμενο, πετρόλ = έρχεται σύντομα.
  * Ρυθμίζονται και με μεταβλητές CSS --ellada-map-*.
  */
 const CREAM = (a: number) => `rgba(246,242,233,${a})`
@@ -130,9 +130,9 @@ const V2 = {
   idle: { fill: 'var(--ellada-map-idle, #2c6866)', stroke: CREAM(0.25), strokeWidth: 0.7 },
   idleHover: { fill: 'var(--ellada-map-idle-hover, #357a77)', stroke: CREAM(0.6), strokeWidth: 1.2 },
   // Σύνορα σε σκούρο πετρόλ: μέσα σε μια περιφέρεια με πολλούς «χρυσούς» νομούς φαίνονται τα όριά τους.
-  content: { fill: 'color-mix(in srgb, var(--ellada-map-content, #d29a48) 85%, transparent)', stroke: 'rgba(18,60,59,0.55)', strokeWidth: 0.8 },
-  contentHover: { fill: 'color-mix(in srgb, var(--ellada-map-content-hover, #ddb06c) 95%, transparent)', stroke: CREAM(0.95), strokeWidth: 1.4 },
-  pressed: 'var(--ellada-map-here, #d97745)',
+  content: { fill: 'color-mix(in srgb, var(--ellada-map-content, #d97745) 85%, transparent)', stroke: 'rgba(18,60,59,0.55)', strokeWidth: 0.8 },
+  contentHover: { fill: 'color-mix(in srgb, var(--ellada-map-content-hover, #e39468) 95%, transparent)', stroke: CREAM(0.95), strokeWidth: 1.4 },
+  pressed: 'var(--ellada-map-here, #c2602f)',
   hint: 'var(--ellada-map-hint, #a9bdb8)',
 }
 
