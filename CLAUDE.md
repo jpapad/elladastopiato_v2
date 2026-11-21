@@ -57,7 +57,12 @@
 ## Πρόοδος
 - Κείμενα live: Κρήτη (140), Χανιά 292, Ρέθυμνο 291, Ηράκλειο 289, Λασίθι 290 και οι 24 δήμοι
   της Κρήτης — 32 URLs τοποθεσιών στο sitemap.
-- ellada-map **1.22.0** live (backups έως 1.21.1). 1.22.0: `includes/seo-titles.php` — flag **`seo_titles`** (ΚΛΕΙΣΤΟ, περιμένει έγκριση):
+- ellada-map **1.22.3** live (backups έως 1.22.2). 1.22.1–3: `includes/palette-preview.php` — προεπισκόπηση παλέτας ΜΟΝΟ για editors:
+  `?ellada_palette=petrol` (cookie 1 μέρα), `?ellada_palette=off`. Παλέτα «petrol» του χρήστη: #174C4B πετρόλ, #C5A46D χρυσό άμμου,
+  #F5F1E8 κρεμ, #D7DFD8 φασκόμηλο, #343B39 ανθρακί (χάρτης παλιό→νέο στο `ellada_palettes()`). Μηχανισμός: kit vars + ίδιοι κανόνες CSS
+  (χωρίς !important) στο τέλος + swap στο HTML + αντίγραφο του assets/js/ellada-map.js (shadow DOM) στο uploads/ellada-palette/.
+  Δεν έχει εφαρμοστεί μόνιμα· το λογότυπο (PNG) είναι ακόμα πορτοκαλί. Σελίδα σύγκρισης: artifact 5ciieNHrArT5UaUxZZLbSk.
+- ellada-map 1.22.0: 1.22.0: `includes/seo-titles.php` — flag **`seo_titles`** (ΚΛΕΙΣΤΟ, περιμένει έγκριση):
   τίτλοι Google ανά τύπο (`ellada_seo_title_for`, ≤65 χαρ., «συνταγή από την <περιφέρεια>» μέσω `ellada_region_from`), περιγραφές για
   Χάρτη/Επικοινωνία/κατηγορίες/τόπους χωρίς κείμενο (filter `ellada_meta_data` στο seo.php), canonical σε κατηγορίες, H1 (screen-reader) στον Χάρτη.
   Εκκρεμεί: δεύτερο H1 αρχικής (`h3c-title` στο 163) → h2.
