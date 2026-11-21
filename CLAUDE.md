@@ -57,7 +57,9 @@
 ## Πρόοδος
 - Κείμενα live: Κρήτη (140), Χανιά 292, Ρέθυμνο 291, Ηράκλειο 289, Λασίθι 290 και οι 24 δήμοι
   της Κρήτης — 32 URLs τοποθεσιών στο sitemap.
-- ellada-map **1.22.3** live (backups έως 1.22.2). 1.22.1–3: `includes/palette-preview.php` — προεπισκόπηση παλέτας ΜΟΝΟ για editors:
+- ellada-map **1.22.4** live (backups έως 1.22.3). 1.22.4: δεύτερη παλέτα `petrol2` = ίδια με ζεστό χρυσό **#D29A48** (`?ellada_palette=petrol2`),
+  εναλλαγή από τη μπάρα κάτω αριστερά. Βρέθηκε: το κουμπί «Βρείτε συνταγή» (`.ellada-finder__btn`) έχει ροζ border #CC3366 από το Elementor kit (και live).
+  1.22.1–3: `includes/palette-preview.php` — προεπισκόπηση παλέτας ΜΟΝΟ για editors:
   `?ellada_palette=petrol` (cookie 1 μέρα), `?ellada_palette=off`. Παλέτα «petrol» του χρήστη: #174C4B πετρόλ, #C5A46D χρυσό άμμου,
   #F5F1E8 κρεμ, #D7DFD8 φασκόμηλο, #343B39 ανθρακί (χάρτης παλιό→νέο στο `ellada_palettes()`). Μηχανισμός: kit vars + ίδιοι κανόνες CSS
   (χωρίς !important) στο τέλος + swap στο HTML + αντίγραφο του assets/js/ellada-map.js (shadow DOM) στο uploads/ellada-palette/.

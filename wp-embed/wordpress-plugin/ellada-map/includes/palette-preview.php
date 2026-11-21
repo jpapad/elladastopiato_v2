@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
 
 /** Οι παλέτες: παλιό χρώμα → νέο (κεφαλαία hex, και rgb τριάδες για rgba). */
 function ellada_palettes() {
-	return array(
+	$all = array(
 		'petrol' => array(
 			'name' => 'Πετρόλ & χρυσό',
 			'vars' => array(
@@ -66,6 +66,17 @@ function ellada_palettes() {
 			),
 		),
 	);
+	// Ίδια παλέτα με πιο ζεστό, πιο έντονο χρυσό (#D29A48).
+	$swap = array( '#C5A46D' => '#D29A48', '#D3B886' => '#DDB06C', '#E2D2B2' => '#ECD3AA', '197,164,109' => '210,154,72' );
+	$p2   = $all['petrol'];
+	$p2['name'] = 'Πετρόλ & ζεστό χρυσό';
+	foreach ( array( 'vars', 'hex', 'rgb' ) as $g ) {
+		foreach ( $p2[ $g ] as $k2 => $v ) {
+			$p2[ $g ][ $k2 ] = strtr( $v, $swap );
+		}
+	}
+	$all['petrol2'] = $p2;
+	return $all;
 }
 
 function ellada_palette_active() {
@@ -220,7 +231,7 @@ add_action(
 					return $html;
 				}
 				list( $html ) = ellada_palette_swap( $html, $pal );
-				$bar = '<div id="ellada-pal-bar" style="position:fixed;left:12px;bottom:12px;z-index:99999;background:#174C4B;color:#F5F1E8;font:600 12px/1.3 system-ui,sans-serif;padding:8px 12px;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.25)">Προεπισκόπηση παλέτας: ' . esc_html( $pal['name'] ) . ' · <a style="color:#C5A46D" href="' . esc_url( add_query_arg( 'ellada_palette', 'off' ) ) . '">κανονικά χρώματα</a></div>';
+				$bar = '<div id="ellada-pal-bar" style="position:fixed;left:12px;bottom:12px;z-index:99999;background:#174C4B;color:#F5F1E8;font:600 12px/1.3 system-ui,sans-serif;padding:8px 12px;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.25)">Προεπισκόπηση παλέτας: ' . esc_html( $pal['name'] ) . ' · <a style="color:#C5A46D" href="' . esc_url( add_query_arg( 'ellada_palette', 'petrol' ) ) . '">χρυσό άμμου</a> · <a style="color:#D29A48" href="' . esc_url( add_query_arg( 'ellada_palette', 'petrol2' ) ) . '">ζεστό χρυσό</a> · <a style="color:#F5F1E8;opacity:.8" href="' . esc_url( add_query_arg( 'ellada_palette', 'off' ) ) . '">κανονικά χρώματα</a></div>';
 				return str_ireplace( '</body>', '<style id="ellada-palette-preview">' . ellada_palette_stylesheet( $key ) . '</style>' . $bar . '</body>', $html );
 			}
 		);
