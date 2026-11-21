@@ -155,7 +155,10 @@
 - Νέες συνταγές από τον χρήστη: ξαναγράφονται στο δικό μας ύφος (όχι αντιγραφή κειμένου/φωτογραφιών τρίτων).
 - Αργότερα: σελίδες οικισμών, διαδρομές, πανηγύρια, αγγλική έκδοση.
 - Social links στο footer όταν ο χρήστης δώσει λογαριασμούς.
-- Search Console: ο χρήστης επαλήθευσε την ιδιοκτησία· εκκρεμεί service account + κλειδί στο wp-config για την καρτέλα Google.
+- Search Console: ιδιοκτησία επαληθευμένη + sitemap υποβλήθηκε (`https://elladastopiato.gr/wp-sitemap.xml`). **Εκκρεμεί** (ο χρήστης
+  το άφησε για αργότερα): upload του service-account JSON ως `domains/elladastopiato.gr/gsc-key.json` (έξω από public_html) → εγώ
+  προσθέτω `define( 'ELLADA_GSC_KEY_FILE', '/home/u543862105/domains/elladastopiato.gr/gsc-key.json' );` στο wp-config (με backup, μετά από έγκριση).
+- Τίτλοι Google (flag `seo_titles`): περιμένουν έγκριση για άνοιγμα + δεύτερο H1 αρχικής → h2.
 - Σε αναμονή: Reach/newsletter.
 
 > Ενημέρωνε τις ενότητες «Πρόοδος» και «Εκκρεμότητες» όταν κάτι ολοκληρώνεται.
