@@ -57,11 +57,11 @@
 ## Πρόοδος
 - Κείμενα live: Κρήτη (140), Χανιά 292, Ρέθυμνο 291, Ηράκλειο 289, Λασίθι 290 και οι 24 δήμοι
   της Κρήτης — 32 URLs τοποθεσιών στο sitemap.
-- ellada-map **1.22.4** live (backups έως 1.22.3). 1.22.4: δεύτερη παλέτα `petrol2` = ίδια με ζεστό χρυσό **#D29A48** (`?ellada_palette=petrol2`),
+- ellada-map **1.22.5** live (backups έως 1.22.4). 1.22.5: πετρόλ → **#28545A**, κρεμ φόντο → **#F6F2E9** (και στις δύο παλέτες· σκούρο hover #1F4247,
+  γραμμές σε σκούρο #346670/#3D717B). Τρέχουσα επιλογή χρήστη: petrol2 (#28545A + #D29A48 + #F6F2E9 + #D7DFD8 + #343B39). 1.22.4: δεύτερη παλέτα `petrol2` = ίδια με ζεστό χρυσό **#D29A48** (`?ellada_palette=petrol2`),
   εναλλαγή από τη μπάρα κάτω αριστερά. Βρέθηκε: το κουμπί «Βρείτε συνταγή» (`.ellada-finder__btn`) έχει ροζ border #CC3366 από το Elementor kit (και live).
   1.22.1–3: `includes/palette-preview.php` — προεπισκόπηση παλέτας ΜΟΝΟ για editors:
-  `?ellada_palette=petrol` (cookie 1 μέρα), `?ellada_palette=off`. Παλέτα «petrol» του χρήστη: #174C4B πετρόλ, #C5A46D χρυσό άμμου,
-  #F5F1E8 κρεμ, #D7DFD8 φασκόμηλο, #343B39 ανθρακί (χάρτης παλιό→νέο στο `ellada_palettes()`). Μηχανισμός: kit vars + ίδιοι κανόνες CSS
+  `?ellada_palette=petrol` (cookie 1 μέρα), `?ellada_palette=off`. Παλέτα «petrol» του χρήστη (αρχικά #174C4B/#F5F1E8, τώρα #28545A/#F6F2E9): #C5A46D χρυσό άμμου, #D7DFD8 φασκόμηλο, #343B39 ανθρακί (χάρτης παλιό→νέο στο `ellada_palettes()`). Μηχανισμός: kit vars + ίδιοι κανόνες CSS
   (χωρίς !important) στο τέλος + swap στο HTML + αντίγραφο του assets/js/ellada-map.js (shadow DOM) στο uploads/ellada-palette/.
   Δεν έχει εφαρμοστεί μόνιμα· το λογότυπο (PNG) είναι ακόμα πορτοκαλί. Σελίδα σύγκρισης: artifact 5ciieNHrArT5UaUxZZLbSk.
 - ellada-map 1.22.0: 1.22.0: `includes/seo-titles.php` — flag **`seo_titles`** (ΚΛΕΙΣΤΟ, περιμένει έγκριση):
