@@ -62,8 +62,9 @@
   Αλλαγές: κώδικας (front.css, plate-mark.svg, PHP, χάρτης `GreeceMap.tsx` με CONTENT_FILL accent(0.72)) στην 1.24.0· Elementor kit 9
   `_elementor_page_settings` (backup meta `_ellada_palette_backup_2026_11_21`) και **`_elementor_global_variables`** (οι V4 μεταβλητές
   --Accent/--Dark/--Ink…· backup `_ellada_gvars_backup_2026_11_21`)· `_elementor_data` των 70/176/624/163/137 (backup `_ellada_palette_backup_2026_11_21`).
-  Νέο λογότυπο 664 (`ellada-brand/ellada-logo-header-petrol@2x.png`, αντί για 157 στα 70/176/624), site icon 665, OG 666
-  (παλιά στο option `ellada_brand_backup_2026_11_21`). Το ροζ border του «Βρείτε συνταγή» διορθώθηκε. Το `palette-preview.php` μένει (μόνο editors).
+  **Λογότυπο live: «ΣΤΟ ΠΙΑΤΟ» + Κρήτη σε #D97745** (κεραμιδί, μόνο στο λογότυπο): 667 `ellada-brand/ellada-logo-header-d977@2x.png`
+  (στα e-image των 70/176/624), site icon 668, OG 669. Προηγούμενα: χρυσό 664/665/666, αρχικό πορτοκαλί 157/159/160
+  (option `ellada_brand_backup_2026_11_21`). Ανακαλύφθηκε με ξαναχρωματισμό των PNG (PIL)· δεν υπάρχει SVG πηγή. Το ροζ border του «Βρείτε συνταγή» διορθώθηκε. Το `palette-preview.php` μένει (μόνο editors).
 - ellada-map **1.24.0** live (backups έως 1.23.4).
 - ellada-map 1.23.4: 1.23.4: δύο προεπισκοπήσεις για σύγκριση — `?ellada_palette=petrol2` (πετρόλ #1D514E)
   και `?ellada_palette=petrol3` (πετρόλ #174C4B), αλλιώς ίδιες (#D29A48 · #F6F2E9 · #D7DFD8 · #343B39).
