@@ -132,6 +132,9 @@ const V2 = {
   // Σύνορα σε σκούρο πετρόλ: μέσα σε μια περιφέρεια με πολλούς «χρυσούς» νομούς φαίνονται τα όριά τους.
   content: { fill: 'color-mix(in srgb, var(--ellada-map-content, #d97745) 80%, transparent)', stroke: 'rgba(18,60,59,0.55)', strokeWidth: 0.8 },
   contentHover: { fill: 'color-mix(in srgb, var(--ellada-map-content-hover, #e39468) 95%, transparent)', stroke: CREAM(0.95), strokeWidth: 1.4 },
+  /** Αδιαφάνεια του κεραμιδί ανά επίπεδο: περιφέρειες → νομοί → δήμοι όλο και πιο διάφανα. */
+  contentAlpha: [80, 64, 50],
+  contentHoverAlpha: [95, 85, 75],
   pressed: 'var(--ellada-map-here, #c2602f)',
   hint: 'var(--ellada-map-hint, #a9bdb8)',
 }
@@ -789,7 +792,12 @@ export default function GreeceMap({
                           else if (level === 1) handlePrefectureClick(geo)
                           else if (level === 2) handleMunicipalityClick(geo)
                         }
-                        const v2Base = hasContent ? V2.content : V2.idle
+                        const lvlA = Math.min(level, 2)
+                        const v2Content = {
+                          ...V2.content,
+                          fill: `color-mix(in srgb, var(--ellada-map-content, #d97745) ${V2.contentAlpha[lvlA]}%, transparent)`,
+                        }
+                        const v2Base = hasContent ? v2Content : V2.idle
                         const base = colorsV2 && clickableLevel
                           ? {
                               fill: empty ? EMPTY_STYLE.fill : v2Base.fill,
@@ -803,7 +811,12 @@ export default function GreeceMap({
                               strokeWidth: style.strokeWidth,
                               outline: 'none',
                             }
-                        const v2Hover = hasContent ? V2.contentHover : V2.idleHover
+                        const v2Hover = hasContent
+                          ? {
+                              ...V2.contentHover,
+                              fill: `color-mix(in srgb, var(--ellada-map-content-hover, #e39468) ${V2.contentHoverAlpha[lvlA]}%, transparent)`,
+                            }
+                          : V2.idleHover
                         return (
                           <Geography
                             key={geo.rsmKey}
