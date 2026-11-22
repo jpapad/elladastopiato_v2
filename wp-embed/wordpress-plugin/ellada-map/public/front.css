@@ -1302,3 +1302,187 @@ html body .elementor-element-h3-map > .s-home2-maplink {
 html body .elementor-element-h3-map > .s-home2-maplink::after { content: "\2192"; font-size: 1.3em; line-height: 1; transition: transform .2s; }
 html body .elementor-element-h3-map > .s-home2-maplink:hover::after { transform: translateX(4px); }
 @media (max-width:767px){ html body .elementor-element-h3-map > .s-home2-maplink { margin-bottom: 40px !important; } }
+
+/* ══════════════ Σελίδα Συνταγές v4 (includes/recipes-v4.php· body.ellada-rv4) ══════════════ */
+
+/* (1) Hero: πετρόλ, τίτλος σε δύο χρώματα, φωτογραφία δεξιά που σβήνει στο πετρόλ */
+html body.ellada-rv4 .elementor-element.s-arch-hero {
+	position: relative; isolation: isolate; overflow: hidden;
+	background: var(--ellada-dark, #174C4B) !important; padding: 72px 24px 64px !important;
+}
+html body.ellada-rv4 .elementor-element.s-arch-hero::before {
+	content: ""; position: absolute; top: 0; right: 0; bottom: 0; left: auto !important; width: min(46%, 620px); height: auto; z-index: 0; pointer-events: none;
+	background: var(--ellada-rv4-img) right center / cover no-repeat;
+	-webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.25) 22%, rgba(0,0,0,.7) 42%, #000 62%);
+	mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.25) 22%, rgba(0,0,0,.7) 42%, #000 62%);
+}
+html body.ellada-rv4 .elementor-element.s-arch-hero::after {
+	content: ""; position: absolute; left: 0; right: 0; bottom: 0; top: auto !important; height: 30%; z-index: 0; pointer-events: none;
+	background: linear-gradient(to bottom, rgba(23,76,75,0), var(--ellada-dark, #174C4B));
+}
+html body.ellada-rv4 .elementor-element.s-arch-hero > * { position: relative; z-index: 1; }
+html body.ellada-rv4 .elementor-element.s-arch-hero-in { padding-right: min(40%, 520px) !important; }
+html body.ellada-rv4 .s-arch-title, html body.ellada-rv4 .s-arch-title * {
+	font-family: "Fira Sans Extra Condensed", "Commissioner", sans-serif !important; font-style: normal !important;
+	font-weight: 800 !important; text-transform: uppercase; letter-spacing: -0.01em; color: #F6F2E9 !important;
+}
+html body.ellada-rv4 .s-arch-title { font-size: clamp(56px, 9vw, 128px) !important; line-height: .86 !important; margin: 0 0 22px !important; }
+html body.ellada-rv4-main .s-arch-title::after { content: "από κάθε τόπο"; display: block; color: var(--ellada-accent, #D29A48); }
+html body.ellada-rv4 .ellada-aintro__text { color: rgba(246,242,233,.82); font-size: 19px; }
+html body.ellada-rv4 .ellada-aintro__count {
+	display: inline-flex; align-items: center; gap: 8px; margin-top: 8px; padding: 7px 14px; border-radius: 999px;
+	background: rgba(246,242,233,.08); border: 1px solid rgba(246,242,233,.18); color: var(--ellada-accent, #D29A48) !important;
+}
+html body.ellada-rv4 .ellada-aintro__count::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #D97745; }
+@media (max-width: 767px) {
+	html body.ellada-rv4 .elementor-element.s-arch-hero { padding: 48px 20px 44px !important; }
+	html body.ellada-rv4 .elementor-element.s-arch-hero::before { width: 100%; left: 0 !important; opacity: .28; -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 85%); mask-image: linear-gradient(to bottom, #000 0%, transparent 85%); }
+	html body.ellada-rv4 .elementor-element.s-arch-hero-in { padding-right: 0 !important; }
+	html body.ellada-rv4 .ellada-aintro__text { font-size: 17px; }
+}
+
+/* (4) Φίλτρα σε μία μπάρα πάνω από τις κάρτες */
+html body.ellada-rv4 .elementor-element.s-arch-list { padding-top: 32px !important; }
+html body .ellada-rv4bar {
+	position: sticky; top: 12px; z-index: 20; margin: 0 0 32px; padding: 12px 14px; border-radius: 18px;
+	background: rgba(250,248,242,.94); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+	border: 1px solid var(--ellada-line, #D7DFD8); transition: box-shadow .2s;
+}
+html body .ellada-rv4bar.is-stuck { box-shadow: 0 14px 30px -18px rgba(23,76,75,.45); }
+html body .ellada-rv4bar__sentinel { height: 1px; margin-bottom: -1px; }
+html body .ellada-rv4bar .ellada-rfilters { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 18px; }
+html body .ellada-rv4bar .ellada-rfilters__cats { margin: 0; }
+html body .ellada-rv4bar .ellada-rfilters__form { flex-wrap: nowrap; align-items: center; gap: 10px; }
+html body .ellada-rv4bar .ellada-rfilters__field { display: flex; align-items: center; gap: 8px; min-width: 0; }
+html body .ellada-rv4bar .ellada-rfilters__field span { margin: 0; }
+html body .ellada-rv4bar .ellada-rfilters__field select { min-width: 150px; }
+html body .ellada-rv4bar__toggle {
+	display: none; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; cursor: pointer;
+	border: 1px solid var(--ellada-line, #D7DFD8) !important; background: #fff !important; color: var(--ellada-ink, #343B39) !important;
+	font: 700 14px/1 "Commissioner", sans-serif;
+}
+html body .ellada-rv4bar__dot { width: 8px; height: 8px; border-radius: 50%; background: #D97745; }
+@media (max-width: 1024px) {
+	html body .ellada-rv4bar .ellada-rfilters { flex-direction: column; align-items: stretch; }
+	html body .ellada-rv4bar .ellada-rfilters__form { flex-wrap: wrap; }
+}
+@media (max-width: 767px) {
+	html body .ellada-rv4bar { position: static; padding: 10px; background: transparent; border: 0; -webkit-backdrop-filter: none; backdrop-filter: none; }
+	html body .ellada-rv4bar__toggle { display: inline-flex; margin-bottom: 0; }
+	html body .ellada-rv4bar .ellada-rfilters__form { display: none; margin-top: 12px; }
+	html body .ellada-rv4bar.is-open .ellada-rfilters__form, html body .ellada-rv4bar.has-active .ellada-rfilters__form { display: grid; }
+	html body .ellada-rv4bar .ellada-rfilters__field { display: grid; gap: 4px; }
+	html body .ellada-rv4bar .ellada-rfilters__field select { min-width: 0; }
+	html body .ellada-rv4bar .ellada-rfilters { flex-direction: column-reverse; }
+}
+
+/* (3) Κάρτες */
+html body.ellada-rv4 .ellada-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 28px; }
+@media (max-width: 1024px) { html body.ellada-rv4 .ellada-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { html body.ellada-rv4 .ellada-cards { grid-template-columns: 1fr; } }
+html body .ellada-card.is-v4 { position: relative; }
+html body .ellada-card.is-v4 .ellada-card__media { box-shadow: 0 18px 34px -22px rgba(23,76,75,.55); transition: box-shadow .3s, transform .3s; }
+html body .ellada-card.is-v4:hover .ellada-card__media { box-shadow: 0 26px 44px -22px rgba(23,76,75,.7); transform: translateY(-3px); }
+html body .ellada-card.is-v4 .ellada-card__img { transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+html body .ellada-card.is-v4:hover .ellada-card__img { transform: scale(1.07); }
+html body .ellada-card__region {
+	position: absolute; left: 12px; bottom: 12px; z-index: 2; padding: 6px 11px; border-radius: 999px;
+	background: rgba(23,76,75,.82); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+	color: #F6F2E9; font: 700 12px/1 "Commissioner", sans-serif; letter-spacing: .02em;
+}
+html body .ellada-card__region::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 7px; border-radius: 50%; background: #D97745; vertical-align: 1px; }
+html body .ellada-card__fav {
+	position: absolute; top: 12px; right: 12px; z-index: 3; width: 40px; height: 40px; padding: 0 !important; border-radius: 50% !important;
+	display: grid; place-items: center; cursor: pointer; border: 0 !important;
+	background: rgba(250,248,242,.92) !important; color: #174C4B !important; font-size: 20px; line-height: 1;
+	box-shadow: 0 6px 16px -8px rgba(0,0,0,.45); transition: transform .15s, color .15s;
+}
+html body .ellada-card__fav:hover { transform: scale(1.08); }
+html body .ellada-card__fav.is-on { color: #C2602F !important; }
+html body .ellada-card.is-v4 .ellada-card__badge { right: auto; }
+html body .ellada-card__placeholder.is-map {
+	display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 18px;
+	background: radial-gradient(90% 80% at 50% 40%, #1F5A58 0%, var(--ellada-dark, #174C4B) 70%) !important;
+}
+html body .ellada-card__ph-map { width: 72%; height: 72%; flex: 0 0 auto; transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+html body .ellada-card.is-v4:hover .ellada-card__ph-map { transform: scale(1.05); }
+html body .ellada-card__ph-map .is-other path { fill: #2C6866; stroke: #174C4B; stroke-width: .5; }
+html body .ellada-card__ph-map .is-on { fill: color-mix(in srgb, #D97745 88%, transparent); stroke: #F6F2E9; stroke-width: .6; }
+html body .ellada-card__placeholder.is-map .ellada-card__ph-label { display: none; }
+html body .ellada-rv4toast {
+	position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 9999; padding: 12px 18px; border-radius: 999px;
+	background: #174C4B; color: #F6F2E9 !important; font: 700 14px/1.2 "Commissioner", sans-serif; text-decoration: none;
+	box-shadow: 0 14px 30px -12px rgba(0,0,0,.45); animation: ellada-rv4toast .25s ease;
+}
+@keyframes ellada-rv4toast { from { opacity: 0; transform: translate(-50%, 8px); } }
+
+/* (5) Ενότητες κάτω από τις κάρτες */
+html body .ellada-rv4s { margin-top: 88px; font-family: "Commissioner", sans-serif; }
+html body .ellada-rv4s__head { max-width: 62ch; margin-bottom: 26px; }
+html body .ellada-rv4s__eyebrow { margin: 0 0 8px; font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #C2602F; }
+html body .ellada-rv4s__title {
+	margin: 0; font-family: "Fira Sans Extra Condensed", "Commissioner", sans-serif; font-weight: 800; text-transform: uppercase;
+	font-size: clamp(36px, 4.6vw, 56px); line-height: .95; color: var(--ellada-dark, #174C4B);
+}
+html body .ellada-rv4s__lead { margin: 12px 0 0; font-size: 17px; line-height: 1.55; color: var(--ellada-muted, #58615E); }
+html body .ellada-rv4s__more {
+	display: inline-flex; gap: 8px; margin: -6px 0 26px; padding-bottom: 6px; border-bottom: 2px solid var(--ellada-accent, #D29A48);
+	font-weight: 800; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--ellada-dark, #174C4B); text-decoration: none;
+}
+html body .ellada-rv4s__split {
+	display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 40px; align-items: center;
+	padding: 44px; border-radius: 28px; background: var(--ellada-dark, #174C4B);
+	box-shadow: 0 40px 80px -40px rgba(8,30,29,.6);
+}
+html body .ellada-rv4s--regions .ellada-rv4s__title { color: #F6F2E9; }
+html body .ellada-rv4s--regions .ellada-rv4s__eyebrow { color: var(--ellada-accent, #D29A48); }
+html body .ellada-rv4s--regions .ellada-rv4s__lead { color: #A9BDB8; }
+html body .ellada-rv4s__regions { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+html body .ellada-rv4s__regions a {
+	display: flex; justify-content: space-between; gap: 12px; padding: 12px 16px; border-radius: 12px;
+	background: rgba(246,242,233,.06); border: 1px solid rgba(246,242,233,.12); color: #F6F2E9; text-decoration: none; font-weight: 700;
+	transition: background .15s, border-color .15s;
+}
+html body .ellada-rv4s__regions a:hover { background: rgba(217,119,69,.18); border-color: #D97745; }
+html body .ellada-rv4s__n { white-space: nowrap; color: var(--ellada-accent, #D29A48); font-weight: 600; font-size: 14px; }
+html body .ellada-rv4s__map { width: 100%; height: auto; max-height: 420px; }
+html body .ellada-rv4s__map .is-off { fill: #2C6866; stroke: #174C4B; stroke-width: .6; }
+html body .ellada-rv4s__map .is-on { fill: color-mix(in srgb, #D97745 80%, transparent); stroke: #123C3B; stroke-width: .6; transition: fill .15s; cursor: pointer; }
+html body .ellada-rv4s__map a:hover .is-on, html body .ellada-rv4s__map a:focus .is-on { fill: #E39468; }
+html body .ellada-rv4s__soonlist { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+html body .ellada-rv4s__soon {
+	display: flex; flex-direction: column; gap: 8px; padding: 22px; border-radius: 18px;
+	background: #FAF8F2; border: 1px dashed #C9D2CB;
+}
+html body .ellada-rv4s__tag { align-self: flex-start; padding: 5px 10px; border-radius: 999px; background: #D7DFD8; color: #174C4B; font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+html body .ellada-rv4s__soon h3 { margin: 6px 0 0; font-size: 1.15rem; font-weight: 800; color: var(--ellada-ink, #343B39); }
+html body .ellada-rv4s__soon p { margin: 0; font-size: 14px; line-height: 1.5; color: var(--ellada-muted, #58615E); }
+html body .ellada-rv4s__soon a { margin-top: auto; padding-top: 6px; font-size: 13px; font-weight: 700; color: var(--ellada-dark, #174C4B); text-decoration: none; }
+html body .ellada-rv4s__soon a::before { content: "📍 "; }
+html body .ellada-rv4cta {
+	display: flex; align-items: center; justify-content: space-between; gap: 24px 40px; flex-wrap: wrap;
+	padding: 40px 44px; border-radius: 28px; background: linear-gradient(120deg, #D97745, #C2602F);
+}
+html body .ellada-rv4cta .ellada-rv4s__eyebrow { color: #FBE3D3; }
+html body .ellada-rv4cta__title { margin: 0; font-family: "Fira Sans Extra Condensed", "Commissioner", sans-serif; font-weight: 800; text-transform: uppercase; font-size: clamp(30px, 3.6vw, 44px); line-height: 1; color: #fff; }
+html body .ellada-rv4cta__text { margin: 10px 0 0; color: #FFF1E7; font-size: 17px; }
+html body .ellada-rv4cta__btn {
+	display: inline-flex; gap: 10px; padding: 16px 26px; border-radius: 999px; background: #174C4B; color: #F6F2E9 !important;
+	font-weight: 800; letter-spacing: .06em; text-transform: uppercase; font-size: 14px; text-decoration: none; transition: transform .15s;
+}
+html body .ellada-rv4cta__btn:hover { transform: translateX(3px); }
+@media (max-width: 1024px) {
+	html body .ellada-rv4s__soonlist { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	html body .ellada-rv4s__split { grid-template-columns: 1fr; padding: 32px; }
+	html body .ellada-rv4s__map { order: -1; max-height: 320px; }
+}
+@media (max-width: 600px) {
+	html body .ellada-rv4s { margin-top: 64px; }
+	html body .ellada-rv4s__soonlist { grid-template-columns: 1fr; }
+	html body .ellada-rv4s__split { padding: 24px 20px; border-radius: 22px; }
+	html body .ellada-rv4cta { padding: 28px 24px; border-radius: 22px; }
+}
+
+/* (6) Footer: οι περιφέρειες σε στήλες, χωρίς κενά δίπλα στα μεγάλα ονόματα */
+html body.ellada-rv4-on .ellada-footer__col--wide .ellada-footer__list { display: block; columns: 2; column-gap: 32px; }
+html body.ellada-rv4-on .ellada-footer__col--wide .ellada-footer__list li { break-inside: avoid; margin: 0 0 8px; }

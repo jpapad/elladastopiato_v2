@@ -385,7 +385,7 @@ function ellada_recipe_card( $post_id ) {
 	// Χωρίς φωτογραφία: το πιατάκι του λογότυπου και η κατηγορία.
 	$ph = '<span class="ellada-card__placeholder" aria-hidden="true"><span class="ellada-card__ph-mark"></span>'
 		. ( $cat ? '<span class="ellada-card__ph-label">' . esc_html( $cat ) . '</span>' : '' ) . '</span>';
-	return sprintf(
+	$html = sprintf(
 		'<article class="ellada-card"><a href="%1$s" class="ellada-card__link"><div class="ellada-card__media">%2$s</div><div class="ellada-card__body">%3$s<h3 class="ellada-card__title">%4$s</h3>%5$s</div></a></article>',
 		esc_url( get_permalink( $post_id ) ),
 		( $img ? $img : $ph ) . $badge,
@@ -393,6 +393,11 @@ function ellada_recipe_card( $post_id ) {
 		esc_html( get_the_title( $post_id ) ),
 		$meta ? '<p class="ellada-card__meta">' . esc_html( implode( ' · ', $meta ) ) . '</p>' : ''
 	);
+	// Σελίδα Συνταγές v4: περιφέρεια, ♥ και χάρτης αντί για πιατάκι (includes/recipes-v4.php).
+	if ( function_exists( 'ellada_recipes_v4_page' ) && ellada_recipes_v4_page() ) {
+		$html = ellada_rv4_card( $html, $post_id, (bool) $img, $cat );
+	}
+	return $html;
 }
 
 function ellada_collection_card( $post_id ) {
