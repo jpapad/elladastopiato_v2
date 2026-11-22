@@ -655,8 +655,21 @@ export default function GreeceMap({
 
   return (
     <div
-      className="bg-[var(--ellada-bg,#174c4b)] text-white border border-white/5 shadow-2xl relative flex flex-col overflow-hidden min-h-[var(--ellada-h-m)] sm:min-h-[var(--ellada-h)]"
-      style={sizeVars}
+      className={
+        colorsV2
+          ? 'bg-[var(--ellada-bg,#174c4b)] text-white border border-[rgba(246,242,233,0.16)] relative flex flex-col overflow-hidden min-h-[var(--ellada-h-m)] sm:min-h-[var(--ellada-h)]'
+          : 'bg-[var(--ellada-bg,#174c4b)] text-white border border-white/5 shadow-2xl relative flex flex-col overflow-hidden min-h-[var(--ellada-h-m)] sm:min-h-[var(--ellada-h)]'
+      }
+      style={
+        colorsV2
+          ? {
+              ...sizeVars,
+              // Βαθιά σκιά σε σκούρο πετρόλ: το πλαίσιο «αιωρείται» και πάνω σε πετρόλ φόντο (αρχική).
+              boxShadow:
+                'var(--ellada-map-shadow, 0 40px 80px -20px rgba(8,30,29,.75), 0 18px 36px -12px rgba(8,30,29,.5))',
+            }
+          : sizeVars
+      }
       onPointerEnter={warmUp}
       onTouchStart={warmUp}
       onFocusCapture={warmUp}
