@@ -1256,27 +1256,20 @@ html body .elementor-element.elementor-element-home2-hero::after {
 	/* Ξεκινά ακριβώς στο τέλος του πιάτου (≈84% του ύψους) και σβήνει γρήγορα. */
 	background: linear-gradient(to bottom, rgba(23, 76, 75, 0) 0%, rgba(23, 76, 75, .7) 35%, rgba(23, 76, 75, .95) 70%, var(--ellada-dark, #174C4B) 100%);
 }
-/*
- * ::before = δύο στρώσεις πάνω από τη φωτογραφία (κάτω από το κείμενο):
- *  1. πλαϊνό: πετρόλ ως λίγο πριν από το πιάτο και το μπολάκι, που σβήνει προς τα δεξιά. Η φωτογραφία έχει
- *     το ύψος του hero και κάθεται δεξιά, οπότε τα σημεία είναι κλάσματα του ύψους (--ellada-hero-h, από JS) από τη δεξιά άκρη.
- *  2. πάνω: μαύρο ως λίγο πριν από το μπολάκι με το λάδι και τις ελιές (≈11% του ύψους)· αριστερά το καλύπτει το πετρόλ.
- */
+/* Πάνω: μαύρο σβήσιμο μόνο πάνω από τη φωτογραφία, ως λίγο πριν από το μπολάκι με το λάδι και τις ελιές (≈11% του ύψους)·
+   αριστερά (πίσω από το λογότυπο) μένει πετρόλ — η αριστερή άκρη του μαύρου σβήνει ομαλά. */
 html body .elementor-element.elementor-element-home2-hero::before {
-	content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
-	background-image:
-		linear-gradient(90deg, var(--ellada-dark, #174C4B) 0, var(--ellada-dark, #174C4B) calc(100% - var(--ellada-hero-h, 846px) * .551), rgba(23, 76, 75, .75) calc(100% - var(--ellada-hero-h, 846px) * .53), rgba(23, 76, 75, .3) calc(100% - var(--ellada-hero-h, 846px) * .511), rgba(23, 76, 75, 0) calc(100% - var(--ellada-hero-h, 846px) * .487)),
-		linear-gradient(to top, rgba(11, 11, 11, 0) 0%, rgba(11, 11, 11, .7) 35%, rgba(11, 11, 11, .95) 70%, #0B0B0B 100%);
-	background-size: 100% 100%, 100% 11%;
-	background-position: 0 0, 0 0;
-	background-repeat: no-repeat;
+	content: ""; position: absolute; left: 55%; right: 0; top: 0; height: 11%; pointer-events: none; z-index: 0;
+	-webkit-mask-image: linear-gradient(to right, transparent 0%, #000 30%);
+	mask-image: linear-gradient(to right, transparent 0%, #000 30%);
+	background: linear-gradient(to top, rgba(11, 11, 11, 0) 0%, rgba(11, 11, 11, .7) 35%, rgba(11, 11, 11, .95) 70%, #0B0B0B 100%);
 }
 @media (max-width: 767px) {
 	html body .elementor-element.elementor-element-home2-hero::after { height: 35%; }
 	/* Κινητό: η φωτογραφία είναι πίσω από όλο το hero — μόνο πάνω σβήσιμο, σε πετρόλ. */
 	html body .elementor-element.elementor-element-home2-hero::before {
-		background-image: linear-gradient(to top, rgba(23, 76, 75, 0) 0%, rgba(23, 76, 75, .7) 35%, rgba(23, 76, 75, .95) 70%, var(--ellada-dark, #174C4B) 100%);
-		background-size: 100% 14%;
+		left: 0; height: 14%; -webkit-mask-image: none; mask-image: none;
+		background: linear-gradient(to top, rgba(23, 76, 75, 0) 0%, rgba(23, 76, 75, .7) 35%, rgba(23, 76, 75, .95) 70%, var(--ellada-dark, #174C4B) 100%);
 	}
 }
 

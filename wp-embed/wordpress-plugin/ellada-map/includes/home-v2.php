@@ -194,14 +194,3 @@ add_action(
 	20
 );
 
-/* Το πλάτος της φωτογραφίας του hero εξαρτάται από το ύψος του: το CSS του σβησίματος το χρειάζεται (--ellada-hero-h). */
-add_action(
-	'wp_footer',
-	function () {
-		if ( ! is_front_page() ) {
-			return;
-		}
-		echo "<script>(function(){var h=document.querySelector('.elementor-element-home2-hero');if(!h)return;function s(){h.style.setProperty('--ellada-hero-h',h.offsetHeight+'px');}s();window.addEventListener('resize',s,{passive:true});if(window.ResizeObserver)new ResizeObserver(s).observe(h);})();</script>\n";
-	},
-	40
-);
