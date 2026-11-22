@@ -1252,9 +1252,9 @@ html body .ellada-finder__btn { border-color: transparent; }
 /* Αρχική: η φωτογραφία του hero σβήνει ομαλά προς το πετρόλ της ενότητας του χάρτη. */
 html body .elementor-element.elementor-element-home2-hero { position: relative; isolation: isolate; }
 html body .elementor-element.elementor-element-home2-hero::after {
-	content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 17%; pointer-events: none; z-index: 0;
-	/* Μόνο κάτω από το πιάτο: η φωτογραφία μένει καθαρή ως εκεί. */
-	background: linear-gradient(to bottom, rgba(23, 76, 75, 0) 0%, rgba(23, 76, 75, .6) 50%, var(--ellada-dark, #174C4B) 100%);
+	content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 16%; pointer-events: none; z-index: 0;
+	/* Ξεκινά ακριβώς στο τέλος του πιάτου (≈84% του ύψους) και σβήνει γρήγορα. */
+	background: linear-gradient(to bottom, rgba(23, 76, 75, 0) 0%, rgba(23, 76, 75, .7) 35%, rgba(23, 76, 75, .95) 70%, var(--ellada-dark, #174C4B) 100%);
 }
 @media (max-width: 767px) {
 	html body .elementor-element.elementor-element-home2-hero::after { height: 35%; }
