@@ -212,7 +212,7 @@ add_shortcode(
 		}
 		// Νέα μορφή: tabs με εικόνα ανά περιφέρεια (includes/guide-tabs.php, λειτουργία «guide_tabs»).
 		$tabs = function_exists( 'ellada_guide_tabs_on' ) && ellada_guide_tabs_on() ? ellada_guide_tabs_html( $byreg, $pages, $munis ) : '';
-		$html .= '<section class="ellada-ghub__sec is-alt"><div class="ellada-ghub__wrap"><p class="ellada-ghub__eyebrow is-dark">Όλοι οι τόποι</p><h2 class="ellada-ghub__h">Οι 13<br><strong>περιφέρειες</strong></h2>'
+		$html .= '<section class="ellada-ghub__sec is-alt' . ( $tabs ? ' is-tabs' : '' ) . '"><div class="ellada-ghub__wrap"><p class="ellada-ghub__eyebrow is-dark">Όλοι οι τόποι</p><h2 class="ellada-ghub__h">Οι 13<br><strong>περιφέρειες</strong></h2>'
 			. ( $tabs ? $tabs : '<div class="ellada-gall">' . $all . '</div>' ) . '</div></section>';
 
 		/* Ξέρετε έναν τόπο; */
