@@ -203,7 +203,8 @@ add_action(
 		}
 		echo "<script>(function(){var h=document.querySelector('.elementor-element-home2-hero');if(!h)return;function s(){h.style.setProperty('--ellada-hero-h',h.offsetHeight+'px');}s();window.addEventListener('resize',s,{passive:true});if(window.ResizeObserver)new ResizeObserver(s).observe(h);})();</script>\n";
 		// «Ή εξερευνήστε τον χάρτη»: από το hero στην αρχή της ενότητας του χάρτη, με γραμμή σε όλο το πλάτος.
-		echo "<script>(function(){var l=document.querySelector('.elementor-element-home2-hero .s-home2-maplink'),m=document.querySelector('.elementor-element-h3-map');if(!l||!m)return;m.insertBefore(l,m.firstChild);m.classList.add('ellada-has-maplink');})();</script>\n";
+		// Στο hero μένει αόρατο αντίγραφο ίδιου μεγέθους, ώστε το hero να μη μετακινείται.
+		echo "<script>(function(){var l=document.querySelector('.elementor-element-home2-hero .s-home2-maplink'),m=document.querySelector('.elementor-element-h3-map');if(!l||!m)return;var ph=l.cloneNode(true);ph.removeAttribute('href');ph.removeAttribute('data-id');ph.setAttribute('aria-hidden','true');ph.classList.add('ellada-maplink-ph');l.parentNode.insertBefore(ph,l);m.insertBefore(l,m.firstChild);m.classList.add('ellada-has-maplink');})();</script>\n";
 	},
 	40
 );

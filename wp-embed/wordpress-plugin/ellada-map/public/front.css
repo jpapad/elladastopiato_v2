@@ -1286,6 +1286,7 @@ html body .elementor-element.elementor-element-home2-hero::before {
 
 html body .elementor-element.elementor-element-home2-hero > * { position: relative; z-index: 1; }
 /* «Ή εξερευνήστε τον χάρτη» στην αρχή της ενότητας του χάρτη (μεταφέρεται με JS από το home-v2.php) */
+html body .elementor-element-home2-hero .ellada-maplink-ph { visibility: hidden !important; pointer-events: none !important; }
 html body .elementor-element.elementor-element-h3-map.ellada-has-maplink { padding-top: 36px !important; flex-wrap: wrap !important; }
 html body .elementor-element-h3-map > .s-home2-maplink {
   box-sizing: border-box; flex: 0 0 100%; width: 100%; max-width: 1200px; margin: 0 auto 64px !important; align-self: center;
