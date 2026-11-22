@@ -1398,3 +1398,6 @@ html body .ellada-rv4cta__btn:hover { transform: translateX(3px); }
 	html body .ellada-rv4s { margin-top: 64px; }
 	html body .ellada-rv4cta { padding: 28px 24px; border-radius: 22px; }
 }
+
+/* Δοκιμή φόντου μόνο στη σελίδα Συνταγές (22/11): #F3EFE5 αντί για #F6F2E9 */
+html body.ellada-rv4 { background-color: #F3EFE5 !important; }
