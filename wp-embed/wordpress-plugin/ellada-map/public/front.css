@@ -1437,7 +1437,7 @@ html body .ellada-gtabs__dot { position: absolute; top: 10px; right: 12px; width
 
 html body .ellada-gtabs__panel {
 	display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; padding: 36px; border-radius: 28px;
-	background: #fff; border: 1px solid var(--ellada-line, #D7DFD8); box-shadow: 0 30px 60px -40px rgba(23,76,75,.45);
+	background: #E7E2D5; border: 1px solid #DAD3C2; box-shadow: 0 30px 60px -40px rgba(23,76,75,.45);
 	animation: ellada-gtabs-in .35s ease;
 }
 html body .ellada-gtabs__panel[hidden] { display: none; }
