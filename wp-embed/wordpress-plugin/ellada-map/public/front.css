@@ -1258,12 +1258,15 @@ html body .elementor-element.elementor-element-home2-hero::after {
 }
 /* Και από πάνω: σβήνει σε μαύρο ως λίγο πριν από το μπολάκι με το λάδι και τις ελιές (≈11% του ύψους). */
 html body .elementor-element.elementor-element-home2-hero::before {
-	content: ""; position: absolute; left: 0; right: 0; top: 0; height: 11%; pointer-events: none; z-index: 0;
-	/* Σε μαύρο (όχι το πετρόλ): πιο βαθύ πάνω, πίσω από το μενού. */
+	content: ""; position: absolute; left: 55%; right: 0; top: 0; height: 11%; pointer-events: none; z-index: 0;
+	/* Σε μαύρο, μόνο πάνω από τη φωτογραφία· αριστερά (πίσω από το λογότυπο) μένει πετρόλ — η αριστερή άκρη σβήνει ομαλά. */
+	-webkit-mask-image: linear-gradient(to right, transparent 0%, #000 30%);
+	mask-image: linear-gradient(to right, transparent 0%, #000 30%);
 	background: linear-gradient(to top, rgba(11, 11, 11, 0) 0%, rgba(11, 11, 11, .7) 35%, rgba(11, 11, 11, .95) 70%, #0B0B0B 100%);
 }
 @media (max-width: 767px) {
 	html body .elementor-element.elementor-element-home2-hero::after { height: 35%; }
-	html body .elementor-element.elementor-element-home2-hero::before { height: 14%; }
+	/* Στο κινητό η φωτογραφία είναι πίσω από όλο το hero: το μαύρο πιάνει όλο το πλάτος. */
+	html body .elementor-element.elementor-element-home2-hero::before { height: 14%; left: 0; -webkit-mask-image: none; mask-image: none; }
 }
 html body .elementor-element.elementor-element-home2-hero > * { position: relative; z-index: 1; }
