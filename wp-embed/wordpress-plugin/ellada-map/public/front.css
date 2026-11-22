@@ -1266,10 +1266,14 @@ html body .elementor-element.elementor-element-home2-hero::after {
 html body .elementor-element.elementor-element-home2-hero::before {
 	content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
 	background:
+		/* Η φωτογραφία είναι τετράγωνη (πλάτος = ύψος hero): από το μαύρο σβήνει σε πετρόλ ως την αριστερή της άκρη,
+		   ώστε να μη φαίνεται σκληρή κάθετη γραμμή στις φαρδιές οθόνες. */
 		linear-gradient(90deg,
-			rgba(11, 11, 11, 0) calc(100% - var(--ellada-hero-h, 846px) * .74),
-			rgba(11, 11, 11, .9) calc(100% - var(--ellada-hero-h, 846px) * .58),
-			rgba(11, 11, 11, .85) calc(100% - var(--ellada-hero-h, 846px) * .545),
+			var(--ellada-dark, #174C4B) calc(100% - var(--ellada-hero-h, 846px)),
+			rgba(23, 76, 75, .97) calc(100% - var(--ellada-hero-h, 846px) * .94),
+			rgba(17, 45, 44, .95) calc(100% - var(--ellada-hero-h, 846px) * .8),
+			rgba(11, 11, 11, .9) calc(100% - var(--ellada-hero-h, 846px) * .62),
+			rgba(11, 11, 11, .8) calc(100% - var(--ellada-hero-h, 846px) * .56),
 			rgba(11, 11, 11, .35) calc(100% - var(--ellada-hero-h, 846px) * .51),
 			rgba(11, 11, 11, 0) calc(100% - var(--ellada-hero-h, 846px) * .48)),
 		linear-gradient(to top, rgba(11, 11, 11, 0) 0%, rgba(11, 11, 11, .7) 35%, rgba(11, 11, 11, .95) 70%, #0B0B0B 100%)
