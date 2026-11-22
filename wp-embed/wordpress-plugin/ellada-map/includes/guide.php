@@ -127,7 +127,8 @@ function ellada_guide_place_types() {
 
 /** Η διεύθυνση του χάρτη ανοιχτού σε έναν δήμο ή οικισμό. */
 function ellada_guide_map_url( $pref, $muni, $id = '' ) {
-	return add_query_arg( 'topos', rawurlencode( $pref . '|' . $muni . '|' . $id ), home_url( '/xartis/' ) );
+	// Η σελίδα «Χάρτης» είναι ανενεργή (22/11): ο χάρτης της αρχικής διαβάζει το ίδιο ?topos=.
+	return add_query_arg( 'topos', rawurlencode( $pref . '|' . $muni . '|' . $id ), home_url( '/' ) ) . '#xartis';
 }
 
 /**

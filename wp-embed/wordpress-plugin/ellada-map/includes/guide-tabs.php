@@ -170,3 +170,31 @@ function ellada_guide_tabs_html( $byreg, $pages, $munis ) {
 		. 'var h=location.hash.slice(1);show(pans.some(function(p){return p.id===h})?h:(w.dataset.first||tabs[0].dataset.slug),false,false);'
 		. '})();</script>';
 }
+
+/* ═════════════════════ Η σελίδα «Χάρτης» είναι ανενεργή (22/11) ═════════════════════ */
+
+/**
+ * Η σελίδα /xartis/ είναι σε πρόχειρο (ο χάρτης υπάρχει στην αρχική και στον οδηγό).
+ * Οι παλιοί σύνδεσμοι πάνε μόνιμα (301) στον χάρτη της αρχικής, μαζί με το ?topos= αν υπάρχει.
+ * Επαναφορά: δημοσίευση της σελίδας + μενού (το redirect ισχύει μόνο όσο η σελίδα δεν είναι δημοσιευμένη).
+ */
+add_action(
+	'template_redirect',
+	function () {
+		$path = trim( (string) wp_parse_url( isset( $_SERVER['REQUEST_URI'] ) ? wp_unslash( $_SERVER['REQUEST_URI'] ) : '', PHP_URL_PATH ), '/' ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+		if ( 'xartis' !== $path ) {
+			return;
+		}
+		$page = get_page_by_path( 'xartis', OBJECT, 'page' );
+		if ( $page && 'publish' === $page->post_status ) {
+			return;
+		}
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$topos = isset( $_GET['topos'] ) ? sanitize_text_field( wp_unslash( $_GET['topos'] ) ) : '';
+		$to    = $topos ? add_query_arg( 'topos', rawurlencode( $topos ), home_url( '/' ) ) : home_url( '/' );
+		wp_safe_redirect( $to . '#xartis', 301 );
+		exit;
+	},
+	1
+);
+

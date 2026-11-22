@@ -44,10 +44,8 @@ function ellada_footer_col( $title, $items, $extra_class = '' ) {
 function ellada_footer_links_html() {
 	/* Εξερεύνησε */
 	$explore = array();
-	$map     = ellada_footer_page( 'xartis' );
-	if ( $map ) {
-		$explore[] = ellada_footer_link( get_permalink( $map ), 'Χάρτης' );
-	}
+	// Ο χάρτης είναι στην αρχική (η σελίδα «Χάρτης» είναι ανενεργή από 22/11).
+	$explore[] = ellada_footer_link( home_url( '/#xartis' ), 'Χάρτης' );
 	$guide = ellada_footer_page( 'odigos' );
 	if ( $guide && ( ! function_exists( 'ellada_feature' ) || ellada_feature( 'guide' ) ) ) {
 		$explore[] = ellada_footer_link( get_permalink( $guide ), 'Ταξιδιωτικός οδηγός' );

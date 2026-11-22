@@ -341,7 +341,7 @@ add_shortcode(
 			<?php if ( '' === trim( $query ) ) : ?>
 				<p class="ellada-results__count">Γράψτε τι ψάχνετε: μια συνταγή ή μια περιοχή.</p>
 			<?php elseif ( ! $total ) : ?>
-				<p class="ellada-results__count">Δεν βρέθηκε κάτι για «<?php echo esc_html( $query ); ?>». Δοκιμάστε μια άλλη λέξη ή <a href="<?php echo esc_url( home_url( '/xartis/' ) ); ?>">ανοίξτε τον χάρτη</a>.</p>
+				<p class="ellada-results__count">Δεν βρέθηκε κάτι για «<?php echo esc_html( $query ); ?>». Δοκιμάστε μια άλλη λέξη ή <a href="<?php echo esc_url( home_url( '/#xartis' ) ); ?>">ανοίξτε τον χάρτη</a>.</p>
 			<?php else : ?>
 				<p class="ellada-results__count"><?php echo esc_html( sprintf( 1 === $total ? '1 αποτέλεσμα για «%2$s»' : '%1$d αποτελέσματα για «%2$s»', $total, $query ) ); ?></p>
 			<?php endif; ?>
