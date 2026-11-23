@@ -1691,3 +1691,71 @@ html body .elementor-nav-menu--main a.ellada-mi:hover .ellada-mi__ico { transfor
 html body .elementor-nav-menu--dropdown a.ellada-mi { display: flex !important; width: 100%; gap: 12px; }
 html body .elementor-nav-menu--dropdown .ellada-mi__ico { width: 20px; height: 20px; flex-basis: 20px; }
 @media (prefers-reduced-motion: reduce) { html body .elementor-nav-menu--main .ellada-mi__txt, html body .elementor-nav-menu--main a.ellada-mi { transition: none; } }
+
+/* ══════════════ Επικοινωνία v3: δική μας φόρμα με πεδία ανά θέμα (includes/contact-v3.php) ══════════════ */
+html body .ecv3 { --f: color-mix(in srgb, var(--ellada-line, #D7DFD8) 60%, #fff); font-family: "Commissioner", sans-serif; color: var(--ellada-ink, #343B39); }
+html body .ecv3 [hidden] { display: none !important; }
+html body .ecv3-form { display: grid; gap: 18px; }
+html body .ecv3-eyebrow { margin: 0 0 6px; font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #C2602F; }
+html body .ecv3-title { margin: 0; font-family: "Fira Sans Extra Condensed", "Commissioner", sans-serif; font-weight: 800; font-size: clamp(30px, 3.2vw, 40px); line-height: 1; text-transform: uppercase; color: var(--ellada-dark, #174C4B); }
+html body .ecv3-sub { margin: 10px 0 0; font-size: 15px; line-height: 1.55; color: var(--ellada-muted, #58615E); }
+html body .ecv3-topics { margin: 0; padding: 0; border: 0; min-width: 0; }
+html body .ecv3-topics legend { margin-bottom: 10px; padding: 0; font-size: 13px; font-weight: 700; color: var(--ellada-ink, #343B39); }
+html body .ecv3-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+html body .ecv3-chip { position: relative; display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px 10px 12px; border-radius: 999px; cursor: pointer;
+	background: #fff; border: 1.5px solid var(--ellada-line, #D7DFD8); font-size: 14px; font-weight: 700; transition: border-color .15s, background .15s, color .15s; }
+html body .ecv3-chip input { position: absolute; opacity: 0; pointer-events: none; }
+html body .ecv3-chip__i { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--f); color: var(--ellada-dark, #174C4B); }
+html body .ecv3-chip__i svg { width: 16px; height: 16px; }
+html body .ecv3-chip:hover { border-color: var(--ellada-accent, #D29A48); }
+html body .ecv3-chip.is-on { background: var(--ellada-dark, #174C4B); border-color: var(--ellada-dark, #174C4B); color: #F6F2E9; }
+html body .ecv3-chip.is-on .ecv3-chip__i { background: rgba(246,242,233,.14); color: var(--ellada-accent, #D29A48); }
+html body .ecv3-chip:has(input:focus-visible) { outline: 3px solid var(--ellada-accent, #D29A48); outline-offset: 2px; }
+html body .ecv3-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+html body .ecv3-group { display: grid; gap: 14px; animation: ecv3-in .3s ease; }
+@keyframes ecv3-in { from { opacity: 0; transform: translateY(6px); } }
+html body .ecv3-field { display: grid; gap: 6px; }
+html body .ecv3-field label { font-size: 13px; font-weight: 700; color: var(--ellada-ink, #343B39); }
+html body .ecv3-req { color: #C2602F; }
+html body .ecv3-field input[type=text], html body .ecv3-field input[type=email], html body .ecv3-field textarea, html body .ecv3-field select {
+	width: 100%; box-sizing: border-box; padding: 13px 15px !important; border-radius: 14px !important; border: 1.5px solid transparent !important;
+	background: var(--f) !important; color: var(--ellada-ink, #343B39) !important; font: 500 15px/1.5 "Commissioner", sans-serif; transition: border-color .15s, background .15s, box-shadow .15s;
+}
+html body .ecv3-field textarea { min-height: 110px; resize: vertical; }
+html body .ecv3-field input:focus, html body .ecv3-field textarea:focus, html body .ecv3-field select:focus {
+	outline: none; background: #fff !important; border-color: var(--ellada-dark, #174C4B) !important; box-shadow: 0 0 0 4px rgba(23,76,75,.12);
+}
+html body .ecv3-field ::placeholder { color: #8A928F; }
+html body .ecv3 .is-touched[aria-invalid] { border-color: #C2602F !important; background: #FCEEE7 !important; }
+html body .ecv3-file { position: relative; }
+html body .ecv3-file input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+html body .ecv3-file__ui { display: flex; align-items: center; gap: 12px; padding: 10px; border-radius: 14px; border: 1.5px dashed #BFC9C2; background: #fff; }
+html body .ecv3-file__btn { padding: 8px 14px; border-radius: 999px; background: var(--ellada-dark, #174C4B); color: #F6F2E9; font-size: 13px; font-weight: 700; white-space: nowrap; }
+html body .ecv3-file__name { font-size: 13px; color: var(--ellada-muted, #58615E); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+html body .ecv3-file:hover .ecv3-file__ui, html body .ecv3-file:focus-within .ecv3-file__ui { border-color: var(--ellada-dark, #174C4B); }
+html body .ecv3-check { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.45; cursor: pointer; }
+html body .ecv3-check input { flex: 0 0 auto; width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--ellada-dark, #174C4B); }
+html body .ecv3-check input[aria-invalid] { outline: 2px solid #C2602F; outline-offset: 2px; }
+html body .ecv3-check a { color: var(--ellada-dark, #174C4B); font-weight: 700; }
+html body .ecv3-consent { padding-top: 4px; border-top: 1px solid var(--ellada-line, #D7DFD8); padding-top: 16px; }
+html body .ecv3-hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+html body .ecv3-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
+html body .ecv3-btn {
+	display: inline-flex; align-items: center; gap: 10px; padding: 15px 26px !important; border: 0 !important; border-radius: 999px !important; cursor: pointer;
+	background: #D97745 !important; color: #fff !important; font: 800 14px/1 "Commissioner", sans-serif; letter-spacing: .08em; text-transform: uppercase;
+	box-shadow: 0 14px 26px -16px rgba(194,96,47,.9); transition: background .15s, transform .15s;
+}
+html body .ecv3-btn:hover { background: #C2602F !important; transform: translateX(2px); }
+html body .ecv3-btn:disabled { opacity: .7; cursor: wait; }
+html body .ecv3-status { margin: 0; font-size: 14px; color: var(--ellada-muted, #58615E); }
+html body .ecv3-status.is-err { color: #A8461A; font-weight: 600; }
+html body .ecv3-done { display: grid; justify-items: start; gap: 10px; padding: 34px; border-radius: 22px; background: var(--ellada-dark, #174C4B); color: #F6F2E9; outline: none; animation: ecv3-in .35s ease; }
+html body .ecv3-done__i { display: grid; place-items: center; width: 58px; height: 58px; border-radius: 50%; background: #D97745; color: #fff; }
+html body .ecv3-done h2 { margin: 6px 0 0; font-family: "Fira Sans Extra Condensed", sans-serif; font-weight: 800; font-size: 34px; text-transform: uppercase; color: #F6F2E9; }
+html body .ecv3-done p { margin: 0; font-size: 16px; line-height: 1.55; color: #D7DFD8; max-width: 52ch; }
+html body .ecv3-again { margin-top: 8px; padding: 11px 18px !important; border-radius: 999px !important; border: 1.5px solid rgba(246,242,233,.35) !important; background: transparent !important; color: #F6F2E9 !important; font-weight: 700; cursor: pointer; }
+@media (max-width: 600px) {
+	html body .ecv3-row { grid-template-columns: 1fr; }
+	html body .ecv3-chip { padding: 9px 13px 9px 10px; font-size: 13px; }
+	html body .ecv3-btn { width: 100%; justify-content: center; }
+}

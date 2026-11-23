@@ -14,6 +14,10 @@
 defined( 'ABSPATH' ) || exit;
 
 function ellada_contact_v2() {
+	// Όταν ισχύει η v3 (δική μας φόρμα), η v2 που «ντύνει» τη φόρμα του Elementor δεν χρειάζεται.
+	if ( function_exists( 'ellada_contact_v3' ) && ellada_contact_v3() ) {
+		return false;
+	}
 	return function_exists( 'ellada_feature' ) && ellada_feature( 'contact_v2' ) && is_page( 'epikoinonia' );
 }
 
