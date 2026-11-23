@@ -65,7 +65,10 @@
   **Λογότυπο live: «ΣΤΟ ΠΙΑΤΟ» + Κρήτη σε #D97745** (κεραμιδί, μόνο στο λογότυπο): 667 `ellada-brand/ellada-logo-header-d977@2x.png`
   (στα e-image των 70/176/624), site icon 668, OG 669. Προηγούμενα: χρυσό 664/665/666, αρχικό πορτοκαλί 157/159/160
   (option `ellada_brand_backup_2026_11_21`). Ανακαλύφθηκε με ξαναχρωματισμό των PNG (PIL)· δεν υπάρχει SVG πηγή. Το ροζ border του «Βρείτε συνταγή» διορθώθηκε. Το `palette-preview.php` μένει (μόνο editors).
-- ellada-map **1.29.1** live (backups έως 1.29.0). 1.29.x: `includes/home-closing.php` — αρχική, ενότητα «Κάθε τόπος, ένα πιάτο» (h3c-hero) v2
+- ellada-map **1.30.0** live (backups έως 1.29.1). 1.30.0: `includes/menu-v2.php` — κεντρικό μενού v2 πίσω από flag **`menu_v2`** (ΚΛΕΙΣΤΟ·
+  προβολή χωρίς σύνδεση `?ellada_demo=menu`): «Αρχική» → σπιτάκι (SVG, aria-label/title «Αρχική»· στο dropdown κινητού σπιτάκι + «Αρχική»),
+  «Οδηγός» → «Εξερευνήστε» (φίλτρα `nav_menu_item_title`/`nav_menu_link_attributes`· το μενού 3 του WP δεν αλλάζει, η σελίδα /odigos/ μένει).
+- ellada-map 1.29.1 (backups έως 1.29.0). 1.29.x: `includes/home-closing.php` — αρχική, ενότητα «Κάθε τόπος, ένα πιάτο» (h3c-hero) v2
   πίσω από flag **`home_closing`** (**ΑΝΟΙΧΤΟ**, live 23/11· προβολή χωρίς σύνδεση `?ellada_demo=closing`): φόντο #E7E2D5, τίτλος πετρόλ/κεραμιδί, δεξιά
   ζευγάρια «τόπος → πιάτο» από τις συνταγές (`ellada_hc_pairs`), κορδέλα με ονόματα πιάτων (συνταγές + `ellada_missing_recipes`), δεύτερο κουμπί
   «Ο οδηγός →». Με JS (template + `[data-id=h3c-…]`)· το Elementor δεν αλλάζει. **Έγινε** H1 → H2 του `h3c-title` (Elementor 163· backup meta `_ellada_h3c_backup_2026_11_23`) — η αρχική έχει πλέον ένα H1.
