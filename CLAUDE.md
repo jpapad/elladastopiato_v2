@@ -66,9 +66,9 @@
   (στα e-image των 70/176/624), site icon 668, OG 669. Προηγούμενα: χρυσό 664/665/666, αρχικό πορτοκαλί 157/159/160
   (option `ellada_brand_backup_2026_11_21`). Ανακαλύφθηκε με ξαναχρωματισμό των PNG (PIL)· δεν υπάρχει SVG πηγή. Το ροζ border του «Βρείτε συνταγή» διορθώθηκε. Το `palette-preview.php` μένει (μόνο editors).
 - ellada-map **1.29.1** live (backups έως 1.29.0). 1.29.x: `includes/home-closing.php` — αρχική, ενότητα «Κάθε τόπος, ένα πιάτο» (h3c-hero) v2
-  πίσω από flag **`home_closing`** (ΚΛΕΙΣΤΟ· προβολή χωρίς σύνδεση `?ellada_demo=closing`): φόντο #E7E2D5, τίτλος πετρόλ/κεραμιδί, δεξιά
+  πίσω από flag **`home_closing`** (**ΑΝΟΙΧΤΟ**, live 23/11· προβολή χωρίς σύνδεση `?ellada_demo=closing`): φόντο #E7E2D5, τίτλος πετρόλ/κεραμιδί, δεξιά
   ζευγάρια «τόπος → πιάτο» από τις συνταγές (`ellada_hc_pairs`), κορδέλα με ονόματα πιάτων (συνταγές + `ellada_missing_recipes`), δεύτερο κουμπί
-  «Ο οδηγός →». Με JS (template + `[data-id=h3c-…]`)· το Elementor δεν αλλάζει. Εκκρεμεί στο άνοιγμα: H1 → H2 του `h3c-title` (Elementor 163, με backup).
+  «Ο οδηγός →». Με JS (template + `[data-id=h3c-…]`)· το Elementor δεν αλλάζει. **Έγινε** H1 → H2 του `h3c-title` (Elementor 163· backup meta `_ellada_h3c_backup_2026_11_23`) — η αρχική έχει πλέον ένα H1.
 - ellada-map 1.28.1 (backups έως 1.28.0). 1.28.x: `includes/footer-v2.php` — **νέο footer** πίσω από flag **`footer_v2`** (**ΑΝΟΙΧΤΟ**, live 23/11· επαναφορά = κλείσιμο του flag):
   πετρόλ κάρτα με βαθιά σκιά, χρυσή-κεραμιδί γραμμή πάνω, φράση «Ανακαλύπτουμε… <γεύσεις>…» + 3 κάρτες δράσης (συνταγή/τόπος → Επικοινωνία ?thema=,
   Οι συνταγές μου), στήλες Εξερεύνησε/Συνταγές/Μιλήστε μας (+ info@), περιφέρειες ως chips (κουκκίδα = οδηγός· κινητό: «Περιφέρειες +»), ©/νομικά/«↑».
@@ -212,7 +212,7 @@
 - Search Console: ιδιοκτησία επαληθευμένη + sitemap υποβλήθηκε (`https://elladastopiato.gr/wp-sitemap.xml`). **Εκκρεμεί** (ο χρήστης
   το άφησε για αργότερα): upload του service-account JSON ως `domains/elladastopiato.gr/gsc-key.json` (έξω από public_html) → εγώ
   προσθέτω `define( 'ELLADA_GSC_KEY_FILE', '/home/u543862105/domains/elladastopiato.gr/gsc-key.json' );` στο wp-config (με backup, μετά από έγκριση).
-- Τίτλοι Google (flag `seo_titles`): περιμένουν έγκριση για άνοιγμα + δεύτερο H1 αρχικής → h2.
+- Τίτλοι Google (flag `seo_titles`): περιμένουν έγκριση για άνοιγμα (το δεύτερο H1 της αρχικής διορθώθηκε 23/11).
 - Σε αναμονή: Reach/newsletter.
 
 > Ενημέρωνε τις ενότητες «Πρόοδος» και «Εκκρεμότητες» όταν κάτι ολοκληρώνεται.
