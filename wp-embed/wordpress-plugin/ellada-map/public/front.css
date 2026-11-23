@@ -1607,3 +1607,66 @@ html body .efv2__up:hover { transform: translateY(-3px); background: #DDB06C; }
 	html body .efv2 .ellada-footer-legal { margin-left: 0; }
 	html body .efv2__up { align-self: flex-end; margin-top: -4px; }
 }
+
+/* ══════════════ Αρχική: «Κάθε τόπος, ένα πιάτο» v2 (includes/home-closing.php· body.ellada-hc) ══════════════ */
+html body.ellada-hc .elementor-element.elementor-element-h3c-hero { background: #E7E2D5 !important; overflow: hidden; }
+html body.ellada-hc .elementor-element-h3c-hero [data-id="h3c-hero-in"] {
+	display: grid !important; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); column-gap: 56px; align-items: center;
+}
+html body.ellada-hc [data-id="h3c-hero-in"] > *:not(.ellada-hc__aside) { grid-column: 1; }
+html body.ellada-hc .ellada-hc__aside { grid-column: 2; grid-row: 1 / span 4; align-self: center; }
+html body.ellada-hc .elementor-element-h3c-hero .s-h3c-title, html body.ellada-hc .elementor-element-h3c-hero .s-h3c-title * {
+	color: var(--ellada-dark, #174C4B) !important;
+}
+html body.ellada-hc .elementor-element-h3c-hero .s-h3c-title { font-size: clamp(64px, 8.4vw, 132px) !important; line-height: .86 !important; }
+html body.ellada-hc .elementor-element-h3c-hero .s-h3c-title strong { color: #D97745 !important; }
+html body.ellada-hc .elementor-element-h3c-hero .s-h3c-lead { color: var(--ellada-muted, #58615E) !important; }
+html body.ellada-hc .ellada-hc__btns { display: flex; flex-wrap: wrap; gap: 14px 32px; }
+html body.ellada-hc .ellada-hc__btns a, html body.ellada-hc .ellada-hc__btns a * { color: var(--ellada-dark, #174C4B) !important; }
+
+/* Κορδέλα με ονόματα πιάτων */
+html body .ellada-hc__ticker {
+	position: relative; overflow: hidden; margin: 22px 0 6px; padding: 10px 0; border-top: 1px solid rgba(23,76,75,.16); border-bottom: 1px solid rgba(23,76,75,.16);
+	-webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+html body .ellada-hc__track { display: flex; width: max-content; animation: ellada-hc-tick 70s linear infinite; }
+html body .ellada-hc__ticker:hover .ellada-hc__track { animation-play-state: paused; }
+html body .ellada-hc__track span {
+	white-space: nowrap; padding: 0 18px; font-family: "Fira Sans Extra Condensed", "Commissioner", sans-serif; font-weight: 700;
+	font-size: 20px; letter-spacing: .02em; text-transform: uppercase; color: var(--ellada-dark, #174C4B);
+}
+html body .ellada-hc__track span::after { content: "·"; margin-left: 36px; color: #D97745; }
+@keyframes ellada-hc-tick { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { html body .ellada-hc__track { animation: none; } }
+
+/* Τόπος → πιάτο */
+html body .ellada-hc__eyebrow { margin: 0 0 14px; font: 800 12px/1 "Commissioner", sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #C2602F; }
+html body .ellada-hc__pairs { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+html body .ellada-hc__pair {
+	display: flex; align-items: center; gap: 16px; padding: 12px 18px 12px 12px; border-radius: 20px; text-decoration: none;
+	background: #F6F2E9; border: 1px solid #DAD3C2; color: var(--ellada-ink, #343B39) !important;
+	box-shadow: 0 18px 34px -26px rgba(8,30,29,.5); transition: transform .2s, box-shadow .2s, border-color .2s;
+	font-family: "Commissioner", sans-serif;
+}
+html body .ellada-hc__pair:hover { transform: translateX(-4px); border-color: #D97745; box-shadow: 0 24px 40px -24px rgba(8,30,29,.55); }
+html body .ellada-hc__thumb {
+	flex: 0 0 72px; width: 72px; height: 72px; border-radius: 14px; overflow: hidden; display: grid; place-items: center;
+	background: var(--ellada-dark, #174C4B); color: var(--ellada-accent, #D29A48);
+}
+html body .ellada-hc__thumb img.ellada-hc__img { width: 100%; height: 100%; object-fit: cover; display: block; max-width: none; }
+html body .ellada-hc__txt { display: grid; gap: 4px; min-width: 0; }
+html body .ellada-hc__place { font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #C2602F; }
+html body .ellada-hc__dish { font-size: 18px; font-weight: 800; line-height: 1.2; color: var(--ellada-dark, #174C4B); }
+html body .ellada-hc__go { margin-left: auto; font-size: 20px; color: var(--ellada-dark, #174C4B); transition: transform .2s; }
+html body .ellada-hc__pair:hover .ellada-hc__go { transform: translateX(3px); color: #D97745; }
+
+@media (max-width: 1024px) {
+	html body.ellada-hc .elementor-element-h3c-hero [data-id="h3c-hero-in"] { grid-template-columns: 1fr; }
+	html body.ellada-hc .ellada-hc__aside { grid-column: 1; grid-row: auto; margin-top: 36px; }
+}
+@media (max-width: 767px) {
+	html body .ellada-hc__track span { font-size: 17px; padding: 0 12px; }
+	html body .ellada-hc__track span::after { margin-left: 24px; }
+	html body .ellada-hc__thumb { flex-basis: 60px; width: 60px; height: 60px; }
+	html body .ellada-hc__dish { font-size: 16px; }
+}
