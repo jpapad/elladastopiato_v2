@@ -1671,12 +1671,23 @@ html body .ellada-hc__pair:hover .ellada-hc__go { transform: translateX(3px); co
 	html body .ellada-hc__dish { font-size: 16px; }
 }
 
-/* ══════════════ Κεντρικό μενού v2: σπιτάκι αντί για «Αρχική» (includes/menu-v2.php) ══════════════ */
-html body .ellada-home-link { display: inline-flex !important; align-items: center; gap: 10px; }
-html body .ellada-home-ico { display: block; width: 22px; height: 22px; flex: 0 0 22px; transition: transform .2s; }
-html body .ellada-home-link:hover .ellada-home-ico { transform: translateY(-2px); }
-/* Στο οριζόντιο μενού μόνο το σπιτάκι· η λέξη μένει για αναγνώστες οθόνης. */
-html body .elementor-nav-menu--main .ellada-home-txt {
-	position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+/* ══════════════ Κεντρικό μενού v2: εικονίδια + «ακορντεόν» στο hover (includes/menu-v2.php) ══════════════ */
+html body a.ellada-mi { display: inline-flex !important; align-items: center; }
+html body .ellada-mi__ico { display: block; width: 22px; height: 22px; flex: 0 0 22px; transition: transform .25s cubic-bezier(.2,.7,.2,1); }
+html body .elementor-nav-menu--main a.ellada-mi {
+	gap: 0; padding-left: 14px !important; padding-right: 14px !important; border-radius: 999px;
+	transition: background-color .25s ease, gap .3s cubic-bezier(.2,.7,.2,1), color .2s;
 }
-html body .elementor-nav-menu--dropdown .ellada-home-ico { width: 20px; height: 20px; flex-basis: 20px; }
+html body .elementor-nav-menu--main .ellada-mi__txt {
+	display: inline-block; max-width: 0; opacity: 0; overflow: hidden; white-space: nowrap; vertical-align: middle;
+	transition: max-width .35s cubic-bezier(.2,.7,.2,1), opacity .2s ease .05s;
+}
+html body .elementor-nav-menu--main a.ellada-mi:hover, html body .elementor-nav-menu--main a.ellada-mi:focus-visible,
+html body .elementor-nav-menu--main a.ellada-mi.elementor-item-active { gap: 10px; }
+html body .elementor-nav-menu--main a.ellada-mi:hover, html body .elementor-nav-menu--main a.ellada-mi:focus-visible { background-color: rgba(246,242,233,.1); }
+html body .elementor-nav-menu--main a.ellada-mi:hover .ellada-mi__txt, html body .elementor-nav-menu--main a.ellada-mi:focus-visible .ellada-mi__txt,
+html body .elementor-nav-menu--main a.ellada-mi.elementor-item-active .ellada-mi__txt { max-width: 170px; opacity: 1; }
+html body .elementor-nav-menu--main a.ellada-mi:hover .ellada-mi__ico { transform: translateY(-1px) scale(1.06); }
+html body .elementor-nav-menu--dropdown a.ellada-mi { display: flex !important; width: 100%; gap: 12px; }
+html body .elementor-nav-menu--dropdown .ellada-mi__ico { width: 20px; height: 20px; flex-basis: 20px; }
+@media (prefers-reduced-motion: reduce) { html body .elementor-nav-menu--main .ellada-mi__txt, html body .elementor-nav-menu--main a.ellada-mi { transition: none; } }
