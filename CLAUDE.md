@@ -65,7 +65,13 @@
   **Λογότυπο live: «ΣΤΟ ΠΙΑΤΟ» + Κρήτη σε #D97745** (κεραμιδί, μόνο στο λογότυπο): 667 `ellada-brand/ellada-logo-header-d977@2x.png`
   (στα e-image των 70/176/624), site icon 668, OG 669. Προηγούμενα: χρυσό 664/665/666, αρχικό πορτοκαλί 157/159/160
   (option `ellada_brand_backup_2026_11_21`). Ανακαλύφθηκε με ξαναχρωματισμό των PNG (PIL)· δεν υπάρχει SVG πηγή. Το ροζ border του «Βρείτε συνταγή» διορθώθηκε. Το `palette-preview.php` μένει (μόνο editors).
-- ellada-map **1.31.0** live (backups έως 1.30.2). **Επικοινωνία v3 ΑΝΟΙΧΤΗ** (flag **`contact_v3`**, live 23/11· `includes/contact-v3.php`): δική μας
+- ellada-map **1.32.0** live (backups έως 1.31.0). 1.32.0: `includes/a11y.php` — προσβασιμότητα v1 πίσω από flag **`a11y_v1`** (ΚΛΕΙΣΤΟ·
+  προβολή χωρίς σύνδεση `?ellada_demo=a11y`): script αντίθεσης (σκουραίνει/ανοίγει την ίδια απόχρωση μόνο όπου < 4,5:1 ή < 3:1 στα μεγάλα,
+  και μέσα στο shadow DOM του χάρτη), aria-label λογότυπου, role=main + στόχος «Μετάβαση στο περιεχόμενο», εσωτερικό header role=none,
+  χάρτης: focus ring στο shadow DOM, «Παράλειψη χάρτη», «Οι περιφέρειες σε λίστα» (→ /odigos/#ellada-gtabs), footer ≥24px στο κινητό,
+  κουμπί φόρμας #AE5F37. Χωρίς flag (live): ⏸ στην κορδέλα (home-closing), κρυφό H2 στις Συνταγές, μηνύματα λάθους φόρμας με aria-describedby.
+  Έλεγχος axe 24/11 (πριν): color-contrast 117 κόμβοι, link-name, skip-link, landmarks, heading-order.
+- ellada-map 1.31.0 (backups έως 1.30.2). **Επικοινωνία v3 ΑΝΟΙΧΤΗ** (flag **`contact_v3`**, live 23/11· `includes/contact-v3.php`): δική μας
   φόρμα (αντικαθιστά τη φόρμα του Elementor μέσω `elementor/widget/render_content`· η v2 απενεργοποιείται αυτόματα· η φόρμα Elementor μένει ως εφεδρεία)
   με πεδία ανά θέμα (syntagi/topos/lathos/synergasia/allo — ίδια slugs με ?thema=, κάρτες αριστερά το αλλάζουν, ?selida= γεμίζει τη Διόρθωση),
   φωτογραφία συνταγής (JPG/PNG/WebP ≤ 8 MB + «είναι δική μου»), συναίνεση απορρήτου. REST `ellada/v1/contact`: honeypot, υπογεγραμμένος χρόνος ≥ 4",

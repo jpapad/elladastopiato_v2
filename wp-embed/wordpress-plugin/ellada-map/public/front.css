@@ -1759,3 +1759,38 @@ html body .ecv3-again { margin-top: 8px; padding: 11px 18px !important; border-r
 	html body .ecv3-chip { padding: 9px 13px 9px 10px; font-size: 13px; }
 	html body .ecv3-btn { width: 100%; justify-content: center; }
 }
+
+/* ══════════════ Προσβασιμότητα v1 (includes/a11y.php· body.ellada-a11y) ══════════════ */
+/* Βοηθητικά */
+html body .ellada-sr { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+html body .ellada-skipmap { position: absolute; left: -9999px; z-index: 50; padding: 10px 16px; border-radius: 999px; background: #F6F2E9; color: #174C4B !important; font: 700 14px/1 "Commissioner", sans-serif; text-decoration: none; }
+html body .ellada-skipmap:focus { left: 16px; margin-top: 8px; outline: 3px solid #DAAB67; }
+html body .ellada-maplist { margin-top: 14px; text-align: center; }
+html body .ellada-maplist a { display: inline-block; padding: 8px 4px; font: 700 13px/1.2 "Commissioner", sans-serif; letter-spacing: .04em; color: #A9BDB8 !important; text-decoration: underline; text-underline-offset: 3px; }
+html body .ellada-maplist a:hover { color: #DAAB67 !important; }
+html body.ellada-a11y .ellada-logo-link:focus-visible, html body.ellada-a11y a:focus-visible, html body.ellada-a11y button:focus-visible { outline: 3px solid #DAAB67 !important; outline-offset: 3px; }
+html body.ellada-a11y [role=main]:focus { outline: none; }
+
+/* Αντίθεση: γίνεται με το script του includes/a11y.php (μόνο όπου χρειάζεται)· εδώ μόνο το κουμπί της φόρμας. */
+html body.ellada-a11y .ecv3-btn { background: #AE5F37 !important; }
+html body.ellada-a11y .ecv3-btn:hover { background: #964F2C !important; }
+
+/* Footer: σύνδεσμοι ≥ 24px στο κινητό */
+@media (max-width: 767px) {
+	html body.ellada-a11y .efv2__list a, html body.ellada-a11y .efv2 .ellada-footer-legal a { display: inline-block; padding: 4px 0; min-height: 24px; }
+	html body.ellada-a11y .efv2__list { gap: 6px; }
+}
+
+/* Κορδέλα: κουμπί παύσης · Φόρμα: μήνυμα λάθους κάτω από το πεδίο */
+html body .ellada-hc__ticker { padding-right: 44px; }
+html body .ellada-hc__pause {
+	position: absolute; right: 2px; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; padding: 0 !important; border-radius: 50% !important;
+	display: grid; place-items: center; border: 1.5px solid rgba(23,76,75,.25) !important; background: #E7E2D5 !important; color: #174C4B !important; cursor: pointer;
+}
+html body .ellada-hc__pause .g { display: none; }
+html body .ellada-hc__pause[aria-pressed="true"] .p { display: none; }
+html body .ellada-hc__pause[aria-pressed="true"] .g { display: inline; }
+html body .ellada-hc__ticker.is-paused .ellada-hc__track { animation-play-state: paused; }
+html body .ecv3-err { display: block; margin-top: 2px; font-size: 13px; font-weight: 600; color: #A8461A; }
+html body .ecv3-check .ecv3-err { flex-basis: 100%; margin-left: 30px; }
+html body .ecv3-check:has(.ecv3-err) { flex-wrap: wrap; }

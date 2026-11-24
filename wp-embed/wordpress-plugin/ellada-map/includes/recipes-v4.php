@@ -136,7 +136,7 @@ add_filter(
 		if ( 'ellada_cards' !== $tag || ! ellada_recipes_v4_page() || ( $attr['source'] ?? '' ) !== 'archive' ) {
 			return $output;
 		}
-		$before = ellada_rv4_filters_html();
+		$before = ellada_rv4_filters_html() . '<h2 class="ellada-sr">Οι συνταγές</h2>';
 		$after  = '';
 		if ( is_post_type_archive( 'ellada_recipe' ) && ! is_paged() && ! ellada_recipe_filters_active() ) {
 			$after = ellada_rv4_submit();

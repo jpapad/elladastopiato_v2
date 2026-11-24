@@ -121,7 +121,8 @@ add_action(
 				$items .= '<span>' . esc_html( mb_strtolower( $d ) ) . '</span>';
 			}
 			// Δύο φορές το ίδιο για συνεχόμενη κίνηση.
-			$ticker = '<div class="ellada-hc__ticker" aria-hidden="true"><div class="ellada-hc__track">' . $items . $items . '</div></div>';
+			$ticker = '<div class="ellada-hc__ticker"><div class="ellada-hc__track" aria-hidden="true">' . $items . $items . '</div>'
+				. '<button type="button" class="ellada-hc__pause" aria-pressed="false" aria-label="Παύση της κίνησης"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path class="p" d="M8 5v14M16 5v14" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path class="g" d="M8 5l11 7-11 7z" fill="currentColor"/></svg></button></div>';
 		}
 		$guide_btn = $guide && 'publish' === $guide->post_status ? get_permalink( $guide ) : '';
 		?>
@@ -146,6 +147,8 @@ add_action(
 				b2.textContent = 'Ο οδηγός →'; wrap.appendChild(b2);
 			}
 			if (aside) inner.appendChild(aside);
+			var pb = sec.querySelector('.ellada-hc__pause');
+			if (pb) pb.addEventListener('click', function () { var on = pb.getAttribute('aria-pressed') !== 'true'; pb.setAttribute('aria-pressed', on ? 'true' : 'false'); pb.setAttribute('aria-label', on ? 'Συνέχιση της κίνησης' : 'Παύση της κίνησης'); sec.querySelector('.ellada-hc__ticker').classList.toggle('is-paused', on); });
 			sec.classList.add('is-hc');
 		})();
 		</script>

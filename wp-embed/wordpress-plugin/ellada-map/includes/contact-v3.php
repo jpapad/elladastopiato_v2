@@ -380,10 +380,16 @@ function ellada_cv3_form_html() {
 		// Λάθη μόνο αφού αγγίξει κανείς το πεδίο
 		f.querySelectorAll('input,textarea,select').forEach(function (el) { el.addEventListener('blur', function () { el.classList.add('is-touched'); }); });
 		w.querySelectorAll('textarea').forEach(function (t) { t.addEventListener('input', function () { t.style.height = 'auto'; t.style.height = Math.min(t.scrollHeight + 2, 480) + 'px'; }); });
+		function err(el, bad) {
+			var id = (el.id || el.name) + '-err', box = el.closest('.ecv3-field, .ecv3-check'), m = document.getElementById(id);
+			if (!bad) { if (m) m.remove(); el.removeAttribute('aria-describedby'); return; }
+			if (!m && box) { m = document.createElement('span'); m.id = id; m.className = 'ecv3-err'; box.appendChild(m); }
+			if (m) { m.textContent = el.type === 'email' && el.value ? 'Γράψτε ένα σωστό email.' : (el.type === 'checkbox' ? 'Χρειάζεται να το τσεκάρετε.' : 'Υποχρεωτικό πεδίο.'); el.setAttribute('aria-describedby', id); }
+		}
 		function valid() { var ok = true, firstBad = null;
 			f.querySelectorAll('[data-req]').forEach(function (el) { if (el.disabled) return; var bad = el.type === 'checkbox' ? !el.checked : !String(el.value).trim();
 				if (el.type === 'email' && !bad) bad = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value);
-				el.classList.add('is-touched'); el.toggleAttribute('aria-invalid', bad); if (bad) { ok = false; firstBad = firstBad || el; } });
+				el.classList.add('is-touched'); el.toggleAttribute('aria-invalid', bad); err(el, bad); if (bad) { ok = false; firstBad = firstBad || el; } });
 			var own = f.querySelector('input[name="f[photo_own]"]'); if (file && file.files.length && own && !own.disabled && !own.checked) { ok = false; own.setAttribute('aria-invalid', ''); firstBad = firstBad || own; }
 			if (firstBad) firstBad.focus(); return ok; }
 		f.addEventListener('submit', function (e) {
