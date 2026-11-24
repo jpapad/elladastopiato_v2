@@ -206,6 +206,9 @@ function ellada_cv3_box_html( $data ) {
 		}
 		$html .= '<tr><th>' . esc_html( $f[0] ) . '</th><td>' . $val . '</td></tr>';
 	}
+	if ( ! empty( $data['user'] ) ) {
+		$html .= '<tr><th>Λογαριασμός</th><td>Ναι — το βλέπει στο «Ο λογαριασμός μου» · Να φαίνεται το όνομα αν δημοσιευτεί: ' . ( ! empty( $data['credit'] ) ? '✔ Ναι' : '✘ Όχι' ) . '</td></tr>';
+	}
 	if ( ! empty( $data['from_page'] ) ) {
 		$html .= '<tr><th>Από τη σελίδα</th><td><a href="' . esc_url( $data['from_page'] ) . '" target="_blank">' . esc_html( $data['from_page'] ) . '</a></td></tr>';
 	}
@@ -305,6 +308,9 @@ function ellada_cv3_form_html() {
 	$start   = isset( $topics[ $start ] ) ? $start : 'syntagi';
 	$page_tx = $page && get_post( $page ) ? get_the_title( $page ) . ' — ' . get_permalink( $page ) : '';
 	$privacy = get_page_by_path( 'politiki-aporritou' );
+	$me      = function_exists( 'ellada_acct2' ) && ellada_acct2() && is_user_logged_in() ? wp_get_current_user() : null;
+	$me_name  = $me && function_exists( 'ellada_acct_name' ) ? ellada_acct_name( $me ) : '';
+	$me_email = $me ? $me->user_email : '';
 
 	$chips = '';
 	foreach ( $topics as $slug => $t ) {
@@ -341,13 +347,16 @@ function ellada_cv3_form_html() {
 			</div>
 			<fieldset class="ecv3-topics"><legend>Για ποιο θέμα;</legend><div class="ecv3-chips"><?php echo $chips; // phpcs:ignore WordPress.Security.EscapeOutput ?></div></fieldset>
 			<div class="ecv3-row">
-				<div class="ecv3-field ecv3-field--line"><label for="ecv3-name">Όνομα <span class="ecv3-req" aria-hidden="true">*</span></label><input type="text" id="ecv3-name" name="name" maxlength="120" required data-req="1" autocomplete="name"></div>
-				<div class="ecv3-field ecv3-field--line"><label for="ecv3-email">Email <span class="ecv3-req" aria-hidden="true">*</span></label><input type="email" id="ecv3-email" name="email" maxlength="160" required data-req="1" autocomplete="email"></div>
+				<div class="ecv3-field ecv3-field--line"><label for="ecv3-name">Όνομα <span class="ecv3-req" aria-hidden="true">*</span></label><input type="text" id="ecv3-name" name="name" maxlength="120" required data-req="1" autocomplete="name" value="<?php echo esc_attr( $me_name ); ?>"></div>
+				<div class="ecv3-field ecv3-field--line"><label for="ecv3-email">Email <span class="ecv3-req" aria-hidden="true">*</span></label><input type="email" id="ecv3-email" name="email" maxlength="160" required data-req="1" autocomplete="email" value="<?php echo esc_attr( $me_email ); ?>"></div>
 			</div>
 			<div class="ecv3-groups"><?php echo $groups; // phpcs:ignore WordPress.Security.EscapeOutput ?></div>
 			<div class="ecv3-hp" aria-hidden="true"><label>Αφήστε το κενό <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
 			<input type="hidden" name="t" value="<?php echo esc_attr( ellada_cv3_token() ); ?>">
 			<input type="hidden" name="from_page" value="">
+			<?php if ( $me ) : ?>
+			<label class="ecv3-check ecv3-credit" data-credit><input type="checkbox" name="credit" value="1" checked><span>Αν δημοσιευτεί, να γράψετε το όνομά μου («Πρόταση αναγνώστη: …»). Θα βλέπετε την πορεία της στο <strong>«Ο λογαριασμός μου»</strong>.</span></label>
+			<?php endif; ?>
 			<label class="ecv3-check ecv3-consent" for="ecv3-consent"><input type="checkbox" id="ecv3-consent" name="consent" value="1" required data-req="1"><span>Διάβασα την <?php echo $privacy ? '<a href="' . esc_url( get_permalink( $privacy ) ) . '" target="_blank">Πολιτική απορρήτου</a>' : 'Πολιτική απορρήτου'; ?> και συμφωνώ να κρατηθούν τα στοιχεία μου για να μου απαντήσετε.</span></label>
 			<div class="ecv3-actions">
 				<button type="submit" class="ecv3-btn"><span class="ecv3-btn__t">Αποστολή</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
@@ -372,6 +381,7 @@ function ellada_cv3_form_html() {
 			w.querySelectorAll('.ecv3-group').forEach(function (g) { var on = g.getAttribute('data-group') === t; g.hidden = !on;
 				g.querySelectorAll('input,textarea,select').forEach(function (el) { el.disabled = !on; }); });
 			w.querySelectorAll('.ecv3-chip').forEach(function (c) { c.classList.toggle('is-on', c.querySelector('input').value === t); });
+			var cr = w.querySelector('[data-credit]'); if (cr) { var cOn = t === 'syntagi' || t === 'topos'; cr.hidden = !cOn; cr.querySelector('input').disabled = !cOn; }
 			document.querySelectorAll('.ellada-contact__card').forEach(function (c) { c.classList.toggle('is-active', MAP[c.getAttribute('data-topic')] === t); });
 			if (focus) { var first = w.querySelector('.ecv3-group:not([hidden]) input, .ecv3-group:not([hidden]) textarea, .ecv3-group:not([hidden]) select'); w.scrollIntoView({ behavior: 'smooth', block: 'start' }); if (first) setTimeout(function () { first.focus({ preventScroll: true }); }, 450); }
 		}
@@ -402,7 +412,7 @@ function ellada_cv3_form_html() {
 			e.preventDefault(); st.textContent = ''; st.classList.remove('is-err');
 			if (!valid()) { st.textContent = 'Συμπληρώστε τα πεδία με αστεράκι.'; st.classList.add('is-err'); return; }
 			btn.disabled = true; btn.querySelector('.ecv3-btn__t').textContent = 'Αποστολή…';
-			fetch(f.action, { method: 'POST', body: new FormData(f), credentials: 'same-origin' }).then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+			fetch(f.action, { method: 'POST', body: new FormData(f), credentials: 'same-origin', headers: window.elladaAcct && window.elladaAcct.nonce ? { 'X-WP-Nonce': window.elladaAcct.nonce } : {} }).then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
 				.then(function (res) { if (!res.ok || !res.d.ok) throw new Error(res.d && res.d.message ? res.d.message : 'Κάτι πήγε στραβά.');
 					f.hidden = true; var done = w.querySelector('.ecv3-done'); if (res.d.text) done.querySelector('.ecv3-done__t').textContent = res.d.text; done.hidden = false; done.focus(); done.scrollIntoView({ behavior: 'smooth', block: 'center' }); })
 				.catch(function (err) { st.textContent = err.message + ' Δοκιμάστε ξανά ή γράψτε μας στο info@elladastopiato.gr.'; st.classList.add('is-err'); })
@@ -503,6 +513,11 @@ function ellada_cv3_submit( WP_REST_Request $req ) {
 		'email'     => $email,
 		'from_page' => esc_url_raw( wp_unslash( $p['from_page'] ?? '' ) ),
 	);
+	// Από λογαριασμό (το nonce στέλνεται μόνο από συνδεδεμένους): σύνδεση με «Οι προτάσεις μου» + αναφορά ονόματος.
+	if ( get_current_user_id() ) {
+		$data['user']   = get_current_user_id();
+		$data['credit'] = empty( $p['credit'] ) ? 0 : 1;
+	}
 	foreach ( ellada_cv3_fields()[ $topic ] as $key => $f ) {
 		if ( 'file' === $f[1] ) {
 			continue;
@@ -596,6 +611,12 @@ function ellada_cv3_submit( WP_REST_Request $req ) {
 		}
 	} else {
 		$draft = 0;
+	}
+	if ( ! empty( $data['user'] ) ) {
+		update_post_meta( $inbox, '_ellada_user', (int) $data['user'] );
+		if ( $draft && ! empty( $data['credit'] ) ) {
+			update_post_meta( $draft, '_ellada_credit', $name );
+		}
 	}
 
 	/* 3. Email στο info@ */

@@ -530,6 +530,8 @@ add_shortcode(
 				<p class="ellada-acct__empty" data-acct-empty="made"<?php echo $d['made'] ? ' hidden' : ''; ?>>Όταν μαγειρέψετε μια συνταγή, πατήστε <strong>«Το έφτιαξα!»</strong> στο τέλος των βημάτων και θα τη βρίσκετε εδώ.</p>
 			</section>
 
+			<?php echo apply_filters( 'ellada_account_sections', '', $u ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+
 			<section class="ellada-acct__sec ellada-acct__set" aria-labelledby="acct-set">
 				<h3 id="acct-set"><?php echo ellada_acct_icon( 'user' ); // phpcs:ignore WordPress.Security.EscapeOutput ?> Ρυθμίσεις</h3>
 				<?php if ( $member ) : ?>
@@ -547,7 +549,7 @@ add_shortcode(
 				<div class="ellada-acct__data">
 					<div>
 						<h4>Τα δεδομένα μου</h4>
-						<p>Κρατάμε μόνο το email σας<?php echo $member ? ', το όνομα αν το δώσατε' : ''; ?> και τις συνταγές που σημειώσατε. Χωρίς IP, χωρίς υπηρεσίες τρίτων. <a href="<?php echo esc_url( $priv_url ); ?>">Απόρρητο</a></p>
+						<p>Κρατάμε μόνο το email σας<?php echo $member ? ', το όνομα αν το δώσατε' : ''; ?> και ό,τι αποθηκεύετε εδώ (συνταγές, σημειώσεις, λίστες). Χωρίς IP, χωρίς υπηρεσίες τρίτων. <a href="<?php echo esc_url( $priv_url ); ?>">Απόρρητο</a></p>
 						<button type="button" class="ellada-acct__btn2" data-acct-export>Κατεβάστε τα δεδομένα μου</button>
 					</div>
 					<?php if ( $member ) : ?>

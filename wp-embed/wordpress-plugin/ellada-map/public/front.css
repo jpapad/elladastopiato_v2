@@ -1900,3 +1900,71 @@ html body .ellada-acct__out a { font-weight: 700; color: var(--ellada-dark, #174
 	html body .ellada-acct__inline { flex-wrap: wrap; }
 }
 html body .ellada-acct .ellada-cards a { text-decoration: none; }
+
+/* ══════════════ Λογαριασμός — Βήμα 2 (includes/account-v2.php) ══════════════ */
+html body .ellada-acct__link { padding: 8px 4px !important; border: 0 !important; background: none !important; color: var(--ellada-dark, #174C4B) !important; font: 700 14px/1.2 "Commissioner", sans-serif; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+html body .ellada-acct__link:hover { color: #A8461A !important; }
+html body .ellada-acct__more { margin: 14px 0 0; font-weight: 700; }
+html body .ellada-acct__more a { color: var(--ellada-dark, #174C4B); }
+/* Σημειώσεις στη συνταγή */
+html body .ellada-notes { margin: 28px 0 0; padding: 18px 20px; border-radius: 16px; background: #FFF9E9; border: 1px solid #EBD9AE; }
+html body .ellada-notes__h { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin-bottom: 10px; font: 800 15px/1.2 "Commissioner", sans-serif; color: var(--ellada-dark, #174C4B); }
+html body .ellada-notes__h svg { color: #B77C2A; }
+html body .ellada-notes__h small { font-weight: 500; font-size: 12px; color: var(--ellada-muted, #58615E); }
+html body .ellada-notes textarea { width: 100%; min-height: 84px; padding: 12px 14px; border: 1.5px solid #E3D3A9 !important; border-radius: 12px !important; background: #fff !important; font: 15px/1.55 "Commissioner", sans-serif; color: var(--ellada-ink, #343B39); resize: vertical; }
+html body .ellada-notes textarea:focus { outline: none; border-color: var(--ellada-dark, #174C4B) !important; box-shadow: 0 0 0 3px rgba(23,76,75,.12); }
+html body .ellada-notes__st { min-height: 1em; margin: 6px 0 0; font-size: 12px; color: var(--ellada-muted, #58615E); }
+html body .ellada-notes--cta { display: flex; align-items: center; gap: 10px; padding: 12px 16px; background: transparent; border-style: dashed; font-size: 14px; color: var(--ellada-muted, #58615E); }
+html body .ellada-notes--cta svg { flex: 0 0 auto; color: #B77C2A; }
+html body .ellada-notes--cta a { font-weight: 700; color: var(--ellada-dark, #174C4B); }
+html body .ellada-credit { margin: 22px 0 0; font-size: 14px; color: var(--ellada-muted, #58615E); }
+html body .ellada-credit strong { color: var(--ellada-dark, #174C4B); }
+html body .ellada-ingredients__shop.is-acct { margin-left: 8px; }
+/* Συλλογή: αναδυόμενο */
+html body .ellada-coll { position: relative; display: inline-block; }
+html body .ellada-coll__pop { position: absolute; z-index: 40; top: calc(100% + 8px); left: 0; display: grid; gap: 4px; width: min(300px, 86vw); padding: 14px; border-radius: 16px; background: #fff; border: 1px solid var(--ellada-line, #D7DFD8); box-shadow: 0 24px 48px -20px rgba(18,60,59,.45); }
+html body .ellada-coll__pop[hidden] { display: none; }
+html body .ellada-coll__t { margin-bottom: 4px; font: 800 12px/1.2 "Commissioner", sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #A8461A; }
+html body .ellada-coll__row { display: flex; align-items: center; gap: 10px; padding: 8px 6px; border-radius: 10px; cursor: pointer; font-size: 15px; color: var(--ellada-ink, #343B39); }
+html body .ellada-coll__row:hover { background: #F6F2E9; }
+html body .ellada-coll__row input { width: 18px; height: 18px; accent-color: var(--ellada-dark, #174C4B); }
+html body .ellada-coll__row small { margin-left: auto; color: var(--ellada-muted, #58615E); }
+html body .ellada-coll__new { display: flex; gap: 6px; margin-top: 6px; }
+html body .ellada-coll__new input { flex: 1; min-width: 0; padding: 9px 12px; border: 1.5px solid var(--ellada-line, #D7DFD8) !important; border-radius: 10px !important; font: 14px "Commissioner", sans-serif; }
+html body .ellada-coll__new button { padding: 9px 12px !important; border: 0 !important; border-radius: 10px !important; background: var(--ellada-dark, #174C4B) !important; color: #F6F2E9 !important; font: 700 13px "Commissioner", sans-serif; cursor: pointer; }
+html body .ellada-coll__all { margin-top: 6px; font-size: 13px; font-weight: 700; color: var(--ellada-dark, #174C4B); }
+/* Λίστα για ψώνια (λογαριασμός) */
+html body .ellada-shop__bar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin-bottom: 14px; }
+html body .ellada-shop { display: grid; gap: 14px; }
+html body .ellada-shop__r { padding: 16px 18px; border-radius: 16px; background: #fff; border: 1px solid var(--ellada-line, #D7DFD8); }
+html body .ellada-shop__h { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+html body .ellada-shop__h b { font-size: 16px; color: var(--ellada-dark, #174C4B); }
+html body .ellada-shop__h small { color: var(--ellada-muted, #58615E); }
+html body .ellada-shop__x { margin-left: auto; width: 32px; height: 32px; padding: 0 !important; border: 0 !important; border-radius: 50% !important; background: #F6F2E9 !important; color: var(--ellada-ink, #343B39) !important; font-size: 20px; line-height: 1; cursor: pointer; }
+html body .ellada-shop ul { list-style: none; margin: 0; padding: 0; columns: 2 260px; column-gap: 24px; }
+html body .ellada-shop li { break-inside: avoid; }
+html body .ellada-shop label { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; font-size: 15px; line-height: 1.4; cursor: pointer; }
+html body .ellada-shop label input { flex: 0 0 auto; width: 20px; height: 20px; margin: 0; accent-color: var(--ellada-dark, #174C4B); }
+html body .ellada-shop label.is-done span { text-decoration: line-through; color: #8A928F; }
+/* Συλλογές (λογαριασμός) */
+html body .ellada-lists { display: grid; gap: 12px; }
+html body .ellada-lists__one { border-radius: 16px; background: #fff; border: 1px solid var(--ellada-line, #D7DFD8); }
+html body .ellada-lists__one summary { display: flex; align-items: center; gap: 12px; padding: 16px 20px; cursor: pointer; list-style: none; }
+html body .ellada-lists__one summary::-webkit-details-marker { display: none; }
+html body .ellada-lists__one summary::after { content: "+"; margin-left: auto; font-size: 22px; color: var(--ellada-dark, #174C4B); }
+html body .ellada-lists__one[open] summary::after { content: "–"; }
+html body .ellada-lists__n { font: 800 20px/1.1 "Fira Sans Extra Condensed", sans-serif; text-transform: uppercase; color: var(--ellada-dark, #174C4B); }
+html body .ellada-lists__c { font-size: 13px; color: var(--ellada-muted, #58615E); }
+html body .ellada-lists__one .ellada-cards { padding: 0 20px; }
+html body .ellada-lists__act { display: flex; gap: 12px; align-items: center; padding: 12px 20px 18px; margin: 0; }
+/* Οι προτάσεις μου */
+html body .ellada-subs { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+html body .ellada-subs__one { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px; padding: 16px 20px; border-radius: 16px; background: #fff; border: 1px solid var(--ellada-line, #D7DFD8); }
+html body .ellada-subs__txt small { display: block; font-size: 12px; color: var(--ellada-muted, #58615E); }
+html body .ellada-subs__txt b { font-size: 17px; color: var(--ellada-dark, #174C4B); }
+html body .ellada-subs__txt a { color: inherit; }
+html body .ellada-subs__steps { display: flex; align-items: center; gap: 5px; }
+html body .ellada-subs__steps i { width: 26px; height: 6px; border-radius: 3px; background: #E7E2D5; }
+html body .ellada-subs__steps i.on { background: #D97745; }
+html body .ellada-subs__one.is-published .ellada-subs__steps i.on { background: #2F7A4A; }
+html body .ellada-subs__steps span { margin-left: 8px; font-size: 13px; font-weight: 700; color: var(--ellada-ink, #343B39); }
