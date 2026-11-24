@@ -66,7 +66,7 @@
   (στα e-image των 70/176/624), site icon 668, OG 669. Προηγούμενα: χρυσό 664/665/666, αρχικό πορτοκαλί 157/159/160
   (option `ellada_brand_backup_2026_11_21`). Ανακαλύφθηκε με ξαναχρωματισμό των PNG (PIL)· δεν υπάρχει SVG πηγή. Το ροζ border του «Βρείτε συνταγή» διορθώθηκε. Το `palette-preview.php` μένει (μόνο editors).
 - ellada-map **1.37.0** live (backups έως 1.36.1). 1.37.0: κουμπί λογαριασμού **δίπλα στον φακό** αντί για στοιχείο μενού, πίσω από flag **`acct_header`**
-  (**ΚΛΕΙΣΤΟ**, προβολή `?ellada_demo=acctbtn`· `ellada_acct_header()` στο account.php): `<template>` + JS βάζει `a.ellada-acct-btn` πριν από το widget του
+  (**ΑΝΟΙΧΤΟ**, live 24/11· προβολή `?ellada_demo=acctbtn`· `ellada_acct_header()` στο account.php): `<template>` + JS βάζει `a.ellada-acct-btn` πριν από το widget του
   `.ellada-search-btn` (η κεφαλίδα Elementor μπορεί να είναι cached), ίδιο τετράγωνο 46px, 👤 ή κύκλος με αρχικό, tooltip στο hover· κινητό: λογότυπο · 👤 · 🔍 · ☰
   (42px, χωρίς πλαίσιο)· όταν είναι ανοιχτό, το στοιχείο του μενού δεν μπαίνει. CLS 0.
 - ellada-map 1.36.1 (backups έως 1.36.0). 1.36.1: email «Δημοσιεύτηκε! — <τίτλος>» στο μέλος όταν δημοσιεύεται συνταγή/σημείο που ήρθε από πρότασή του
