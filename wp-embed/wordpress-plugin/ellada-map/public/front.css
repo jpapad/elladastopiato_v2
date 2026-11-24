@@ -1802,3 +1802,32 @@ html body .ellada-hc__ticker {
 	mask-image: linear-gradient(90deg, transparent, #000 8%, #000 calc(100% - 90px), transparent calc(100% - 46px), #000 calc(100% - 46px));
 }
 html body .ellada-hc__pause { z-index: 2; }
+
+/* ══════════════ 🔊 «Διάβασέ μου τα βήματα» (includes/read-aloud.php) ══════════════ */
+html body .ellada-ra { margin: 4px 0 18px; font-family: "Commissioner", sans-serif; }
+html body .ellada-ra [hidden] { display: none !important; }
+html body .ellada-ra__start {
+	display: inline-flex; align-items: center; gap: 10px; padding: 11px 18px !important; border-radius: 999px !important; cursor: pointer;
+	border: 1.5px solid var(--ellada-dark, #174C4B) !important; background: transparent !important; color: var(--ellada-dark, #174C4B) !important;
+	font: 700 14px/1 "Commissioner", sans-serif;
+}
+html body .ellada-ra__start:hover { background: var(--ellada-dark, #174C4B) !important; color: #F6F2E9 !important; }
+html body .ellada-ra__ctrl {
+	display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px; border-radius: 18px;
+	background: var(--ellada-dark, #174C4B); color: #F6F2E9; box-shadow: 0 16px 30px -18px rgba(8,30,29,.7);
+	position: sticky; top: 12px; z-index: 30;
+}
+html body .ellada-ra__ctrl button {
+	min-width: 44px; min-height: 44px; padding: 8px 14px !important; border-radius: 999px !important; cursor: pointer;
+	border: 1.5px solid rgba(246,242,233,.25) !important; background: transparent !important; color: #F6F2E9 !important; font: 700 14px/1 "Commissioner", sans-serif;
+}
+html body .ellada-ra__ctrl button:hover { background: rgba(246,242,233,.12) !important; }
+html body .ellada-ra__ctrl button.is-main { background: #DAAB67 !important; border-color: #DAAB67 !important; color: #123C3B !important; }
+html body .ellada-ra__now { margin-left: auto; padding-right: 6px; font-size: 13px; font-weight: 600; color: #D7DFD8; }
+html body .ellada-steps li.is-reading { background: rgba(218,171,103,.16); border-radius: 14px; box-shadow: inset 4px 0 0 #D29A48; transition: background .3s; }
+@media (max-width: 600px) { html body .ellada-ra__now { flex-basis: 100%; margin: 2px 0 0 6px; } }
+
+/* Συνταγή: η πλαϊνή στήλη (Υλικά) «κολλάει» μόνο στον υπολογιστή — στο κινητό σκέπαζε τα βήματα (24/11) */
+@media (max-width: 1024px) {
+	html body .elementor-element.elementor-element-recipe-aside { position: static !important; top: auto !important; }
+}
