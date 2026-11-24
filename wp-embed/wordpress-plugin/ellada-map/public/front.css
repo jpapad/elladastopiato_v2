@@ -1970,3 +1970,26 @@ html body .ellada-subs__one.is-published .ellada-subs__steps i.on { background: 
 html body .ellada-subs__steps span { margin-left: 8px; font-size: 13px; font-weight: 700; color: var(--ellada-ink, #343B39); }
 html body .ellada-mi__avatar { display: grid !important; place-items: center; border-radius: 50%; background: #D97745; color: #fff; font: 800 13px/1 "Commissioner", sans-serif; }
 html body .elementor-nav-menu--dropdown .ellada-mi__avatar { font-size: 12px; }
+
+/* ── Κουμπί λογαριασμού δίπλα στην αναζήτηση (acct_header) ── */
+html body .ellada-has-acct { display: flex !important; flex-direction: row !important; align-items: center; gap: 8px; }
+html body .ellada-acct-btn {
+	position: relative; display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto;
+	width: 46px; height: 46px; color: #F6F2E9; border: 1px solid rgba(246, 242, 233, .28); text-decoration: none !important;
+	transition: color .15s, border-color .15s;
+}
+html body .ellada-acct-btn:hover, html body .ellada-acct-btn:focus-visible, html body .ellada-acct-btn[aria-current] { color: var(--ellada-accent, #D29A48); border-color: var(--ellada-accent, #D29A48); }
+html body .ellada-acct-btn:focus-visible { outline: 2px solid var(--ellada-accent, #D29A48); outline-offset: 3px; }
+html body .ellada-acct-btn__av { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: #D97745; color: #fff; font: 800 14px/1 "Commissioner", sans-serif; transition: box-shadow .15s; }
+html body .ellada-acct-btn:hover .ellada-acct-btn__av, html body .ellada-acct-btn[aria-current] .ellada-acct-btn__av { box-shadow: 0 0 0 3px rgba(210,154,72,.45); }
+html body .ellada-acct-btn__tip {
+	position: absolute; top: calc(100% + 10px); right: 0; z-index: 60; padding: 7px 12px; border-radius: 999px; white-space: nowrap;
+	background: #123C3B; color: #F6F2E9; font: 700 12px/1 "Commissioner", sans-serif; letter-spacing: .06em; text-transform: uppercase;
+	box-shadow: 0 10px 24px -12px rgba(0,0,0,.6); opacity: 0; transform: translateY(-4px); pointer-events: none; transition: opacity .15s, transform .15s;
+}
+html body .ellada-acct-btn:hover .ellada-acct-btn__tip, html body .ellada-acct-btn:focus-visible .ellada-acct-btn__tip { opacity: 1; transform: none; }
+@media (max-width: 767px) {
+	html body .ellada-has-acct { gap: 2px; }
+	html body .ellada-acct-btn { width: 42px; height: 42px; border-color: transparent; }
+	html body .ellada-acct-btn__tip { display: none; }
+}

@@ -785,7 +785,7 @@ add_filter(
 add_filter(
 	'wp_nav_menu_items',
 	function ( $items, $args ) {
-		if ( ! ellada_accounts() ) {
+		if ( ! ellada_accounts() || ellada_acct_header() ) {
 			return $items;
 		}
 		$menu = isset( $args->menu ) ? wp_get_nav_menu_object( $args->menu ) : false;
@@ -836,4 +836,61 @@ add_filter(
 	},
 	10,
 	2
+);
+
+/* ═════════════════════ Κουμπί λογαριασμού δίπλα στην αναζήτηση (λειτουργία «acct_header»· προβολή ?ellada_demo=acctbtn) ═════════════════════
+ * Αντί για στοιχείο στο μενού: τετράγωνο κουμπί ίδιο με του φακού, ακριβώς αριστερά του (υπολογιστής και κινητό).
+ * Μπαίνει με JS, γιατί η κεφαλίδα του Elementor μπορεί να σερβίρεται από τη δική του cache. */
+function ellada_acct_header() {
+	if ( ! function_exists( 'ellada_accounts' ) || ! ellada_accounts() ) {
+		return false;
+	}
+	// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	if ( isset( $_GET['ellada_demo'] ) && 'acctbtn' === $_GET['ellada_demo'] ) {
+		return true;
+	}
+	return function_exists( 'ellada_feature' ) && ellada_feature( 'acct_header' );
+}
+
+add_action(
+	'wp_footer',
+	function () {
+		if ( is_admin() || ! ellada_acct_header() ) {
+			return;
+		}
+		$in     = is_user_logged_in();
+		$label  = $in ? 'Ο λογαριασμός μου' : 'Λογαριασμός';
+		$demo   = isset( $_GET['ellada_demo'] ) && 'acctbtn' === $_GET['ellada_demo']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$url    = $demo && ! $in ? ellada_acct_url( array( 'ellada_demo' => 'account' ) ) : ellada_acct_url();
+		$inner  = '<svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8.2" r="3.8"/><path d="M4.5 20.2c.9-3.9 3.9-6 7.5-6s6.6 2.1 7.5 6"/></svg>';
+		if ( $in ) {
+			$me     = wp_get_current_user();
+			$nm     = ellada_acct_name( $me );
+			$inner  = '<span class="ellada-acct-btn__av" aria-hidden="true">' . esc_html( mb_strtoupper( mb_substr( $nm ? $nm : $me->user_email, 0, 1 ) ) ) . '</span>';
+		}
+		$html = sprintf(
+			'<a class="ellada-acct-btn%1$s" href="%2$s" aria-label="%3$s"%4$s>%5$s<span class="ellada-acct-btn__tip" aria-hidden="true">%3$s</span></a>',
+			$in ? ' is-in' : '',
+			esc_url( $url ),
+			esc_attr( $label ),
+			ellada_acct_is_page() ? ' aria-current="page"' : '',
+			$inner // phpcs:ignore WordPress.Security.EscapeOutput
+		);
+		?>
+		<template id="ellada-acct-btn-tpl"><?php echo $html; // phpcs:ignore WordPress.Security.EscapeOutput ?></template>
+		<script>
+		(function () {
+			var tpl = document.getElementById('ellada-acct-btn-tpl'); if (!tpl) return;
+			document.querySelectorAll('header .ellada-search-btn').forEach(function (s) {
+				var w = s.closest('.elementor-widget') || s;
+				if (w.previousElementSibling && w.previousElementSibling.classList.contains('ellada-acct-btn')) return;
+				w.parentNode.insertBefore(tpl.content.firstElementChild.cloneNode(true), w);
+				w.parentNode.classList.add('ellada-has-acct');
+			});
+			document.documentElement.classList.add('ellada-acct-hdr');
+		})();
+		</script>
+		<?php
+	},
+	3
 );
