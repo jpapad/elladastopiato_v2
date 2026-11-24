@@ -112,7 +112,7 @@ add_action(
 				esc_html( $dish )
 			);
 		}
-		$aside = $list ? '<aside class="ellada-hc__aside" aria-label="Τόποι και πιάτα"><p class="ellada-hc__eyebrow">Από τον τόπο στο πιάτο</p><ul class="ellada-hc__pairs">' . $list . '</ul></aside>' : '';
+		$aside = $list ? '<div class="ellada-hc__aside" role="region" aria-label="Τόποι και πιάτα"><p class="ellada-hc__eyebrow">Από τον τόπο στο πιάτο</p><ul class="ellada-hc__pairs">' . $list . '</ul></div>' : '';
 
 		$ticker = '';
 		if ( count( $dishes ) > 3 ) {

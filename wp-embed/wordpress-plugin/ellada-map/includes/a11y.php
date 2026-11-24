@@ -57,8 +57,11 @@ add_action(
 				var main = document.querySelector('main, [role=main]');
 				if (!main) {
 					main = document.querySelector('[data-elementor-type]:not([data-elementor-type=header]):not([data-elementor-type=footer]):not([data-elementor-type=popup])');
+					if (!main) { var g = document.querySelector('.ellada-ghub, .site-main, .page-content, .entry-content'); main = g ? (g.closest('.elementor, .site-main, .page-content') || g) : null; }
 					if (main) main.setAttribute('role', 'main');
 				}
+				// Πλαϊνά κουτιά μέσα στην κύρια περιοχή: περιοχή με όνομα, όχι ξεχωριστό «complementary».
+				if (main) main.querySelectorAll('aside').forEach(function (a) { var h = a.querySelector('h2,h3,h4,p'); a.setAttribute('role', 'region'); if (!a.getAttribute('aria-label')) a.setAttribute('aria-label', h ? h.textContent.trim().slice(0, 60) : 'Πληροφορίες'); });
 				if (main) {
 					if (!document.getElementById('content')) main.id = main.id || 'content';
 					if (!main.hasAttribute('tabindex')) main.setAttribute('tabindex', '-1');
@@ -99,7 +102,10 @@ add_action(
 					var own = false; for (var n = el.firstChild; n; n = n.nextSibling) if (n.nodeType === 3 && n.nodeValue.trim()) { own = true; break; }
 					if (!own) return;
 					var cs = getComputedStyle(el); if (cs.visibility === 'hidden' || cs.display === 'none') return;
-					var fg = rgb(cs.color), bg = bgOf(el); if (!fg || !bg || fg.a < 0.5) return;
+					var fg = rgb(cs.color), bg = bgOf(el); if (!fg || !bg) return;
+					// Ημιδιάφανο χρώμα ή opacity: υπολογισμός όπως φαίνεται πάνω στο φόντο.
+					var al = fg.a * parseFloat(cs.opacity || 1); if (al < 0.2) return;
+					if (al < 1) { fg = { r: fg.r * al + bg.r * (1 - al), g: fg.g * al + bg.g * (1 - al), b: fg.b * al + bg.b * (1 - al), a: 1 }; if (cs.opacity !== '1') el.style.setProperty('opacity', '1', 'important'); }
 					var size = parseFloat(cs.fontSize), bold = parseInt(cs.fontWeight, 10) >= 700;
 					var need = (size >= 24 || (bold && size >= 18.66)) ? 3.1 : 4.6;
 					if (ratio(fg, bg) >= need - 0.1) return;
