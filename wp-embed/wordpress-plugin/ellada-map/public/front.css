@@ -1838,3 +1838,65 @@ html body .ellada-access li { padding: 4px 10px; border-radius: 999px; backgroun
 html body .ellada-access .ellada-access__ico { background: #1F4A6B; color: #fff; }
 html body .ellada-access.is-long li { font-size: 14px; padding: 6px 12px; }
 html body .ellada-access-box { margin-top: 32px; padding: 22px 24px; border-radius: 18px; background: #F3F7FA; border: 1px solid #D5E2EC; }
+
+/* ══════════════ Λογαριασμός v1 (includes/account.php· /logariasmos/) ══════════════ */
+html body.ellada-page-acct .page-header { display: none; }
+html body .ellada-acct { max-width: 1100px; margin: 0 auto; }
+html body .ellada-acct__grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: start; }
+html body .ellada-acct__perks { list-style: none; margin: 26px 0 0; padding: 0; display: grid; gap: 16px; }
+html body .ellada-acct__perks li { display: flex; gap: 14px; align-items: flex-start; font-size: 15px; line-height: 1.5; color: var(--ellada-muted, #58615E); }
+html body .ellada-acct__perks li > span { display: grid; place-items: center; flex: 0 0 44px; height: 44px; border-radius: 50%; background: #E7E2D5; color: var(--ellada-dark, #174C4B); }
+html body .ellada-acct__perks b { display: block; color: var(--ellada-ink, #343B39); font-size: 16px; }
+html body .ellada-acct__card { position: relative; padding: 30px; border-radius: 22px; background: #fff; border: 1px solid var(--ellada-line, #D7DFD8); box-shadow: 0 24px 48px -30px rgba(18,60,59,.45); }
+html body .ellada-acct__card::before { content: ""; position: absolute; left: 28px; right: 28px; top: -1px; height: 3px; border-radius: 0 0 3px 3px; background: linear-gradient(90deg, #D29A48, #D97745); }
+html body .ellada-acct__warn { margin: 0 0 16px; padding: 12px 14px; border-radius: 12px; background: #FCEEE7; color: #8E3A14; font-size: 14px; font-weight: 600; }
+html body .ellada-acct__sent { display: grid; justify-items: start; gap: 8px; outline: none; animation: ecv3-in .3s ease; }
+html body .ellada-acct__sent[hidden] { display: none; }
+html body .ellada-acct__sent h3 { margin: 6px 0 0; font-family: "Fira Sans Extra Condensed", sans-serif; font-size: 28px; font-weight: 800; text-transform: uppercase; color: var(--ellada-dark, #174C4B); }
+html body .ellada-acct__sent p { margin: 0 0 6px; color: var(--ellada-muted, #58615E); line-height: 1.55; }
+html body .ellada-acct__bigi { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: #D97745; color: #fff; }
+html body .ellada-acct__bigi svg { width: 26px; height: 26px; }
+html body .ellada-acct__confirm { max-width: 520px; margin: 0 auto; display: grid; justify-items: start; gap: 6px; }
+html body .ellada-acct__confirm form { margin-top: 16px; }
+html body .ellada-acct__btn2 { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px !important; border-radius: 999px !important; border: 1.5px solid var(--ellada-dark, #174C4B) !important; background: transparent !important; color: var(--ellada-dark, #174C4B) !important; font: 700 14px/1 "Commissioner", sans-serif; cursor: pointer; }
+html body .ellada-acct__btn2:hover { background: var(--ellada-dark, #174C4B) !important; color: #F6F2E9 !important; }
+html body .ellada-acct__danger { padding: 11px 18px !important; border-radius: 999px !important; border: 0 !important; background: #A8461A !important; color: #fff !important; font: 700 14px/1 "Commissioner", sans-serif; cursor: pointer; }
+/* Συνδεδεμένος */
+html body .ellada-acct__hero { display: flex; flex-wrap: wrap; align-items: center; gap: 20px 24px; padding: 30px 32px; border-radius: 24px; background: var(--ellada-dark, #174C4B); color: #F6F2E9; box-shadow: 0 30px 60px -36px rgba(10,36,35,.9); }
+html body .ellada-acct__hero .ecv3-eyebrow { color: #E39468; }
+html body .ellada-acct__avatar { display: grid; place-items: center; width: 68px; height: 68px; border-radius: 50%; background: #D97745; color: #fff; font: 800 30px/1 "Fira Sans Extra Condensed", sans-serif; }
+html body .ellada-acct__avatar svg { width: 32px; height: 32px; }
+html body .ellada-acct__hi { margin: 0; font-family: "Fira Sans Extra Condensed", sans-serif; font-weight: 800; font-size: clamp(28px, 3vw, 38px); line-height: 1.05; text-transform: uppercase; color: #F6F2E9; }
+html body .ellada-acct__mail { margin: 4px 0 0; font-size: 14px; color: #A9BDB8; }
+html body .ellada-acct__stats { display: flex; gap: 10px; margin: 0 0 0 auto; padding: 0; list-style: none; }
+html body .ellada-acct__stats li { padding: 12px 18px; border-radius: 16px; background: rgba(246,242,233,.08); font-size: 13px; color: #D7DFD8; text-align: center; }
+html body .ellada-acct__stats b { display: block; font: 800 28px/1 "Fira Sans Extra Condensed", sans-serif; color: #DDB06C; }
+html body .ellada-acct__note { margin: 18px 0 0; padding: 14px 18px; border-radius: 14px; background: #E7E2D5; color: var(--ellada-ink, #343B39); line-height: 1.5; }
+html body .ellada-acct__sec { margin-top: 40px; }
+html body .ellada-acct__sec h3 { display: flex; align-items: center; gap: 10px; margin: 0 0 18px; font-family: "Fira Sans Extra Condensed", sans-serif; font-weight: 800; font-size: 26px; text-transform: uppercase; color: var(--ellada-dark, #174C4B); }
+html body .ellada-acct__sec h3 svg { color: #D97745; }
+html body .ellada-acct__sec .ellada-cards:empty { display: none; }
+html body .ellada-acct__empty { margin: 0; padding: 24px; border: 1px dashed var(--ellada-line, #D7DFD8); border-radius: 14px; color: var(--ellada-muted, #58615E); line-height: 1.5; }
+html body .ellada-acct__empty[hidden] { display: none; }
+html body .ellada-acct__empty a, html body .ellada-acct__data a { color: var(--ellada-dark, #174C4B); font-weight: 700; }
+html body .ellada-acct__set { padding: 28px 30px; border-radius: 22px; background: #fff; border: 1px solid var(--ellada-line, #D7DFD8); }
+html body .ellada-acct__name { display: grid; gap: 8px; max-width: 520px; }
+html body .ellada-acct__opt { font-weight: 400; color: var(--ellada-muted, #58615E); }
+html body .ellada-acct__inline { display: flex; gap: 10px; }
+html body .ellada-acct__inline input { flex: 1 1 auto; min-width: 0; }
+html body .ellada-acct__data { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--ellada-line, #D7DFD8); }
+html body .ellada-acct__data h4 { margin: 0 0 6px; font-size: 16px; color: var(--ellada-ink, #343B39); }
+html body .ellada-acct__data p { margin: 0 0 14px; font-size: 14px; line-height: 1.5; color: var(--ellada-muted, #58615E); }
+html body .ellada-acct__del summary { cursor: pointer; font-weight: 700; color: #A8461A; padding: 4px 0; }
+html body .ellada-acct__del form { display: grid; gap: 8px; margin-top: 10px; }
+html body .ellada-acct__out { margin: 24px 0 0; }
+html body .ellada-acct__out a { font-weight: 700; color: var(--ellada-dark, #174C4B); }
+@media (max-width: 860px) {
+	html body .ellada-acct__grid, html body .ellada-acct__data { grid-template-columns: 1fr; gap: 28px; }
+	html body .ellada-acct__stats { margin-left: 0; width: 100%; }
+	html body .ellada-acct__stats li { flex: 1; }
+	html body .ellada-acct__card, html body .ellada-acct__set { padding: 22px 18px; }
+	html body .ellada-acct__hero { padding: 24px 20px; }
+	html body .ellada-acct__inline { flex-wrap: wrap; }
+}
+html body .ellada-acct .ellada-cards a { text-decoration: none; }
