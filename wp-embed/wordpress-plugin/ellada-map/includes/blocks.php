@@ -496,6 +496,16 @@ add_shortcode(
 			$ids = wp_list_pluck( $q->posts, 'ID' );
 			$pag = '';
 			// «Δείτε ακόμα»: αν η ίδια περιφέρεια δεν έχει αρκετές, συμπληρώνεται με τις πιο πρόσφατες.
+			if ( 'related' === $atts['source'] && count( $ids ) < (int) $atts['limit'] && function_exists( 'ellada_rv5' ) && ellada_rv5() && 'ellada_recipe' === $post_type ) {
+				// Μετά την ίδια περιφέρεια: ίδια κατηγορία.
+				$terms = wp_get_post_terms( $ctx, 'recipe_category', array( 'fields' => 'ids' ) );
+				if ( ! is_wp_error( $terms ) && $terms ) {
+					$cat = ellada_recipe_query_args( 'latest', $ctx, (int) $atts['limit'] - count( $ids ), $post_type );
+					$cat['post__not_in'] = array_merge( array( $ctx ), $ids );
+					$cat['tax_query']    = array( array( 'taxonomy' => 'recipe_category', 'terms' => $terms ) ); // phpcs:ignore WordPress.DB.SlowDBQuery
+					$ids                 = array_merge( $ids, wp_list_pluck( ( new WP_Query( $cat ) )->posts, 'ID' ) );
+				}
+			}
 			if ( 'related' === $atts['source'] && count( $ids ) < (int) $atts['limit'] ) {
 				$more = ellada_recipe_query_args( 'latest', $ctx, (int) $atts['limit'] - count( $ids ), $post_type );
 				$more['post__not_in'] = array_merge( array( $ctx ), $ids );

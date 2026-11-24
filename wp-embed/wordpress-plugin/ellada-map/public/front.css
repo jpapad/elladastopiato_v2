@@ -2079,3 +2079,40 @@ html body .ellada-lists__one .ellada-arows { padding: 0 16px; }
 	html body .ellada-acct3__tabs { -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent); }
 	html body .ellada-arow__txt b { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; font-size: 17px; }
 }
+
+/* ══════════════ Σελίδα συνταγής v5 (includes/recipe-v5.php) ══════════════ */
+html body .ellada-kcal { display: flex; align-items: baseline; gap: 6px; margin: 16px 0 0; padding: 10px 14px; border-radius: 12px; background: #FFF6E8; color: var(--ellada-ink, #343B39); font-size: 14px; }
+html body .ellada-kcal b { color: #A8461A; }
+html body .ellada-kcal small { color: var(--ellada-muted, #58615E); }
+/* Γλωσσάρι */
+html body .ellada-gl { display: inline; padding: 0 !important; margin: 0; border: 0 !important; border-radius: 0 !important; background: none !important; color: inherit !important; font: inherit; letter-spacing: inherit; text-transform: inherit; cursor: help; text-decoration: underline dotted #C2602F 2px; text-underline-offset: 4px; }
+html body .ellada-gl:hover, html body .ellada-gl[aria-expanded=true] { color: #A8461A !important; }
+html body .ellada-gl:focus-visible { outline: 2px solid #D29A48; outline-offset: 2px; }
+html body .ellada-gl__tip { position: absolute; z-index: 90; padding: 12px 14px; border-radius: 14px; background: #123C3B; color: #F6F2E9; font: 14px/1.5 "Commissioner", sans-serif; box-shadow: 0 18px 36px -16px rgba(0,0,0,.6); }
+html body .ellada-gl__tip[hidden] { display: none; }
+html body .ellada-gl__tip b { color: #DDB06C; }
+/* Χρονόμετρο */
+html body .ellada-tmr-btn { display: inline-flex; align-items: center; gap: 4px; padding: 1px 8px 1px 6px !important; margin: 0 1px; border: 1px solid #E7C3B0 !important; border-radius: 999px !important; background: #FCEEE7 !important; color: #8E3A14 !important; font: 700 0.95em/1.4 "Commissioner", sans-serif; letter-spacing: 0; text-transform: none; cursor: pointer; vertical-align: baseline; }
+html body .ellada-tmr-btn:hover, html body .ellada-tmr-btn:focus-visible { background: #D97745 !important; border-color: #D97745 !important; color: #fff !important; }
+html body .ellada-tmr { position: fixed; right: 16px; bottom: 16px; z-index: 95; display: grid; gap: 8px; }
+html body .ellada-tmr[hidden] { display: none; }
+html body .ellada-tmr__one { display: flex; align-items: center; gap: 10px; padding: 10px 10px 10px 16px; border-radius: 999px; background: #123C3B; color: #F6F2E9; box-shadow: 0 18px 36px -14px rgba(0,0,0,.6); font: 14px/1.2 "Commissioner", sans-serif; }
+html body .ellada-tmr__lb { max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #A9BDB8; font-size: 13px; }
+html body .ellada-tmr__t { min-width: 54px; font: 800 20px/1 "Fira Sans Extra Condensed", sans-serif; color: #DDB06C; font-variant-numeric: tabular-nums; }
+html body .ellada-tmr__one button { width: 34px; height: 34px; padding: 0 !important; border: 0 !important; border-radius: 50% !important; background: rgba(246,242,233,.12) !important; color: #F6F2E9 !important; font-size: 14px; cursor: pointer; }
+html body .ellada-tmr__one button:hover { background: rgba(246,242,233,.25) !important; }
+html body .ellada-tmr__one.is-done { background: #D97745; animation: ellada-tmr-pulse 1s ease-in-out 4; }
+html body .ellada-tmr__one.is-done .ellada-tmr__t, html body .ellada-tmr__one.is-done .ellada-tmr__lb { color: #fff; }
+@keyframes ellada-tmr-pulse { 50% { transform: scale(1.05); } }
+/* Μπάρα «Μαγειρεύω τώρα» στο κινητό */
+html body .ellada-cookbar { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 94; display: flex; align-items: center; gap: 8px; padding: 8px; border-radius: 999px; background: #174C4B; box-shadow: 0 18px 36px -14px rgba(0,0,0,.6); animation: ecv3-in .25s ease; }
+html body .ellada-cookbar[hidden] { display: none; }
+html body .ellada-cookbar__btn { flex: 1; padding: 12px 16px !important; border: 0 !important; border-radius: 999px !important; background: #D97745 !important; color: #fff !important; font: 800 14px/1 "Commissioner", sans-serif; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; }
+html body .ellada-cookbar__btn[aria-pressed=true] { background: #F6F2E9 !important; color: #174C4B !important; }
+html body .ellada-cookbar__up { padding: 12px 14px; color: #F6F2E9 !important; font: 700 14px/1 "Commissioner", sans-serif; text-decoration: none !important; white-space: nowrap; }
+html body.ellada-has-cookbar .ellada-tmr { bottom: 84px; }
+@media (max-width: 600px) { html body .ellada-tmr { left: 12px; right: 12px; } html body .ellada-tmr__lb { max-width: none; flex: 1; } }
+@media print { html body .ellada-cookbar, html body .ellada-tmr { display: none !important; } }
+html body.ellada-has-cookbar .ellada-toast { bottom: 96px !important; }
+html body.ellada-has-cookbar:has(.ellada-tmr:not([hidden])) .ellada-toast { bottom: 160px !important; }
+html body:not(.ellada-has-cookbar):has(.ellada-tmr:not([hidden])) .ellada-toast { bottom: 84px !important; }

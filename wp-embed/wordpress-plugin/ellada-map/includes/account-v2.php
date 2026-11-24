@@ -342,11 +342,12 @@ add_action(
 				b.addEventListener('click', function () {
 					var items = [];
 					sec.querySelectorAll('li').forEach(function (el) {
+						if (window.elladaShopMissing && el.classList.contains('is-done')) return;
 						var q = el.querySelector('.ellada-ingredients__qty'), it = el.querySelector('.ellada-ingredients__item');
 						var x = ((q ? q.textContent.trim() + ' ' : '') + (it ? it.textContent : el.textContent)).replace(/\s+/g, ' ').trim();
 						if (x) items.push({ x: x, d: 0 });
 					});
-					if (!items.length) return;
+					if (!items.length) { say('Τα έχετε όλα — δεν λείπει τίποτα!'); return; }
 					var title = shop.getAttribute('data-title') || document.title;
 					var list = C.shop.filter(function (r) { return !(rid && r.r === rid); });
 					list.unshift({ r: rid, t: title, items: items });

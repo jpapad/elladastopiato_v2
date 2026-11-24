@@ -251,16 +251,21 @@
 			var title = btn.getAttribute('data-title') || document.title;
 			var serv = sec.querySelector('.ellada-serv output');
 			var lines = [title + (serv ? ' (' + serv.textContent + ' μερίδες)' : '')];
+			var missing = !!window.elladaShopMissing, skipped = 0, kept = 0;
 			sec.querySelectorAll('.ellada-ingredients__group, li').forEach(function (el) {
 				if (el.classList.contains('ellada-ingredients__group')) {
 					lines.push('', el.textContent.trim() + ':');
 					return;
 				}
+				// Μόνο όσα λείπουν: τα τσεκαρισμένα (τα έχετε ήδη) δεν μπαίνουν στη λίστα.
+				if (missing && el.classList.contains('is-done')) { skipped++; return; }
+				kept++;
 				var q = el.querySelector('.ellada-ingredients__qty');
 				var item = el.querySelector('.ellada-ingredients__item');
 				var text = ((q ? q.textContent.trim() + ' ' : '') + (item ? item.textContent : el.textContent)).replace(/\s+/g, ' ').trim();
 				if (text) lines.push('• ' + text);
 			});
+			if (missing && !kept) { toast('Τα έχετε όλα — δεν λείπει τίποτα!'); return; }
 			lines.push('', location.origin + location.pathname);
 			var text = lines.join('\n');
 			if (navigator.share && window.matchMedia('(pointer: coarse)').matches) {
@@ -281,6 +286,7 @@
 
 	/* ── Το έφτιαξα! (ένα κλικ ανά συσκευή, χωρίς προσωπικά δεδομένα) ── */
 	function madeLabel(n) {
+		if (n && n < (window.elladaMadeMin || 0)) return 'Γίνετε από τους πρώτους που θα τη φτιάξουν';
 		return n ? (n === 1 ? 'Την έφτιαξε 1 άτομο' : 'Την έφτιαξαν ' + n.toLocaleString('el-GR') + ' άτομα') : 'Γίνετε οι πρώτοι που θα τη φτιάξουν';
 	}
 	function made(box) {

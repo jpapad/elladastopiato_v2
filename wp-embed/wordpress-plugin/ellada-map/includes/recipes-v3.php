@@ -559,6 +559,9 @@ add_action(
 );
 
 function ellada_made_label( $n ) {
+	if ( $n && $n < (int) apply_filters( 'ellada_made_min', 0 ) ) {
+		return 'Γίνετε από τους πρώτους που θα τη φτιάξουν';
+	}
 	return $n ? sprintf( 1 === $n ? 'Την έφτιαξε %d άτομο' : 'Την έφτιαξαν %d άτομα', $n ) : 'Γίνετε οι πρώτοι που θα τη φτιάξουν';
 }
 
