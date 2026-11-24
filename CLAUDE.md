@@ -65,8 +65,12 @@
   **Λογότυπο live: «ΣΤΟ ΠΙΑΤΟ» + Κρήτη σε #D97745** (κεραμιδί, μόνο στο λογότυπο): 667 `ellada-brand/ellada-logo-header-d977@2x.png`
   (στα e-image των 70/176/624), site icon 668, OG 669. Προηγούμενα: χρυσό 664/665/666, αρχικό πορτοκαλί 157/159/160
   (option `ellada_brand_backup_2026_11_21`). Ανακαλύφθηκε με ξαναχρωματισμό των PNG (PIL)· δεν υπάρχει SVG πηγή. Το ροζ border του «Βρείτε συνταγή» διορθώθηκε. Το `palette-preview.php` μένει (μόνο editors).
-- ellada-map **1.33.1** live (backups έως 1.33.0). 1.33.0: `includes/read-aloud.php` — 🔊 «Διάβασέ μου τα βήματα» στις συνταγές πίσω από flag
-  **`read_aloud`** (ΚΛΕΙΣΤΟ· προβολή χωρίς σύνδεση `?ellada_demo=read`): Web Speech API (ελληνική φωνή της συσκευής, τίποτα σε τρίτους), μπάρα με
+- ellada-map **1.34.0** live (backups έως 1.33.1). **`read_aloud` ΑΝΟΙΧΤΟ** (live 24/11). 1.34.0: `includes/access.php` — ♿ ACF «Προσβασιμότητα»
+  στα σημεία (`access` checkbox: step_free/wc/parking/sea/dogs/large, `access_note`, `access_checked`) → σήματα στην κάρτα σημείου + ενότητα στη σελίδα
+  του (μόνο αν συμπληρωθεί· δεν υπάρχουν ακόμα δημοσιευμένα σημεία)· φόρμα v3: θέμα **`prosvasimotita`** (πού, δυσκολία, βοηθητική τεχνολογία)·
+  footer νομικά: «Προσβασιμότητα» → σελίδα **674 «Δήλωση προσβασιμότητας»** (`/dilosi-prosvasimotitas/`, **DRAFT**, περιμένει έγκριση).
+- ellada-map 1.33.1 (backups έως 1.33.0). 1.33.0: `includes/read-aloud.php` — 🔊 «Διάβασέ μου τα βήματα» στις συνταγές πίσω από flag
+  **`read_aloud`** (ΑΝΟΙΧΤΟ· προβολή χωρίς σύνδεση `?ellada_demo=read`): Web Speech API (ελληνική φωνή της συσκευής, τίποτα σε τρίτους), μπάρα με
   Προηγ./Παύση/Επόμ./Τέλος (sticky), τονισμός βήματος `li.is-reading`, «Τέλος. Καλή όρεξη!». 1.33.1 (live, χωρίς flag): **διόρθωση** — στο κινητό η
   πλαϊνή στήλη συνταγής `recipe-aside` (sticky από το Elementor 109) σκέπαζε τα βήματα· `position: static` ≤ 1024px.
 - ellada-map 1.32.3 (backups έως 1.32.2). 1.32.1–3: διόρθωση ημιδιάφανων χρωμάτων στο script αντίθεσης, role=main και στον Οδηγό, aside μέσα σε main → region, pmeta #4A524F, η μάσκα της κορδέλας δεν θαμπώνει το ⏸· axe μετά (με ?ellada_demo=a11y): 0 παραβάσεις σε 8 σελίδες × 2 συσκευές. 1.32.0: `includes/a11y.php` — προσβασιμότητα v1 πίσω από flag **`a11y_v1`** (**ΑΝΟΙΧΤΟ**, live 24/11·

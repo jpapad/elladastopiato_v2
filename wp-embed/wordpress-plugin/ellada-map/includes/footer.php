@@ -106,6 +106,7 @@ function ellada_footer_legal_html() {
 			'epikoinonia'        => 'Επικοινωνία',
 			'politiki-aporritou' => 'Απόρρητο & cookies',
 			'oroi-xrisis'        => 'Όροι χρήσης',
+			'dilosi-prosvasimotitas' => 'Προσβασιμότητα',
 		) as $slug => $label
 	) {
 		$id = ellada_footer_page( $slug );

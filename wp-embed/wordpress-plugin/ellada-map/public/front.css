@@ -1831,3 +1831,10 @@ html body .ellada-steps li.is-reading { background: rgba(218,171,103,.16); borde
 @media (max-width: 1024px) {
 	html body .elementor-element.elementor-element-recipe-aside { position: static !important; top: auto !important; }
 }
+
+/* ♿ Προσβασιμότητα σημείων (includes/access.php) */
+html body .ellada-access { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; font-family: "Commissioner", sans-serif; }
+html body .ellada-access li { padding: 4px 10px; border-radius: 999px; background: #E3ECF3; color: #1F4A6B; font-size: 12px; font-weight: 700; }
+html body .ellada-access .ellada-access__ico { background: #1F4A6B; color: #fff; }
+html body .ellada-access.is-long li { font-size: 14px; padding: 6px 12px; }
+html body .ellada-access-box { margin-top: 32px; padding: 22px 24px; border-radius: 18px; background: #F3F7FA; border: 1px solid #D5E2EC; }

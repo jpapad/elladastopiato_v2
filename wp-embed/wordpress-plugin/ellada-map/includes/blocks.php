@@ -444,7 +444,7 @@ function ellada_point_card( $post_id ) {
 		esc_attr( ellada_point_color( $type ) ),
 		esc_html( $label ),
 		esc_html( get_the_title( $post_id ) ),
-		$desc ? '<p class="ellada-point__desc">' . esc_html( $desc ) . '</p>' : ''
+		( $desc ? '<p class="ellada-point__desc">' . esc_html( $desc ) . '</p>' : '' ) . ( function_exists( 'ellada_access_badges' ) ? ellada_access_badges( $post_id ) : '' )
 	);
 }
 

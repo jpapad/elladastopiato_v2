@@ -39,6 +39,7 @@ function ellada_cv3_topics() {
 		'topos'      => array( 'Τόπος / σημείο', $old['topos'][0] ?? 'Τοπικό σημείο στον χάρτη', $icon( 'topos', $dots ) ),
 		'lathos'     => array( 'Διόρθωση', $old['lathos'][0] ?? 'Διόρθωση / λάθος', $icon( 'lathos', $dots ) ),
 		'synergasia' => array( 'Συνεργασία', $old['synergasia'][0] ?? 'Συνεργασία', $icon( 'synergasia', $dots ) ),
+		'prosvasimotita' => array( 'Προσβασιμότητα', 'Προσβασιμότητα', '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4.5" r="1.8"/><path d="M12 7.5v6h5l2 5"/><path d="M8.5 10.5a5.5 5.5 0 1 0 6.6 7.4"/><path d="M8 9.5h7"/></svg>' ),
 		'allo'       => array( 'Κάτι άλλο', 'Άλλο', $dots ),
 	);
 }
@@ -76,6 +77,11 @@ function ellada_cv3_fields() {
 			'who'   => array( 'Ποιος είστε;', 'select:Φωτογράφος|Παραγωγός|Επιχείρηση|Συντάκτης / δημοσιογράφος|Φορέας / δήμος|Άλλο', true, '' ),
 			'idea'  => array( 'Η ιδέα σας', 'textarea', true, 'Πείτε μας λίγα λόγια για εσάς και τι θα θέλατε να κάνουμε μαζί' ),
 			'link'  => array( 'Site ή social', 'text', false, '(προαιρετικό)' ),
+		),
+		'prosvasimotita' => array(
+			'page'    => array( 'Πού το συναντήσατε;', 'text', false, 'Σελίδα ή σημείο του site (προαιρετικό)' ),
+			'problem' => array( 'Τι δυσκολία είχατε;', 'textarea', true, 'Π.χ. «Δεν μπορώ να ανοίξω τον χάρτη με το πληκτρολόγιο»' ),
+			'tech'    => array( 'Τι χρησιμοποιείτε;', 'text', false, 'Π.χ. αναγνώστη οθόνης, μεγέθυνση, μόνο πληκτρολόγιο (προαιρετικό)' ),
 		),
 		'allo'       => array(
 			'message' => array( 'Μήνυμα', 'textarea', true, 'Τι θέλετε να μας πείτε;' ),
@@ -539,6 +545,7 @@ function ellada_cv3_submit( WP_REST_Request $req ) {
 		'topos'      => 'Τόπος: ' . ( $data['pname'] ?? '' ),
 		'lathos'     => 'Διόρθωση: ' . ( $data['page'] ?? '' ),
 		'synergasia' => 'Συνεργασία: ' . $name,
+		'prosvasimotita' => 'Προσβασιμότητα: ' . mb_substr( (string) ( $data['problem'] ?? '' ), 0, 60 ),
 		'allo'       => 'Μήνυμα: ' . $name,
 	);
 	$title = mb_substr( $titles[ $topic ], 0, 140 );
@@ -622,6 +629,7 @@ function ellada_cv3_submit( WP_REST_Request $req ) {
 		'topos'      => 'Ο τόπος σας έφτασε! Θα τον ελέγξουμε και θα σας ενημερώσουμε όταν μπει στον οδηγό.',
 		'lathos'     => 'Ευχαριστούμε που μας το είπατε! Θα το ελέγξουμε και θα το διορθώσουμε.',
 		'synergasia' => 'Η πρότασή σας έφτασε! Θα σας απαντήσουμε σύντομα στο email σας.',
+		'prosvasimotita' => 'Ευχαριστούμε που μας το είπατε! Θα το εξετάσουμε άμεσα και θα σας απαντήσουμε.',
 		'allo'       => 'Το μήνυμά σας έφτασε. Θα σας απαντήσουμε σύντομα στο email σας.',
 	);
 	return new WP_REST_Response( array( 'ok' => true, 'text' => $texts[ $topic ] ), 200 );
