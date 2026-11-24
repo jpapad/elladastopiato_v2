@@ -501,6 +501,12 @@ add_shortcode(
 			$name   = ellada_acct_name( $u );
 			$member = ellada_acct_is_member( $u );
 			$wel    = isset( $_GET['welcome'] ) ? sanitize_key( $_GET['welcome'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			if ( function_exists( 'ellada_acct3' ) && ellada_acct3() ) {
+				echo ellada_acct3_html( $u, $wel ); // phpcs:ignore WordPress.Security.EscapeOutput
+				echo '</div>';
+				ellada_acct_page_js( true );
+				return ob_get_clean();
+			}
 			?>
 			<header class="ellada-acct__hero">
 				<span class="ellada-acct__avatar" aria-hidden="true"><?php echo $name ? esc_html( mb_strtoupper( mb_substr( $name, 0, 1 ) ) ) : ellada_acct_icon( 'user' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
