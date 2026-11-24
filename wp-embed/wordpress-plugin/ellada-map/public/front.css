@@ -1968,3 +1968,5 @@ html body .ellada-subs__steps i { width: 26px; height: 6px; border-radius: 3px; 
 html body .ellada-subs__steps i.on { background: #D97745; }
 html body .ellada-subs__one.is-published .ellada-subs__steps i.on { background: #2F7A4A; }
 html body .ellada-subs__steps span { margin-left: 8px; font-size: 13px; font-weight: 700; color: var(--ellada-ink, #343B39); }
+html body .ellada-mi__avatar { display: grid !important; place-items: center; border-radius: 50%; background: #D97745; color: #fff; font: 800 13px/1 "Commissioner", sans-serif; }
+html body .elementor-nav-menu--dropdown .ellada-mi__avatar { font-size: 12px; }

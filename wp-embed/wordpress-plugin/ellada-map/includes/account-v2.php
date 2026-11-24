@@ -524,3 +524,41 @@ add_action(
 	},
 	9
 );
+
+/* ═════════════════════ Email: «Η πρότασή σας δημοσιεύτηκε» ═════════════════════ */
+
+add_action(
+	'transition_post_status',
+	function ( $new, $old, $post ) {
+		if ( 'publish' !== $new || 'publish' === $old || ! in_array( $post->post_type, array( 'ellada_recipe', 'ellada_point' ), true ) ) {
+			return;
+		}
+		$inbox = (int) get_post_meta( $post->ID, '_ellada_inbox_id', true );
+		$uid   = $inbox ? (int) get_post_meta( $inbox, '_ellada_user', true ) : 0;
+		if ( ! $uid || get_post_meta( $post->ID, '_ellada_notified', true ) ) {
+			return;
+		}
+		$user = get_userdata( $uid );
+		if ( ! $user || ! is_email( $user->user_email ) ) {
+			return;
+		}
+		update_post_meta( $post->ID, '_ellada_notified', time() );
+		// Μετά την αποθήκευση (για σωστό permalink).
+		add_action(
+			'shutdown',
+			function () use ( $post, $user ) {
+				$name   = function_exists( 'ellada_acct_name' ) ? ellada_acct_name( $user ) : '';
+				$what   = 'ellada_recipe' === $post->post_type ? 'Η συνταγή που μας στείλατε' : 'Ο τόπος που μας προτείνατε';
+				$credit = (string) get_post_meta( $post->ID, '_ellada_credit', true );
+				$body   = ( $name ? "Γεια σας {$name}!" : 'Γεια σας!' ) . "\n\n"
+					. "{$what} δημοσιεύτηκε στο «Ελλάδα στο Πιάτο»:\n\n«" . get_the_title( $post->ID ) . "»\n" . get_permalink( $post->ID ) . "\n\n"
+					. ( $credit ? "Όπως ζητήσατε, γράφει «Πρόταση αναγνώστη: {$credit}».\n\n" : '' )
+					. "Σας ευχαριστούμε πολύ που μοιραστήκατε τον τόπο σας μαζί μας!\n\n"
+					. 'Όλες οι προτάσεις σας: ' . ( function_exists( 'ellada_acct_url' ) ? ellada_acct_url() : home_url( '/' ) ) . "\n\n— Ελλάδα στο Πιάτο\n" . home_url( '/' );
+				wp_mail( $user->user_email, 'Δημοσιεύτηκε! — ' . get_the_title( $post->ID ), $body, array( 'Content-Type: text/plain; charset=UTF-8' ) );
+			}
+		);
+	},
+	10,
+	3
+);

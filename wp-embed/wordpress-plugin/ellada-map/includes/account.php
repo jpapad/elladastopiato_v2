@@ -794,10 +794,17 @@ add_filter(
 		}
 		$drop   = isset( $args->menu_id ) && 0 === strpos( (string) $args->menu_id, 'menu-2-' );
 		$active = ellada_acct_is_page();
-		$label  = 'Λογαριασμός';
+		$label  = is_user_logged_in() ? 'Ο λογαριασμός μου' : 'Λογαριασμός';
+		$avatar = '';
+		if ( is_user_logged_in() ) { // οι σελίδες συνδεδεμένων δεν μπαίνουν σε cache
+			$me     = wp_get_current_user();
+			$nm     = ellada_acct_name( $me );
+			$letter = mb_strtoupper( mb_substr( $nm ? $nm : $me->user_email, 0, 1 ) );
+			$avatar = '<span class="ellada-mi__ico ellada-mi__avatar" aria-hidden="true">' . esc_html( $letter ) . '</span>';
+		}
 		$url    = isset( $_GET['ellada_demo'] ) && 'account' === $_GET['ellada_demo'] ? ellada_acct_url( array( 'ellada_demo' => 'account' ) ) : ellada_acct_url(); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$ico    = function_exists( 'ellada_menu_v2' ) && ellada_menu_v2()
-			? '<svg class="ellada-mi__ico" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8.2" r="3.8"/><path d="M4.5 20.2c.9-3.9 3.9-6 7.5-6s6.6 2.1 7.5 6"/></svg><span class="ellada-mi__txt">' . $label . '</span>'
+			? ( $avatar ? $avatar : '<svg class="ellada-mi__ico" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8.2" r="3.8"/><path d="M4.5 20.2c.9-3.9 3.9-6 7.5-6s6.6 2.1 7.5 6"/></svg>' ) . '<span class="ellada-mi__txt">' . $label . '</span>'
 			: $label;
 		return $items . sprintf(
 			'<li class="menu-item menu-item-ellada-acct%1$s"><a href="%2$s" title="%3$s" aria-label="%3$s" class="ellada-mi ellada-mi--user elementor-item%4$s"%5$s>%6$s</a></li>',
