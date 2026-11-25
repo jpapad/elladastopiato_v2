@@ -2229,3 +2229,17 @@ html body.ellada-r6 .r6-box--place .ellada-rplace__map { order: -1; width: 100%;
 	html body.ellada-r6 .r6-box { padding: 22px 20px; }
 }
 html body.ellada-r6 .r6-box--place .ellada-rplace__title { color: #174C4B !important; }
+/* v6: κουμπιά-εικονίδια με «ακορντεόν» στην κάρτα (όπως το μενού) */
+html body.ellada-r6 .r6-glance__acts .r6-acc { display: inline-flex !important; align-items: center; gap: 0; height: 46px; min-width: 46px; padding: 0 12px !important; border-radius: 999px !important; border: 1.5px solid #D7DFD8 !important; background: #fff !important; color: #174C4B !important; font: 700 14px/1 Commissioner, sans-serif !important; letter-spacing: 0 !important; text-transform: none !important; cursor: pointer; transition: border-color .2s, background .2s, gap .25s; box-shadow: none !important; }
+html body.ellada-r6 .r6-glance__acts .r6-acc .r6-glyph { display: none !important; }
+html body.ellada-r6 .r6-glance__acts .r6-acc .r6-ico { flex: 0 0 20px; }
+html body.ellada-r6 .r6-glance__acts .r6-acc .r6-lbl { max-width: 0; opacity: 0; overflow: hidden; white-space: nowrap; transition: max-width .3s cubic-bezier(.2,.7,.2,1), opacity .2s; }
+html body.ellada-r6 .r6-glance__acts .r6-acc:hover, html body.ellada-r6 .r6-glance__acts .r6-acc:focus-visible { border-color: #174C4B !important; gap: 8px; }
+html body.ellada-r6 .r6-glance__acts .r6-acc:hover .r6-lbl, html body.ellada-r6 .r6-glance__acts .r6-acc:focus-visible .r6-lbl { max-width: 170px; opacity: 1; }
+html body.ellada-r6 .r6-glance__acts .r6-acc[data-ellada-fav][aria-pressed="true"] { background: #FCEEE7 !important; border-color: #E7C3B0 !important; color: #C2602F !important; }
+html body.ellada-r6 .r6-glance__acts .r6-acc[data-ellada-fav][aria-pressed="true"] .r6-ico { fill: currentColor; }
+html body.ellada-r6 .r6-glance__acts .r6-acc.r6-made.is-on { background: #2F7A4A !important; border-color: #2F7A4A !important; color: #fff !important; }
+html body.ellada-r6 .r6-glance__acts .r6-acc.is-primary { background: #174C4B !important; color: #F6F2E9 !important; }
+html body.ellada-r6 .r6-glance__acts .ellada-share__menu { z-index: 50; }
+html body.ellada-r6 .ellada-kcal { display: none !important; }
+@media (hover: none) { html body.ellada-r6 .r6-glance__acts .r6-acc:hover .r6-lbl { max-width: 0; opacity: 0; } html body.ellada-r6 .r6-glance__acts .r6-acc:hover { gap: 0; } }

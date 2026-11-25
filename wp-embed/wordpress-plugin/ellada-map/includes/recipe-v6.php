@@ -295,6 +295,33 @@ add_action(
 			ask.querySelector('.r6-ask__no').addEventListener('click', function () { ask.hidden = true; });
 			paintMade(); setTimeout(paintMade, 400);
 
+			/* Κουμπιά της κάρτας: εικονίδιο + λέξη που ανοίγει σαν ακορντεόν (όπως το μενού) */
+			var IC = {
+				fav: '<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/>',
+				coll: '<path d="M3.5 7.5A2 2 0 0 1 5.5 5.5h4l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2v-10Z"/><path d="M12 11v5M9.5 13.5h5"/>',
+				print: '<path d="M7 9V3h10v6"/><rect x="3.5" y="9" width="17" height="8" rx="2"/><path d="M7 14h10v7H7z"/>',
+				share: '<path d="M7 17 17 7M9 7h8v8"/>',
+				made: '<path d="m5 12.5 4.2 4.2L19 7"/>'
+			};
+			function svg(k) { return '<svg class="r6-ico" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' + IC[k] + '</svg>'; }
+			function accBtn(b, k) {
+				if (!b || b.classList.contains('r6-acc')) return;
+				var glyph = b.firstElementChild && b.firstElementChild.getAttribute('aria-hidden') === 'true' ? b.firstElementChild : null;
+				var lbl = b.querySelector('[data-fav-label],[data-l]') || (b.lastElementChild && b.lastElementChild !== glyph && b.lastElementChild.tagName === 'SPAN' ? b.lastElementChild : null);
+				if (!lbl) { lbl = document.createElement('span'); [].slice.call(b.childNodes).forEach(function (n) { if (n.nodeType === 3 && n.nodeValue.trim()) { lbl.appendChild(document.createTextNode(n.nodeValue.trim())); n.remove(); } }); b.appendChild(lbl); }
+				lbl.classList.add('r6-lbl');
+				if (glyph) glyph.classList.add('r6-glyph');
+				var tmp = document.createElement('span'); tmp.innerHTML = svg(k); var ic = tmp.firstChild;
+				if (glyph) glyph.after(ic); else b.insertBefore(ic, b.firstChild);
+				b.classList.add('r6-acc'); if (!b.title) b.title = lbl.textContent.trim();
+			}
+			var A = hero.querySelector('.r6-glance__acts');
+			accBtn(r6made, 'made');
+			accBtn(A.querySelector('[data-ellada-fav]'), 'fav');
+			accBtn(A.querySelector('[data-acct-coll] > button'), 'coll');
+			accBtn(A.querySelector('[data-ellada-print]'), 'print');
+			accBtn(A.querySelector('[data-ellada-share]'), 'share');
+
 			/* Μπάρα: πρόοδος βημάτων + 🔊 */
 			var nums = steps ? [].slice.call(steps.querySelectorAll('button.ellada-steps__n')) : [];
 			var stepEl = bar.querySelector('[data-r6-step]'), hint = bar.querySelector('[data-r6-hint]'), fill = bar.querySelector('.r6-cookbar__bar'), wasCooking = false, asked = false;
