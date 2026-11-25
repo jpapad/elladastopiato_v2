@@ -67,7 +67,7 @@
   (option `ellada_brand_backup_2026_11_21`). Ανακαλύφθηκε με ξαναχρωματισμό των PNG (PIL)· δεν υπάρχει SVG πηγή. Το ροζ border του «Βρείτε συνταγή» διορθώθηκε. Το `palette-preview.php` μένει (μόνο editors).
 - ellada-map **1.40.3** live (backups έως 1.40.2). 1.40.3: στο v6 τα κουμπιά της κάρτας «με μια ματιά» (✓/♡/Συλλογή/Εκτύπωση/Κοινοποίηση) γίνονται στρογγυλά εικονίδια με «ακορντεόν» λέξης στο hover/focus (`.r6-acc`, όπως το μενού· κρατούν τα δικά τους σενάρια)· οι θερμίδες κρύβονται από τα υλικά (`.ellada-kcal`) αφού είναι στην κάρτα.
 - ellada-map 1.40.2 (backups έως 1.40.1). 1.40.x: `includes/recipe-v6.php` — **σελίδα συνταγής v6 = «Γ · Μιξ» από Claude Design**
-  (καμβάς: artifact TjQNi4Lt2iPiQSJrU6QRJE, πίνακες Α/Β/Γ) πίσω από flag **`recipe_v6`** (**ΚΛΕΙΣΤΟ**· προβολή `?ellada_demo=recipe6`). Template 109 ΔΕΝ αλλάζει:
+  (καμβάς: artifact TjQNi4Lt2iPiQSJrU6QRJE, πίνακες Α/Β/Γ) πίσω από flag **`recipe_v6`** (**ΑΝΟΙΧΤΟ**, live 25/11· προβολή `?ellada_demo=recipe6`). Template 109 ΔΕΝ αλλάζει:
   JS (template `#r6-tpl`) βάζει νέο hero (φωτογραφία σε όλο το πλάτος + τίτλος/ετικέτες + λευκή κάρτα «με μια ματιά»: χρόνος/μερίδες/δυσκολία/kcal + ενέργειες
   `.ellada-ractions` μεταφερμένες + «✓ Την έφτιαξα;»), αφαιρεί το `[data-id=recipe-hero]`, πετρόλ μπάρα μαγειρέματος (το `[data-ellada-cook]` μεταφέρεται εκεί,
   «Βήμα N από M» + πρόοδος από τα `button.ellada-steps__n`, «Διάβασέ μου» → `.ellada-ra__start`), βήματα σε κάρτες (`li.is-next` «Τώρα», `li.is-done` σβηστά),
