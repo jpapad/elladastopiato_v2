@@ -2116,3 +2116,116 @@ html body.ellada-has-cookbar .ellada-tmr { bottom: 84px; }
 html body.ellada-has-cookbar .ellada-toast { bottom: 96px !important; }
 html body.ellada-has-cookbar:has(.ellada-tmr:not([hidden])) .ellada-toast { bottom: 160px !important; }
 html body:not(.ellada-has-cookbar):has(.ellada-tmr:not([hidden])) .ellada-toast { bottom: 84px !important; }
+
+/* ══════════════ Σελίδα συνταγής v6 — «Γ · Μιξ» (includes/recipe-v6.php· body.ellada-r6) ══════════════ */
+html body.ellada-r6 [data-id="recipe-hero"] { display: none !important; }
+html body.ellada-r6 .r6-top { max-width: 1200px; margin: 0 auto; padding: 24px 24px 0; box-sizing: border-box; }
+html body.ellada-r6 .r6-hero__crumbs { margin-bottom: 14px; }
+html body.ellada-r6 .r6-hero__media { position: relative; height: clamp(380px, 42vw, 560px); border-radius: 30px; overflow: hidden; background: #174C4B; box-shadow: 0 40px 70px -44px rgba(10,36,35,.8); }
+html body.ellada-r6 .r6-hero__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+html body.ellada-r6 .r6-hero__shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,11,11,0) 36%, rgba(18,60,59,.93) 100%); }
+html body.ellada-r6 .r6-hero.is-noimg .r6-hero__media { height: 380px; background: #174C4B url("plate-mark.svg") no-repeat right -60px center / 420px; }
+html body.ellada-r6 .r6-hero.is-noimg .r6-hero__shade { background: linear-gradient(90deg, #174C4B 40%, rgba(23,76,75,.6)); }
+html body.ellada-r6 .r6-hero__text { position: absolute; left: 48px; right: 48px; bottom: 96px; display: grid; gap: 14px; max-width: 780px; }
+html body.ellada-r6 .r6-hero__title { margin: 0; font: 800 clamp(56px, 7.4vw, 104px)/.9 "Fira Sans Extra Condensed", sans-serif; text-transform: uppercase; color: #F6F2E9; }
+html body.ellada-r6 .r6-hero__lead { margin: 0; font: 400 20px/1.5 Commissioner, sans-serif; color: #E7E2D5; }
+html body.ellada-r6 .r6-hero__chips .ellada-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; }
+html body.ellada-r6 .r6-hero__chips .ellada-chip { background: rgba(246,242,233,.16) !important; color: #F6F2E9 !important; border: 0 !important; }
+html body.ellada-r6 .r6-hero__chips .ellada-chip.is-area { background: #D97745 !important; color: #fff !important; }
+html body.ellada-r6 .r6-glance { position: relative; margin: -56px 32px 0; padding: 20px 24px; border-radius: 22px; background: #fff; border: 1px solid #D7DFD8; box-shadow: 0 24px 48px -30px rgba(18,60,59,.5); display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; }
+html body.ellada-r6 .r6-glance__stats { flex: 1 1 440px; margin: 0; display: flex; flex-wrap: wrap; gap: 14px 30px; }
+html body.ellada-r6 .r6-glance__stats dt { font: 800 12px/1 Commissioner, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #58615E; }
+html body.ellada-r6 .r6-glance__stats dd { margin: 6px 0 0; font: 800 28px/1 "Fira Sans Extra Condensed", sans-serif; text-transform: uppercase; color: #174C4B; }
+html body.ellada-r6 .r6-glance__acts { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+html body.ellada-r6 .r6-glance__acts .ellada-ractions { display: contents; }
+html body.ellada-r6 .r6-glance__acts .ellada-ractions__btn.is-primary { display: none; }
+html body.ellada-r6 .r6-made { min-height: 44px; padding: 0 16px !important; border-radius: 999px !important; border: 1.5px solid #174C4B !important; background: transparent !important; color: #174C4B !important; font: 700 14px/1 Commissioner, sans-serif; cursor: pointer; }
+html body.ellada-r6 .r6-made.is-on { background: #2F7A4A !important; border-color: #2F7A4A !important; color: #fff !important; }
+html body.ellada-r6 .r6-made[hidden] { display: none; }
+/* Μπάρα μαγειρέματος */
+html body.ellada-r6 .r6-cookbar { margin-top: 28px; padding: 16px 20px; border-radius: 22px; background: #174C4B; color: #F6F2E9; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; box-shadow: 0 24px 50px -30px rgba(10,36,35,.9); }
+html body.ellada-r6 .r6-cookbar [data-ellada-cook] { min-height: 48px; padding: 0 20px !important; border-radius: 999px !important; border: 0 !important; background: #D97745 !important; color: #fff !important; font: 800 14px/1 Commissioner, sans-serif !important; letter-spacing: .06em; text-transform: uppercase; }
+html body.ellada-r6 .r6-cookbar.is-cooking [data-ellada-cook] { background: #F6F2E9 !important; color: #174C4B !important; }
+html body.ellada-r6 .r6-cookbar__prog { flex: 1 1 300px; display: grid; gap: 8px; }
+html body.ellada-r6 .r6-cookbar__prog p { margin: 0; color: #F6F2E9; }
+html body.ellada-r6 .r6-cookbar__prog [data-r6-hint] { color: #A9BDB8; }
+html body.ellada-r6 .r6-cookbar__bar { height: 8px; border-radius: 4px; background: rgba(246,242,233,.15); overflow: hidden; }
+html body.ellada-r6 .r6-cookbar__bar i { display: block; height: 100%; width: 0; background: #D29A48; border-radius: 4px; transition: width .3s; }
+html body.ellada-r6 .r6-cookbar__read { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px !important; border-radius: 999px !important; border: 1.5px solid rgba(246,242,233,.35) !important; background: transparent !important; color: #F6F2E9 !important; font: 700 14px/1 Commissioner, sans-serif; cursor: pointer; }
+html body.ellada-r6 .r6-cookbar__read[hidden] { display: none; }
+html body.ellada-r6 .ellada-ra__start { display: none !important; }
+/* Λωρίδα ενοτήτων (κινητό) */
+html body.ellada-r6 .r6-jump { display: none; }
+/* Βήματα ως κάρτες */
+html body.ellada-r6 .ellada-steps ol { display: grid; gap: 12px; }
+html body.ellada-r6 .ellada-steps ol > li { padding: 18px 22px !important; border-radius: 20px; background: #FAF8F2; border: 1px solid #E7E2D5 !important; transition: background .2s, box-shadow .2s, opacity .2s; }
+html body.ellada-r6 .ellada-steps ol > li.is-done { opacity: .6; background: transparent; }
+html body.ellada-r6 .ellada-steps ol > li.is-done .ellada-steps__body { text-decoration: line-through; color: #58615E; }
+html body.ellada-r6 .ellada-steps ol > li.is-next { background: #fff; border: 2px solid #D97745 !important; box-shadow: 0 24px 44px -28px rgba(194,96,47,.55); padding: 22px 24px !important; }
+html body.ellada-r6 .ellada-steps ol > li.is-next .ellada-steps__body { font-size: 1.15em; }
+html body.ellada-r6 .ellada-steps ol > li.is-next .ellada-steps__body::before { content: "Τώρα"; display: block; margin-bottom: 6px; font: 800 12px/1 Commissioner, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #A8461A; }
+html body.ellada-r6 .ellada-steps ol > li.is-next .ellada-steps__n { background: #D97745 !important; color: #fff !important; }
+html body.ellada-r6 .ellada-made { display: none !important; }
+/* «Το φτιάξατε;» */
+html body.ellada-r6 .r6-ask { margin-top: 16px; padding: 20px 22px; border-radius: 22px; background: #174C4B; color: #F6F2E9; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; box-shadow: 0 24px 44px -28px rgba(10,36,35,.9); animation: ecv3-in .3s ease; }
+html body.ellada-r6 .r6-ask[hidden], html body.ellada-r6 .r6-thanks[hidden] { display: none; }
+html body.ellada-r6 .r6-ask__i { width: 52px; height: 52px; border-radius: 50%; background: #D29A48; color: #123C3B; display: grid; place-items: center; font: 800 24px/1 Commissioner, sans-serif; }
+html body.ellada-r6 .r6-ask__t { flex: 1 1 240px; display: grid; gap: 4px; color: #D7DFD8; }
+html body.ellada-r6 .r6-ask__t b { font: 800 26px/1 "Fira Sans Extra Condensed", sans-serif; text-transform: uppercase; color: #F6F2E9; }
+html body.ellada-r6 .r6-ask__yes { min-height: 46px; padding: 0 20px !important; border-radius: 999px !important; border: 0 !important; background: #D29A48 !important; color: #123C3B !important; font: 800 14px/1 Commissioner, sans-serif; cursor: pointer; }
+html body.ellada-r6 .r6-ask__no { min-height: 46px; padding: 0 16px !important; border-radius: 999px !important; border: 1.5px solid rgba(246,242,233,.35) !important; background: transparent !important; color: #F6F2E9 !important; font: 700 14px/1 Commissioner, sans-serif; cursor: pointer; }
+html body.ellada-r6 .r6-thanks { margin: 16px 0 0; padding: 14px 18px; border-radius: 16px; background: #EAF3EC; color: #22593A; font-weight: 700; }
+/* Σημειώσεις κάτω από τα υλικά */
+html body.ellada-r6 [data-id="recipe-aside"] .ellada-notes { margin-top: 16px; }
+html body.ellada-r6 .r6-allergens { margin: 12px 0 0; font-size: 13px; color: #58615E; }
+/* Κουτάκια */
+html body.ellada-r6 .r6-bento { display: grid; gap: 20px; margin-top: 48px; }
+html body.ellada-r6 .r6-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+html body.ellada-r6 .r6-row--story { grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr); }
+html body.ellada-r6 .r6-box { position: relative; padding: 28px 30px; border-radius: 24px; background: #fff; border: 1px solid #D7DFD8; display: grid; gap: 16px; align-content: start; overflow: hidden; }
+html body.ellada-r6 .r6-eyebrow { display: flex; align-items: center; gap: 12px; margin: 0; font: 800 12px/1 Commissioner, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #A8461A; }
+html body.ellada-r6 .r6-vars { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+html body.ellada-r6 .r6-var { display: flex; gap: 12px; align-items: center; padding: 14px; border-radius: 16px; background: #FAF8F2; border: 1px solid #E7E2D5; }
+html body.ellada-r6 .r6-var__i { flex: 0 0 44px; height: 44px; border-radius: 12px; background: #fff; border: 1px solid #E7E2D5; display: grid; place-items: center; color: #174C4B; }
+html body.ellada-r6 .r6-var__t { display: grid; gap: 2px; font-size: 15px; }
+html body.ellada-r6 .r6-var__t b { color: #174C4B; }
+html body.ellada-r6 .r6-var__t small { font-size: 13px; color: #58615E; }
+html body.ellada-r6 .r6-var.is-fast { background: #EEF6F0; border-color: #BFDCC8; }
+html body.ellada-r6 .r6-var.is-fast .r6-var__i { color: #2F7A4A; border-color: #BFDCC8; }
+html body.ellada-r6 .r6-box--tips { background: #174C4B; border: 0; color: #E7E2D5; }
+html body.ellada-r6 .r6-box--tips .r6-eyebrow { color: #DDB06C; }
+html body.ellada-r6 .r6-box__ico { width: 44px; height: 44px; border-radius: 12px; background: rgba(210,154,72,.18); color: #DDB06C; display: grid; place-items: center; }
+html body.ellada-r6 .r6-tips { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+html body.ellada-r6 .r6-tips li { display: flex; gap: 14px; line-height: 1.6; }
+html body.ellada-r6 .r6-tips b { flex: 0 0 30px; height: 30px; border-radius: 50%; background: #D29A48; color: #123C3B; display: grid; place-items: center; font: 800 14px/1 Commissioner, sans-serif; }
+html body.ellada-r6 .r6-box--story { background: #FAF8F2; border-color: #E7E2D5; }
+html body.ellada-r6 .r6-box--story h2.ellada-h { display: none; }
+html body.ellada-r6 .r6-box--story::after { content: "»"; position: absolute; right: 24px; top: -30px; font: 800 180px/1 "Fira Sans Extra Condensed", sans-serif; color: #EFE6D3; pointer-events: none; z-index: 0; }
+html body.ellada-r6 .r6-box--story > * { position: relative; z-index: 1; }
+html body.ellada-r6 .r6-wide { max-width: 1200px; margin: 0 auto; padding: 0 24px; box-sizing: border-box; }
+html body.ellada-r6 .r6-box--story p { position: relative; margin: 0; font-size: 18px; line-height: 1.75; color: #343B39; }
+html body.ellada-r6 .r6-box--story .r6-story__lead { font-size: 20px; }
+html body.ellada-r6 .r6-drop { float: left; margin: 6px 10px 0 0; font: 800 64px/.8 "Fira Sans Extra Condensed", sans-serif; color: #D97745; }
+html body.ellada-r6 .r6-box--place { padding: 0; background: #E7E2D5; border: 0; }
+html body.ellada-r6 .r6-box--place .ellada-rplace { margin: 0 !important; padding: 28px !important; background: transparent !important; border: 0 !important; display: grid !important; grid-template-columns: 1fr !important; gap: 14px; }
+html body.ellada-r6 .r6-box--place .ellada-rplace__map { order: -1; width: 100%; max-height: 180px; }
+@media (max-width: 860px) {
+	html body.ellada-r6 .r6-top { padding: 14px 12px 0; }
+	html body.ellada-r6 .r6-hero__media { height: 440px; border-radius: 22px; }
+	html body.ellada-r6 .r6-hero__text { left: 18px; right: 18px; bottom: 34px; }
+	html body.ellada-r6 .r6-hero__lead { font-size: 16px; }
+	html body.ellada-r6 .r6-glance { margin: -16px 8px 0; padding: 16px; gap: 14px; }
+	html body.ellada-r6 .r6-glance__stats { flex-basis: 100%; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; text-align: center; }
+	html body.ellada-r6 .r6-glance__stats dt { font-size: 10px; letter-spacing: .08em; }
+	html body.ellada-r6 .r6-glance__stats dd { font-size: 20px; }
+	html body.ellada-r6 .r6-glance__acts { width: 100%; }
+	html body.ellada-r6 .r6-cookbar { margin-top: 16px; }
+	html body.ellada-r6 .r6-wide { padding: 0 12px; }
+	html body.ellada-r6 .r6-jump { position: sticky; top: 0; z-index: 30; display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: 4px; margin: 14px 8px 0; padding: 5px; border-radius: 16px; background: #E7E2D5; box-shadow: 0 10px 20px -16px rgba(0,0,0,.4); }
+	html body.ellada-r6 .r6-jump a { display: grid; place-items: center; min-height: 44px; border-radius: 12px; font: 700 14px/1 Commissioner, sans-serif; color: #343B39 !important; text-decoration: none !important; }
+	html body.ellada-r6 .r6-jump a.is-on { background: #174C4B; color: #F6F2E9 !important; }
+	html body.ellada-r6 .r6-row--story { grid-template-columns: 1fr; }
+	html body.ellada-r6 .r6-vars { grid-template-columns: 1fr; }
+	html body.ellada-r6 .r6-box { padding: 22px 20px; }
+}
+html body.ellada-r6 .r6-box--place .ellada-rplace__title { color: #174C4B !important; }
