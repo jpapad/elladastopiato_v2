@@ -2260,9 +2260,8 @@ html body .rp-head { display: none; }
 	html body.ellada-rp .r6-box--place, html body.ellada-rp .ellada-gallery, html body.ellada-rp .ellada-acct-btn, html body.ellada-rp .ellada-skipmap,
 	html body.ellada-rp .skip-link, html body.ellada-rp .ellada-print-source, html body.ellada-rp .ellada-coll, html body.ellada-rp .ellada-fav-note, html body.ellada-rp #wpadminbar { display: none !important; }
 	/* Κεφαλίδα χαρτιού */
-	html body.ellada-rp .rp-head { display: flex !important; justify-content: space-between; align-items: baseline; padding-bottom: 3mm; margin-bottom: 5mm; border-bottom: 1.2pt solid #D29A48; }
-	html body.ellada-rp .rp-head__logo { font: 800 14pt/1 "Fira Sans Extra Condensed", sans-serif; text-transform: uppercase; letter-spacing: .02em; }
-	html body.ellada-rp .rp-head__logo b { color: #174C4B; } html body.ellada-rp .rp-head__logo i { font-style: normal; color: #C2602F; }
+	html body.ellada-rp .rp-head { display: flex !important; justify-content: space-between; align-items: flex-end; padding-bottom: 3mm; margin-bottom: 5mm; border-bottom: 1.2pt solid #D29A48; }
+	html body.ellada-rp .rp-head__logo { display: block; width: auto !important; height: 10.5mm !important; max-width: none !important; }
 	html body.ellada-rp .rp-head__url { font: 9pt "Commissioner", sans-serif; color: #58615E; }
 	/* Τίτλος, φωτογραφία, «με μια ματιά» */
 	html body.ellada-rp .r6-top { max-width: none !important; padding: 0 !important; margin: 0 !important; }
@@ -2340,7 +2339,11 @@ html body .rp-head { display: none; }
 	html body.ellada-rp .r6-box { padding: 3mm 3.5mm !important; gap: 1.5mm !important; }
 	html body.ellada-rp .r6-box--story p { font-size: 9pt !important; line-height: 1.45 !important; margin: 0 0 1mm !important; }
 	html body.ellada-rp .r6-drop { font-size: 20pt !important; }
-	html body.ellada-rp .rp-head { margin-bottom: 3.5mm !important; padding-bottom: 2mm !important; }
+	html body.ellada-rp .rp-head { margin-bottom: 3mm !important; padding-bottom: 1.8mm !important; }
+	html body.ellada-rp .r6-hero__text { gap: 1.8mm !important; }
+	html body.ellada-rp [data-id="recipe-main"], html body.ellada-rp [data-id="recipe-aside"] { gap: 0 !important; padding: 0 !important; }
+	html body.ellada-rp [data-id="recipe-steps"], html body.ellada-rp .ellada-steps, html body.ellada-rp .ellada-steps ol { margin-bottom: 0 !important; padding-bottom: 0 !important; }
+	html body.ellada-rp [data-id="recipe-extras"]:empty, html body.ellada-rp [data-id="recipe-extras"] > .elementor-widget-container:empty { display: none !important; }
 	html body.ellada-rp .r6-hero { grid-template-columns: 1fr 52mm !important; }
 	html body.ellada-rp .r6-hero__img { width: 52mm !important; height: 39mm !important; }
 	html body.ellada-rp .r6-hero__title { font-size: 30pt !important; }
