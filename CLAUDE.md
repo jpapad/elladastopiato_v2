@@ -65,7 +65,20 @@
   **Λογότυπο live: «ΣΤΟ ΠΙΑΤΟ» + Κρήτη σε #D97745** (κεραμιδί, μόνο στο λογότυπο): 667 `ellada-brand/ellada-logo-header-d977@2x.png`
   (στα e-image των 70/176/624), site icon 668, OG 669. Προηγούμενα: χρυσό 664/665/666, αρχικό πορτοκαλί 157/159/160
   (option `ellada_brand_backup_2026_11_21`). Ανακαλύφθηκε με ξαναχρωματισμό των PNG (PIL)· δεν υπάρχει SVG πηγή. Το ροζ border του «Βρείτε συνταγή» διορθώθηκε. Το `palette-preview.php` μένει (μόνο editors).
-- ellada-map **1.42.3** live (backups έως 1.42.2). 1.42.3: το Viber πετάει την αλλαγή γραμμής και κολλάει τον σύνδεσμο στο κείμενο → native share και viber:// στέλνουν **μόνο τον σύνδεσμο** (την πληροφορία τη δίνει η κάρτα og)· WhatsApp/Email κρατούν το μήνυμα.
+- ellada-map **1.43.2** live (backups έως 1.43.1). 1.43.x: `includes/social.php` — **εφαρμογή «Social»** στο wp-admin (μενού Social, `edit_others_posts`· χωρίς flag,
+  δεν αγγίζει το front): πακέτο ανά συνταγή (post meta `_ellada_social`: ig/story/fb → text, img, status ready|scheduled|sent|error, at, sent, link, err) που φτιάχνεται
+  αυτόματα στη δημοσίευση (`transition_post_status` → shutdown → `ellada_social_build`· φουσκάκι «νέα», option `ellada_social_new`) ή με «Ετοίμασε αναρτήσεις».
+  Κείμενα από πρότυπα (`ellada_social_texts`: τίτλος + «από <περιφέρεια>», short_description, 1η πρόταση ιστορίας, ⏱/🍽/δυσκολία, «link στο bio», hashtags ≤15 χωρίς τόνους·
+  μακρύς τίτλος → πρώτη λέξη). Εικόνες GD (`ellada_social_image`, `uploads/ellada-social/`): ig 1080×1350, story 1080×1920 (χρυσό κουμπί + χώρος για αυτοκόλλητο Link),
+  φωτογραφία πάνω με σβήσιμο σε πετρόλ, λογότυπο 667, «ΣΥΝΤΑΓΗ ΑΠΟ…», τίτλος, στοιχεία· χωρίς φωτογραφία → χάρτης Ελλάδας με τονισμένη την περιφέρεια
+  (`ellada_social_map`, regions-mini.json). fb = κάρτα og (share2/og card). Οθόνη ελέγχου: mock προεπισκόπηση, textarea με μετρητή (2200, 30 hashtags), Αντιγραφή/Λήψη,
+  «✓ Το ανέβασα»· με σύνδεση: «Αποστολή τώρα» + Προγραμματισμός (wp-cron `ellada_social_cron`). **Σύνδεση Meta**: App ID/Secret (option `ellada_social_app` ή σταθερές
+  `ELLADA_META_APP_ID/SECRET`), Facebook Login (`admin-post.php?action=ellada_social_oauth`, state σε transient, scopes pages_show_list, pages_read_engagement,
+  pages_manage_posts, instagram_basic, instagram_content_publish, business_management) → long-lived → `me/accounts` **βρίσκει αυτόματα Σελίδες + Instagram**
+  (option `ellada_social_conn`, autoload no· προτιμά Σελίδα με IG). Αποστολή: FB `/{page}/feed` (message+link), IG `/{ig}/media` + `media_publish` (επανάληψη έως 6×3"),
+  story `media_type=STORIES`. Graph v21.0. **Δεν έχει δοκιμαστεί με αληθινό λογαριασμό** (ο χρήστης θα φτιάξει FB Page + IG επαγγελματικό).
+  Υλικό προφίλ: `wp-embed/brand/social/` (ellada-profil-1080.png, ellada-facebook-cover-1640x624.png, KEIMENA.md, html + r.js).
+- ellada-map 1.42.3 (backups έως 1.42.2). 1.42.3: το Viber πετάει την αλλαγή γραμμής και κολλάει τον σύνδεσμο στο κείμενο → native share και viber:// στέλνουν **μόνο τον σύνδεσμο** (την πληροφορία τη δίνει η κάρτα og)· WhatsApp/Email κρατούν το μήνυμα.
 - ellada-map 1.42.2 (backups έως 1.42.1). 1.42.2: **Viber/κοινοποίηση** — (α) native share στέλνει ένα κείμενο «🍽️ <τίτλος> — συνταγή από <περιφέρεια>\n<URL>» (πριν
   το Viber έχανε/κολλούσε τον σύνδεσμο)· (β) **og:image JPG 1200×630** για συνταγές με φωτογραφία (`ellada_share2_og_url()` → `uploads/ellada-og/share-<id>-<key>.jpg`:
   πετρόλ αριστερά με λογότυπο 667, «ΣΥΝΤΑΓΗ ΑΠΟ ΤΗΝ …», τίτλο, φωτογραφία δεξιά με σβήσιμο, χρυσή γραμμή) + og:image:type/width/height/alt — το WebP δεν φαινόταν στο Viber.
@@ -315,7 +328,9 @@
   ιστορία για 142 αν ο χρήστης έχει.
 - Νέες συνταγές από τον χρήστη: ξαναγράφονται στο δικό μας ύφος (όχι αντιγραφή κειμένου/φωτογραφιών τρίτων).
 - Αργότερα: σελίδες οικισμών, διαδρομές, πανηγύρια, αγγλική έκδοση.
-- Social links στο footer όταν ο χρήστης δώσει λογαριασμούς.
+- **Social (25/11):** ο χρήστης φτιάχνει Facebook Σελίδα + Instagram επαγγελματικό (υλικό στο `wp-embed/brand/social/`). Μετά: εφαρμογή στο developers.facebook.com
+  (Business, Facebook Login for Business, redirect `https://elladastopiato.gr/wp-admin/admin-post.php?action=ellada_social_oauth`) → App ID/Secret στο Social → Σύνδεση →
+  πρώτη αληθινή αποστολή (έλεγχος FB feed, IG post, story). Social links στο footer όταν υπάρχουν οι λογαριασμοί. Ιδέες: σελίδα «link στο bio», carousel με βήματα, Pinterest.
 - Search Console: ιδιοκτησία επαληθευμένη + sitemap υποβλήθηκε (`https://elladastopiato.gr/wp-sitemap.xml`). **Εκκρεμεί** (ο χρήστης
   το άφησε για αργότερα): upload του service-account JSON ως `domains/elladastopiato.gr/gsc-key.json` (έξω από public_html) → εγώ
   προσθέτω `define( 'ELLADA_GSC_KEY_FILE', '/home/u543862105/domains/elladastopiato.gr/gsc-key.json' );` στο wp-config (με backup, μετά από έγκριση).
