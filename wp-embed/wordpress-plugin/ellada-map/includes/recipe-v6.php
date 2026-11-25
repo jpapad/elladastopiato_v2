@@ -355,3 +355,53 @@ add_action(
 	},
 	60
 );
+
+/* ═════════════════════ Εκτύπωση: «κάρτα συνταγής» 1–2 σελίδων (λειτουργία «recipe_print»· προβολή ?ellada_demo=print6) ═════════════════════ */
+
+function ellada_rprint() {
+	if ( ! ellada_rv6() ) {
+		return false;
+	}
+	// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	if ( isset( $_GET['ellada_demo'] ) && 'print6' === $_GET['ellada_demo'] ) {
+		return true;
+	}
+	return function_exists( 'ellada_feature' ) && ellada_feature( 'recipe_print' );
+}
+
+add_filter(
+	'body_class',
+	function ( $c ) {
+		if ( is_singular( 'ellada_recipe' ) && ellada_rprint() ) {
+			$c[] = 'ellada-rp';
+			if ( ! in_array( 'ellada-r6', $c, true ) ) {
+				$c[] = 'ellada-r6';
+			}
+		}
+		return $c;
+	}
+);
+
+add_action(
+	'wp_footer',
+	function () {
+		if ( ! ellada_rprint() || ! is_singular( 'ellada_recipe' ) ) {
+			return;
+		}
+		$url = wp_parse_url( get_permalink(), PHP_URL_HOST ) . wp_parse_url( get_permalink(), PHP_URL_PATH );
+		?>
+		<template id="rp-tpl"><div class="rp-head" aria-hidden="true"><span class="rp-head__logo"><b>Ελλάδα</b> <i>στο πιάτο</i></span><span class="rp-head__url"><?php echo esc_html( rtrim( $url, '/' ) ); ?></span></div></template>
+		<script>
+		(function () {
+			var t = document.getElementById('rp-tpl'), top = document.querySelector('.r6-top');
+			if (t && top) top.insertBefore(t.content.firstElementChild.cloneNode(true), top.firstChild);
+			// Οι σημειώσεις τυπώνονται μόνο αν έχουν κείμενο.
+			function mark() { document.querySelectorAll('.ellada-notes').forEach(function (n) { var ta = n.querySelector('textarea'); n.classList.toggle('rp-has', !!(ta && ta.value.trim())); }); }
+			window.addEventListener('beforeprint', mark); mark();
+		})();
+		</script>
+		<?php
+	},
+	70
+);
+
