@@ -50,13 +50,17 @@ function ellada_recipe_actions_html( $id ) {
 	foreach ( $share as $label => $href ) {
 		$links .= sprintf( '<a href="%s" target="_blank" rel="noopener">%s</a>', esc_url( $href, array( 'https', 'mailto' ) ), esc_html( $label ) );
 	}
+	$links .= '<button type="button" data-ellada-copy>Αντιγραφή συνδέσμου</button>';
+	if ( function_exists( 'ellada_share2' ) && ellada_share2() ) {
+		$links = ellada_share2_menu( $id, $url );
+	}
 	return sprintf(
 		'<div class="ellada-ractions" data-url="%1$s" data-title="%2$s">
 			<a class="ellada-ractions__btn is-primary" href="#ylika"><span aria-hidden="true">↓</span> Στη συνταγή</a>
 			%5$s<button type="button" class="ellada-ractions__btn" data-ellada-print><span aria-hidden="true">⎙</span> Εκτύπωση</button>
 			<div class="ellada-share">
 				<button type="button" class="ellada-ractions__btn" data-ellada-share aria-expanded="false" aria-controls="ellada-share-%3$d"><span aria-hidden="true">↗</span> Κοινοποίηση</button>
-				<div class="ellada-share__menu" id="ellada-share-%3$d" hidden>%4$s<button type="button" data-ellada-copy>Αντιγραφή συνδέσμου</button></div>
+				<div class="ellada-share__menu" id="ellada-share-%3$d" hidden>%4$s</div>
 			</div>
 		</div>',
 		esc_url( $url ),
