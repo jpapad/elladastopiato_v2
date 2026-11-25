@@ -94,6 +94,15 @@ function ellada_rv6_bento( $id ) {
 
 	/* Πάνω σειρά */
 	$top = '';
+	if ( $tips ) {
+		// Η παράγραφος σπάει σε προτάσεις → αριθμημένες συμβουλές.
+		$sent = array_values( array_filter( array_map( 'trim', preg_split( '/(?<=[.!;])\s+/u', $tips ) ) ) );
+		$lis  = '';
+		foreach ( array_slice( $sent, 0, 5 ) as $i => $s ) {
+			$lis .= '<li><b>' . ( $i + 1 ) . '</b><span>' . esc_html( $s ) . '</span></li>';
+		}
+		$top .= '<section class="r6-box r6-box--tips"><h2 class="r6-eyebrow"><span class="r6-box__ico">' . ellada_rv6_icon( 'bulb' ) . '</span>Μυστικά επιτυχίας</h2><ol class="r6-tips">' . $lis . '</ol></section>'; // phpcs:ignore WordPress.Security.EscapeOutput
+	}
 	if ( $lines ) {
 		$items = '';
 		foreach ( $lines as $l ) {
@@ -108,15 +117,6 @@ function ellada_rv6_bento( $id ) {
 			);
 		}
 		$top .= '<section class="r6-box r6-box--vars"><h2 class="r6-eyebrow">Παραλλαγές &amp; συνοδευτικά</h2><ul class="r6-vars">' . $items . '</ul></section>';
-	}
-	if ( $tips ) {
-		// Η παράγραφος σπάει σε προτάσεις → αριθμημένες συμβουλές.
-		$sent = array_values( array_filter( array_map( 'trim', preg_split( '/(?<=[.!;])\s+/u', $tips ) ) ) );
-		$lis  = '';
-		foreach ( array_slice( $sent, 0, 5 ) as $i => $s ) {
-			$lis .= '<li><b>' . ( $i + 1 ) . '</b><span>' . esc_html( $s ) . '</span></li>';
-		}
-		$top .= '<section class="r6-box r6-box--tips"><h2 class="r6-eyebrow"><span class="r6-box__ico">' . ellada_rv6_icon( 'bulb' ) . '</span>Μυστικά επιτυχίας</h2><ol class="r6-tips">' . $lis . '</ol></section>'; // phpcs:ignore WordPress.Security.EscapeOutput
 	}
 	if ( $top ) {
 		$out .= '<div class="r6-row">' . $top . '</div>';
