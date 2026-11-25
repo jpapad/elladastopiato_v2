@@ -2119,6 +2119,9 @@ html body:not(.ellada-has-cookbar):has(.ellada-tmr:not([hidden])) .ellada-toast 
 
 /* ══════════════ Σελίδα συνταγής v6 — «Γ · Μιξ» (includes/recipe-v6.php· body.ellada-r6) ══════════════ */
 html body.ellada-r6 [data-id="recipe-hero"] { display: none !important; }
+/* Χωρίς «πήδημα» (CLS): η συνταγή μένει αόρατη μέχρι να στηθεί από το JS· δικλείδα: εμφανίζεται έτσι κι αλλιώς στα 2,5" */
+html body.ellada-r6:not(.r6-ready) .elementor-location-single { visibility: hidden; animation: ellada-r6-reveal 0s linear 2.5s forwards; }
+@keyframes ellada-r6-reveal { to { visibility: visible; } }
 html body.ellada-r6 .r6-top { max-width: 1200px; margin: 0 auto; padding: 24px 24px 0; box-sizing: border-box; }
 html body.ellada-r6 .r6-hero__crumbs { margin-bottom: 14px; }
 html body.ellada-r6 .r6-hero__media { position: relative; height: clamp(380px, 42vw, 560px); border-radius: 30px; overflow: hidden; background: #174C4B; box-shadow: 0 40px 70px -44px rgba(10,36,35,.8); }

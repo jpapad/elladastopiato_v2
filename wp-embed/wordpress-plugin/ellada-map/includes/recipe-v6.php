@@ -351,6 +351,7 @@ add_action(
 			}
 		})();
 		</script>
+		<script>document.body.classList.add('r6-ready');</script>
 		<?php
 	},
 	60
