@@ -2245,7 +2245,7 @@ html body.ellada-r6 .ellada-kcal { display: none !important; }
 @media (hover: none) { html body.ellada-r6 .r6-glance__acts .r6-acc:hover .r6-lbl { max-width: 0; opacity: 0; } html body.ellada-r6 .r6-glance__acts .r6-acc:hover { gap: 0; } }
 
 /* ══════════════ Εκτύπωση συνταγής — «κάρτα συνταγής» (body.ellada-rp) ══════════════ */
-html body .rp-head { display: none; }
+html body .rp-head { position: absolute !important; left: -10000px; top: 0; width: 1px; height: 1px; overflow: hidden; pointer-events: none; }
 @media print {
 	@page { size: A4; margin: 12mm 13mm 14mm; @bottom-center { content: counter(page) " / " counter(pages); font: 9pt "Commissioner", sans-serif; color: #58615E; } }
 	html body.ellada-rp { background: #fff !important; color: #343B39 !important; font-size: 10.5pt !important; }
@@ -2260,7 +2260,7 @@ html body .rp-head { display: none; }
 	html body.ellada-rp .r6-box--place, html body.ellada-rp .ellada-gallery, html body.ellada-rp .ellada-acct-btn, html body.ellada-rp .ellada-skipmap,
 	html body.ellada-rp .skip-link, html body.ellada-rp .ellada-print-source, html body.ellada-rp .ellada-coll, html body.ellada-rp .ellada-fav-note, html body.ellada-rp #wpadminbar { display: none !important; }
 	/* Κεφαλίδα χαρτιού */
-	html body.ellada-rp .rp-head { display: flex !important; justify-content: space-between; align-items: flex-end; padding-bottom: 3mm; margin-bottom: 5mm; border-bottom: 1.2pt solid #D29A48; }
+	html body.ellada-rp .rp-head { position: static !important; left: auto; width: auto; height: auto; overflow: visible; display: flex !important; justify-content: space-between; align-items: flex-end; padding-bottom: 3mm; margin-bottom: 5mm; border-bottom: 1.2pt solid #D29A48; }
 	html body.ellada-rp .rp-head__logo { display: block; width: auto !important; height: 10.5mm !important; max-width: none !important; }
 	html body.ellada-rp .rp-head__url { font: 9pt "Commissioner", sans-serif; color: #58615E; }
 	/* Τίτλος, φωτογραφία, «με μια ματιά» */

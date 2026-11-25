@@ -390,7 +390,7 @@ add_action(
 		}
 		$url = wp_parse_url( get_permalink(), PHP_URL_HOST ) . wp_parse_url( get_permalink(), PHP_URL_PATH );
 		?>
-		<template id="rp-tpl"><div class="rp-head" aria-hidden="true"><img class="rp-head__logo" src="<?php echo esc_url( plugins_url( 'public/logo-print.svg', ELLADA_MAP_FILE ) ); ?>" alt="Ελλάδα στο Πιάτο" width="182" height="52"><span class="rp-head__url"><?php echo esc_html( rtrim( $url, '/' ) ); ?></span></div></template>
+		<template id="rp-tpl"><div class="rp-head" aria-hidden="true"><img class="rp-head__logo" src="<?php echo esc_url( plugins_url( 'public/logo-print.svg', ELLADA_MAP_FILE ) ); ?>" alt="Ελλάδα στο Πιάτο" width="182" height="52" loading="eager" decoding="sync"><span class="rp-head__url"><?php echo esc_html( rtrim( $url, '/' ) ); ?></span></div></template>
 		<script>
 		(function () {
 			var t = document.getElementById('rp-tpl'), top = document.querySelector('.r6-top');
