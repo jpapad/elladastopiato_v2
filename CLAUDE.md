@@ -65,7 +65,11 @@
   **Λογότυπο live: «ΣΤΟ ΠΙΑΤΟ» + Κρήτη σε #D97745** (κεραμιδί, μόνο στο λογότυπο): 667 `ellada-brand/ellada-logo-header-d977@2x.png`
   (στα e-image των 70/176/624), site icon 668, OG 669. Προηγούμενα: χρυσό 664/665/666, αρχικό πορτοκαλί 157/159/160
   (option `ellada_brand_backup_2026_11_21`). Ανακαλύφθηκε με ξαναχρωματισμό των PNG (PIL)· δεν υπάρχει SVG πηγή. Το ροζ border του «Βρείτε συνταγή» διορθώθηκε. Το `palette-preview.php` μένει (μόνο editors).
-- ellada-map **1.42.1** live (backups έως 1.42.0). 1.42.x: `includes/share-v2.php` — **κοινοποίηση v2** πίσω από flag **`share_v2`** (**ΑΝΟΙΧΤΟ**, live 25/11·
+- ellada-map **1.42.2** live (backups έως 1.42.1). 1.42.2: **Viber/κοινοποίηση** — (α) native share στέλνει ένα κείμενο «🍽️ <τίτλος> — συνταγή από <περιφέρεια>\n<URL>» (πριν
+  το Viber έχανε/κολλούσε τον σύνδεσμο)· (β) **og:image JPG 1200×630** για συνταγές με φωτογραφία (`ellada_share2_og_url()` → `uploads/ellada-og/share-<id>-<key>.jpg`:
+  πετρόλ αριστερά με λογότυπο 667, «ΣΥΝΤΑΓΗ ΑΠΟ ΤΗΝ …», τίτλο, φωτογραφία δεξιά με σβήσιμο, χρυσή γραμμή) + og:image:type/width/height/alt — το WebP δεν φαινόταν στο Viber.
+  Χωρίς φωτογραφία μένει η PNG κάρτα του recipes-v3.
+- ellada-map 1.42.1 (backups έως 1.42.0). 1.42.x: `includes/share-v2.php` — **κοινοποίηση v2** πίσω από flag **`share_v2`** (**ΑΝΟΙΧΤΟ**, live 25/11·
   προβολή `?ellada_demo=share`): κάρτα στο `.ellada-share__menu` (`ellada_share2_menu()` από το `ellada_recipe_actions_html`) με προεπισκόπηση (φωτο/πιατάκι + τίτλος),
   5 στρογγυλά κουμπιά WhatsApp/**Viber**/Facebook/Pinterest/Email, αντιγραφή συνδέσμου («✓ Αντιγράφηκε»), «Ανοίξτε τη στο κινητό» → QR (`public/qrcode.min.js`,
   qrcode-generator 1.4.4 MIT, φορτώνει μόνο στο κλικ), μήνυμα «<τίτλος> — συνταγή από <περιφέρεια> · Ελλάδα στο Πιάτο» (`ellada_share2_msg`). Κινητό: native share με το

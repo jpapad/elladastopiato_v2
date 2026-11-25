@@ -24,7 +24,7 @@ function ellada_share2_msg( $id ) {
 	$title  = get_the_title( $id );
 	$region = function_exists( 'ellada_recipe_region' ) ? ellada_recipe_region( $id ) : '';
 	$from   = ( $region && function_exists( 'ellada_region_from' ) ) ? ellada_region_from( $region ) : '';
-	return $title . ( $from ? ' — συνταγή από ' . $from : ' — συνταγή' ) . ' · Ελλάδα στο Πιάτο';
+	return '🍽️ ' . $title . ( $from ? ' — συνταγή από ' . $from : ' — συνταγή' );
 }
 
 function ellada_share2_icon( $k ) {
@@ -106,7 +106,8 @@ add_action(
 				if (!(navigator.share && window.matchMedia('(pointer: coarse)').matches)) return;
 				var bar = sh(b), box = bar && bar.querySelector('.sh2'); if (!bar) return;
 				e.preventDefault(); e.stopImmediatePropagation();
-				navigator.share({ title: bar.getAttribute('data-title'), text: box ? box.getAttribute('data-msg') : '', url: bar.getAttribute('data-url') }).catch(function () {});
+				var u = bar.getAttribute('data-url');
+				navigator.share({ title: bar.getAttribute('data-title'), text: (box ? box.getAttribute('data-msg') + '\n' : '') + u }).catch(function () {});
 			}, true);
 			document.addEventListener('click', function (e) {
 				var c = e.target.closest('[data-sh2-copy]');
@@ -139,4 +140,160 @@ add_action(
 		<?php
 	},
 	65
+);
+
+/* ═════════════════════ Εικόνα κοινοποίησης (og:image) σε JPG 1200×630 ═════════════════════ */
+
+/**
+ * Κάρτα κοινοποίησης για συνταγή με φωτογραφία: πετρόλ αριστερά (λογότυπο, «Συνταγή από …», τίτλος),
+ * η φωτογραφία δεξιά, χρυσή γραμμή κάτω. JPG ώστε να φαίνεται σε Viber/Facebook/WhatsApp (το WebP δεν φαίνεται παντού).
+ */
+function ellada_share2_og_url( $id ) {
+	$tid = (int) get_post_thumbnail_id( $id );
+	if ( ! $tid || ! function_exists( 'imagettftext' ) ) {
+		return '';
+	}
+	$file = get_attached_file( $tid );
+	if ( ! $file || ! file_exists( $file ) ) {
+		return '';
+	}
+	$title  = html_entity_decode( get_the_title( $id ), ENT_QUOTES, 'UTF-8' );
+	$region = function_exists( 'ellada_recipe_region' ) ? ellada_recipe_region( $id ) : '';
+	$from   = ( $region && function_exists( 'ellada_region_from' ) ) ? ellada_region_from( $region ) : '';
+	$up     = wp_upload_dir();
+	$key    = substr( md5( $title . '|' . $from . '|' . $tid . '|' . filemtime( $file ) . '|s1' ), 0, 10 );
+	$rel    = 'ellada-og/share-' . $id . '-' . $key . '.jpg';
+	$path   = trailingslashit( $up['basedir'] ) . $rel;
+	$url    = trailingslashit( $up['baseurl'] ) . $rel;
+	if ( file_exists( $path ) ) {
+		return $url;
+	}
+	$src = @imagecreatefromstring( (string) file_get_contents( $file ) ); // phpcs:ignore
+	if ( ! $src ) {
+		return '';
+	}
+	wp_mkdir_p( dirname( $path ) );
+	foreach ( (array) glob( trailingslashit( $up['basedir'] ) . 'ellada-og/share-' . $id . '-*.jpg' ) as $old ) {
+		@unlink( $old ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+	}
+
+	$w  = 1200;
+	$h  = 630;
+	$px = 500; // πού αρχίζει η φωτογραφία
+	$im = imagecreatetruecolor( $w, $h );
+	imagealphablending( $im, true );
+	$pet  = imagecolorallocate( $im, 23, 76, 75 );
+	$gold = imagecolorallocate( $im, 210, 154, 72 );
+	$crem = imagecolorallocate( $im, 246, 242, 233 );
+	$mute = imagecolorallocate( $im, 169, 189, 184 );
+	imagefilledrectangle( $im, 0, 0, $w, $h, $pet );
+
+	// Φωτογραφία: γεμίζει το δεξί κομμάτι (cover).
+	$sw = imagesx( $src );
+	$sh = imagesy( $src );
+	$dw = $w - $px;
+	$r  = max( $dw / $sw, $h / $sh );
+	$cw = (int) round( $dw / $r );
+	$ch = (int) round( $h / $r );
+	imagecopyresampled( $im, $src, $px, 0, (int) ( ( $sw - $cw ) / 2 ), (int) ( ( $sh - $ch ) / 2 ), $dw, $h, $cw, $ch );
+	imagedestroy( $src );
+	// Ομαλό πέρασμα από το πετρόλ στη φωτογραφία.
+	for ( $i = 0; $i < 170; $i++ ) {
+		$a = (int) round( 127 * pow( $i / 170, 1.4 ) );
+		imageline( $im, $px + $i, 0, $px + $i, $h, imagecolorallocatealpha( $im, 23, 76, 75, $a ) );
+	}
+	imagefilledrectangle( $im, 0, $h - 12, $w, $h, $gold );
+
+	$fonts = ELLADA_MAP_DIR . 'public/fonts/';
+	$big   = $fonts . 'FiraSansExtraCondensed_800ExtraBold.ttf';
+	$small = $fonts . 'Commissioner_600SemiBold.ttf';
+	$x     = 64;
+
+	// Λογότυπο (το PNG της κεφαλίδας: κρεμ/κεραμιδί, για σκούρο φόντο).
+	$logo = get_attached_file( 667 );
+	if ( $logo && file_exists( $logo ) ) {
+		$lg = @imagecreatefromstring( (string) file_get_contents( $logo ) ); // phpcs:ignore
+		if ( $lg ) {
+			$lw = 250;
+			$lh = (int) round( imagesy( $lg ) * $lw / imagesx( $lg ) );
+			imagecopyresampled( $im, $lg, $x, 54, 0, 0, $lw, $lh, imagesx( $lg ), imagesy( $lg ) );
+			imagedestroy( $lg );
+		}
+	}
+
+	$caps = fn( $t ) => mb_strtoupper( strtr( $t, array( 'ά' => 'α', 'έ' => 'ε', 'ή' => 'η', 'ί' => 'ι', 'ό' => 'ο', 'ύ' => 'υ', 'ώ' => 'ω', 'ΐ' => 'ϊ', 'ΰ' => 'ϋ', 'Ά' => 'Α', 'Έ' => 'Ε', 'Ή' => 'Η', 'Ί' => 'Ι', 'Ό' => 'Ο', 'Ύ' => 'Υ', 'Ώ' => 'Ω' ) ) );
+
+	// Τίτλος: έως 3 γραμμές μέσα στο πετρόλ.
+	$maxw = $px - $x - 20;
+	$size = 96;
+	$text = $caps( $title );
+	do {
+		$lines = array();
+		$cur   = '';
+		foreach ( preg_split( '/\s+/u', $text ) as $word ) {
+			$try = trim( $cur . ' ' . $word );
+			$bb  = imagettfbbox( $size, 0, $big, $try );
+			if ( $cur && ( $bb[2] - $bb[0] ) > $maxw ) {
+				$lines[] = $cur;
+				$cur     = $word;
+			} else {
+				$cur = $try;
+			}
+		}
+		$lines[] = $cur;
+		$widest  = 0;
+		foreach ( $lines as $ln ) {
+			$bb     = imagettfbbox( $size, 0, $big, $ln );
+			$widest = max( $widest, $bb[2] - $bb[0] );
+		}
+		$size -= 4;
+	} while ( ( count( $lines ) > 3 || $widest > $maxw ) && $size > 36 );
+	$size += 4;
+	$lh    = (int) round( $size * 1.02 );
+	$block = 34 + 22 + count( $lines ) * $lh;
+	$y     = (int) max( 200, ( $h - $block ) / 2 + 40 );
+
+	imagettftext( $im, 19, 0, $x, $y, $gold, $small, $caps( $from ? 'Συνταγή από ' . $from : 'Συνταγή' ) );
+	$y += 22 + $size;
+	foreach ( $lines as $ln ) {
+		imagettftext( $im, $size, 0, $x, $y, $crem, $big, $ln );
+		$y += $lh;
+	}
+	imagettftext( $im, 18, 0, $x, $h - 46, $mute, $small, 'elladastopiato.gr' );
+
+	imagejpeg( $im, $path, 86 );
+	imagedestroy( $im );
+	return file_exists( $path ) ? $url : '';
+}
+
+add_filter(
+	'ellada_meta_data',
+	function ( $d ) {
+		if ( is_singular( 'ellada_recipe' ) && ellada_share2() ) {
+			$img = ellada_share2_og_url( get_queried_object_id() );
+			if ( $img ) {
+				$d['image']    = $img;
+				$d['og_share'] = 1;
+			}
+		}
+		return $d;
+	}
+);
+
+add_action(
+	'wp_head',
+	function () {
+		if ( ! is_singular( 'ellada_recipe' ) || ! ellada_share2() || ! function_exists( 'ellada_meta_data' ) ) {
+			return;
+		}
+		$d = ellada_meta_data();
+		if ( empty( $d['og_share'] ) ) {
+			return;
+		}
+		echo '<meta property="og:image:type" content="image/jpeg">' . "\n";
+		echo '<meta property="og:image:width" content="1200">' . "\n";
+		echo '<meta property="og:image:height" content="630">' . "\n";
+		printf( '<meta property="og:image:alt" content="%s">' . "\n", esc_attr( get_the_title() . ' — Ελλάδα στο Πιάτο' ) );
+	},
+	6
 );
