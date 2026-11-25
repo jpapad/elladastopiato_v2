@@ -48,7 +48,7 @@ function ellada_share2_menu( $id, $url ) {
 	$pin   = get_the_post_thumbnail_url( $id, 'large' );
 	$nets  = array(
 		'whatsapp'  => array( 'WhatsApp', 'https://wa.me/?text=' . rawurlencode( $msg . "\n" . $url ) ),
-		'viber'     => array( 'Viber', 'viber://forward?text=' . rawurlencode( $msg . "\n" . $url ) ),
+		'viber'     => array( 'Viber', 'viber://forward?text=' . rawurlencode( $url ) ),
 		'facebook'  => array( 'Facebook', 'https://www.facebook.com/sharer/sharer.php?u=' . rawurlencode( $url ) ),
 		'pinterest' => array( 'Pinterest', 'https://pinterest.com/pin/create/button/?url=' . rawurlencode( $url ) . '&description=' . rawurlencode( $msg ) . ( $pin ? '&media=' . rawurlencode( $pin ) : '' ) ),
 		'email'     => array( 'Email', 'mailto:?subject=' . rawurlencode( $title ) . '&body=' . rawurlencode( $msg . "\n\n" . $url ) ),
@@ -107,7 +107,8 @@ add_action(
 				var bar = sh(b), box = bar && bar.querySelector('.sh2'); if (!bar) return;
 				e.preventDefault(); e.stopImmediatePropagation();
 				var u = bar.getAttribute('data-url');
-				navigator.share({ title: bar.getAttribute('data-title'), text: (box ? box.getAttribute('data-msg') + '\n' : '') + u }).catch(function () {});
+				// Μόνο ο σύνδεσμος: το Viber πετάει την αλλαγή γραμμής και τον κολλάει στο κείμενο· η κάρτα (og) δείχνει τίτλο/φωτογραφία.
+				navigator.share({ url: u }).catch(function () {});
 			}, true);
 			document.addEventListener('click', function (e) {
 				var c = e.target.closest('[data-sh2-copy]');
