@@ -443,6 +443,9 @@ html body .ellada-serv__note button, html body .ellada-ingredients__clear {
 	padding: 0; border: 0; background: none; color: var(--ellada-accent-deep); font: inherit; font-weight: 700; text-decoration: underline; text-transform: none; letter-spacing: 0; cursor: pointer;
 }
 html body .ellada-ingredients__clear { font-size: 13px; }
+html body .ellada-steps__clear { margin-left: 6px; padding: 4px 12px; border: 1.5px solid #D7DFD8; border-radius: 999px; background: #fff; font: 700 13px/1.2 "Commissioner", sans-serif; color: var(--ellada-dark, #174C4B); cursor: pointer; }
+html body .ellada-steps__clear:hover, html body .ellada-steps__clear:focus-visible { border-color: var(--ellada-dark, #174C4B); background: #F6F2E9; }
+html body .ellada-steps__clear[hidden] { display: none; }
 html body .ellada-ingredients.is-tools li { display: block; padding: 0; }
 html body .ellada-ingredients.is-tools label { display: flex; gap: 10px; align-items: baseline; padding: 9px 0; cursor: pointer; }
 html body .ellada-ingredients.is-tools input[type="checkbox"] {

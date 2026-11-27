@@ -219,7 +219,7 @@ add_shortcode(
 		ellada_front_style();
 		$tools = function_exists( 'ellada_feature' ) && ellada_feature( 'recipe_tools' );
 		$html  = '<section class="ellada-steps' . ( $tools ? ' is-tools' : '' ) . '" id="ektelesi"><h2 class="ellada-h">Εκτέλεση</h2>';
-		$html .= $tools ? '<p class="ellada-muted ellada-steps__hint">Πατήστε τον αριθμό για να σημειώσετε ένα βήμα ως έτοιμο.</p>' : '';
+		$html .= $tools ? '<p class="ellada-muted ellada-steps__hint">Πατήστε τον αριθμό για να σημειώσετε ένα βήμα ως έτοιμο. <button type="button" class="ellada-steps__clear" hidden>↺ Μηδενισμός βημάτων</button></p>' : '';
 		$html .= '<ol>';
 		$n     = 0;
 		foreach ( $rows as $row ) {

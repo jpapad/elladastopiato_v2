@@ -120,17 +120,33 @@
 			b.setAttribute('aria-pressed', on ? 'true' : 'false');
 			b.closest('li').classList.toggle('is-done', on);
 		}
+		var clear = sec.querySelector('.ellada-steps__clear');
+		function save() {
+			var on = [];
+			btns.forEach(function (x, j) {
+				if (x.getAttribute('aria-pressed') === 'true') on.push(j);
+			});
+			store(key, on.length ? on : null);
+			if (clear) clear.hidden = !on.length;
+		}
 		btns.forEach(function (b, i) {
 			set(b, saved.indexOf(i) > -1);
 			b.addEventListener('click', function () {
 				set(b, b.getAttribute('aria-pressed') !== 'true');
-				var on = [];
-				btns.forEach(function (x, j) {
-					if (x.getAttribute('aria-pressed') === 'true') on.push(j);
-				});
-				store(key, on.length ? on : null);
+				save();
 			});
 		});
+		if (clear) {
+			clear.hidden = !saved.length;
+			clear.addEventListener('click', function () {
+				btns.forEach(function (b) {
+					set(b, false);
+				});
+				save();
+				if (typeof nextStep === 'function') setTimeout(nextStep, 0);
+				if (btns[0]) btns[0].focus();
+			});
+		}
 	}
 
 	/* ── Εκτύπωση και κοινοποίηση ── */
