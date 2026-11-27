@@ -2417,8 +2417,8 @@ html body.ellada-sh2 .sh2__qr p { margin: 0; font-size: 13px; line-height: 1.45;
 	html body.ellada-olive .r6-box--vars .r6-var, html body.ellada-olive .r6-box--vars .r6-var.is-fast { background: #E4E6D2 !important; border-color: #C9CCA8 !important; }
 	html body.ellada-olive .r6-box--vars .r6-var__i, html body.ellada-olive .r6-box--vars .r6-var.is-fast .r6-var__i { background: #F6F7EE !important; border-color: #C9CCA8 !important; }
 	html body.ellada-olive .r6-box--vars .r6-var__t small { color: #4A524F !important; }
-	/* «Καλή όρεξη!» και μπάρα «Μαγειρεύω τώρα»: ανοιχτό φόντο #E7E8E5, κείμενα πετρόλ, τα κουμπιά κρατούν το χρώμα τους */
-	html body.ellada-olive .r6-cookbar, html body.ellada-olive .r6-ask { background: #E7E8E5 !important; color: #174C4B !important; box-shadow: 0 24px 44px -32px rgba(18,60,59,.45) !important; border: 1px solid #D7DAD3; }
+	/* «Καλή όρεξη!» και μπάρα «Μαγειρεύω τώρα»: ανοιχτό φόντο #F0E5B9 (πριν #E7E8E5), κείμενα πετρόλ, τα κουμπιά κρατούν το χρώμα τους */
+	html body.ellada-olive .r6-cookbar, html body.ellada-olive .r6-ask { background: #F0E5B9 !important; color: #174C4B !important; box-shadow: 0 24px 44px -32px rgba(18,60,59,.45) !important; border: 1px solid #E0D196; }
 	html body.ellada-olive .r6-cookbar [data-ellada-cook] { color: #174C4B !important; }
 	html body.ellada-olive .r6-cookbar.is-cooking [data-ellada-cook] { background: #fff !important; box-shadow: inset 0 0 0 1.5px #174C4B; }
 	html body.ellada-olive .r6-cookbar__prog p, html body.ellada-olive .r6-cookbar__prog [data-r6-hint], html body.ellada-olive .r6-cookbar__prog b { color: #174C4B !important; }
@@ -2428,7 +2428,7 @@ html body.ellada-sh2 .sh2__qr p { margin: 0; font-size: 13px; line-height: 1.45;
 	html body.ellada-olive .r6-ask__t, html body.ellada-olive .r6-ask__t b { color: #174C4B !important; }
 	html body.ellada-olive .r6-ask__yes { color: #174C4B !important; }
 	html body.ellada-olive .r6-ask__i { color: #174C4B !important; }
-	html body.ellada-olive .ellada-cookbar { background: #E7E8E5 !important; border: 1px solid #D7DAD3; box-shadow: 0 18px 36px -16px rgba(18,60,59,.45) !important; }
+	html body.ellada-olive .ellada-cookbar { background: #F0E5B9 !important; border: 1px solid #E0D196; box-shadow: 0 18px 36px -16px rgba(18,60,59,.45) !important; }
 	html body.ellada-olive .ellada-cookbar__btn { color: #174C4B !important; }
 	html body.ellada-olive .ellada-cookbar__btn[aria-pressed=true] { background: #fff !important; box-shadow: inset 0 0 0 1.5px #174C4B; }
 	html body.ellada-olive .ellada-cookbar__up { color: #174C4B !important; }
