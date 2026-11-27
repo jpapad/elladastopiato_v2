@@ -60,7 +60,8 @@ add_action(
 			var lists = sec.querySelectorAll('ul'); var last = lists[lists.length - 1]; if (last) last.parentNode.insertBefore(done, last.nextSibling);
 			// Αλλεργιογόνα ως ετικέτες.
 			var al = $('.r6-allergens');
-			if (al) {
+			if (al && al.querySelector('.ellada-alg')) { al.classList.add('ing2-als'); }
+			else if (al) {
 				var txt = al.textContent.replace(/^\s*Περιέχει:\s*/, '');
 				al.innerHTML = '<span class="screen-reader-text">Περιέχει: </span>' + txt.split(/\s*,\s*/).map(function (t) { return '<span class="ing2-al">' + t.replace(/[<>&]/g, '') + '</span>'; }).join('');
 				al.classList.add('ing2-als');

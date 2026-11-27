@@ -163,13 +163,8 @@ add_filter(
 			return ellada_rv6_bento( $id ) . $gallery;
 		}
 		if ( 'ellada_recipe_ingredients' === $tag && function_exists( 'get_field' ) ) {
-			$labels = array();
-			foreach ( (array) get_field( 'allergens', $id ) as $a ) {
-				$labels[] = is_array( $a ) ? ( $a['label'] ?? '' ) : (string) $a;
-			}
-			$labels = array_filter( $labels );
-			if ( $labels ) {
-				$line = '<p class="r6-allergens">Περιέχει: ' . esc_html( implode( ', ', $labels ) ) . '</p>';
+			$line = function_exists( 'ellada_allergens_html' ) ? ellada_allergens_html( $id ) : '';
+			if ( $line ) {
 				$pos  = strrpos( $output, '</section>' );
 				return false === $pos ? $output . $line : substr_replace( $output, $line . '</section>', $pos, strlen( '</section>' ) );
 			}

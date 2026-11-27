@@ -2507,3 +2507,14 @@ html body.ellada-sh2 .sh2__qr p { margin: 0; font-size: 13px; line-height: 1.45;
 	html body.ellada-ing2 .ellada-ingredients.is-tools .ellada-ingredients__item { font-size: 15px; }
 	html body.ellada-ing2 .ellada-ingredients.is-tools .ellada-ingredients__qty { font-size: 13px; padding: 6px 10px; }
 }
+
+/* ══════════════ Αλλεργιογόνα με κλασικά εικονίδια ══════════════ */
+html body .ellada-algs { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0; font-size: 13px; color: #58615E; }
+html body .ellada-algs__t { margin-right: 2px; font: 700 12px/1 "Commissioner", sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #58615E; }
+html body .ellada-alg { display: inline-flex; align-items: center; gap: 7px; padding: 4px 11px 4px 4px; border-radius: 999px; border: 1px solid #E7E8D5; background: #fff; font: 600 12.5px/1 "Commissioner", sans-serif; color: #343B39; }
+html body .ellada-alg__i { flex: 0 0 auto; display: block; }
+html body.ellada-ing2 .r6-allergens.ellada-algs { font-size: 13px; }
+@media print {
+	html body .ellada-alg { padding: 0 6px 0 0; border: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+	html body .ellada-alg__i { width: 14px; height: 14px; }
+}
