@@ -2420,7 +2420,5 @@ html body.ellada-sh2 .sh2__qr p { margin: 0; font-size: 13px; line-height: 1.45;
 	/* Μυστικά επιτυχίας: όπως τα βήματα (κρεμ κάρτα, λευκοί αριθμοί) */
 	html body.ellada-olive .r6-box--tips { background: #E7E8D5 !important; border: 1px solid #D3D5B8 !important; color: #343B39 !important; }
 	html body.ellada-olive .r6-box--tips .r6-eyebrow { color: #A8461A !important; }
-	html body.ellada-olive .r6-box--tips .r6-box__ico { background: #fff !important; color: #174C4B !important; box-shadow: inset 0 0 0 1.5px #D7DFD8; }
 	html body.ellada-olive .r6-box--tips .r6-tips li { color: #343B39 !important; }
-	html body.ellada-olive .r6-box--tips .r6-tips b { background: #fff !important; color: #174C4B !important; box-shadow: inset 0 0 0 1.5px #D7DFD8; }
 }
