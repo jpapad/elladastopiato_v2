@@ -2399,22 +2399,22 @@ html body.ellada-sh2 .sh2__qr p { margin: 0; font-size: 13px; line-height: 1.45;
 }
 @media print { html body .sh2 { display: none !important; } }
 
-/* ══════════════ Συνταγή v6 — χρώματα «λαδί» #BDBA96 (body.ellada-olive· flag r6_olive) ══════════════ */
+/* ══════════════ Συνταγή v6 — χρώματα «λαδί» #A8AD78 (body.ellada-olive· flag r6_olive) ══════════════ */
 @media screen {
 	/* Βήματα: κάρτες σε κρεμ #FFF9E9, αριθμοί λευκοί, τσεκαρισμένοι λαδί */
 	html body.ellada-olive .ellada-steps ol > li:not(.is-next) { background: #FFF9E9 !important; border-color: #EBD9AE !important; }
 	html body.ellada-olive .ellada-steps ol > li:not(.is-next) button.ellada-steps__n { background: #fff !important; color: #174C4B !important; box-shadow: inset 0 0 0 1.5px #D7DFD8 !important; }
-	html body.ellada-olive .ellada-steps ol > li:not(.is-next) button.ellada-steps__n:hover { background: #F8F7F0 !important; }
-	html body.ellada-olive .ellada-steps ol > li.is-done button.ellada-steps__n { background: #BDBA96 !important; color: #123C3B !important; box-shadow: none !important; }
+	html body.ellada-olive .ellada-steps ol > li:not(.is-next) button.ellada-steps__n:hover { background: #F6F7EE !important; }
+	html body.ellada-olive .ellada-steps ol > li.is-done button.ellada-steps__n { background: #A8AD78 !important; color: #123C3B !important; box-shadow: none !important; }
 	/* Οι σημειώσεις μου */
-	html body.ellada-olive .ellada-notes:not(.ellada-notes--cta) { background: #BDBA96 !important; border-color: #BDBA96 !important; }
+	html body.ellada-olive .ellada-notes:not(.ellada-notes--cta) { background: #A8AD78 !important; border-color: #A8AD78 !important; }
 	html body.ellada-olive .ellada-notes:not(.ellada-notes--cta) .ellada-notes__h, html body.ellada-olive .ellada-notes:not(.ellada-notes--cta) .ellada-notes__h svg { color: #123C3B !important; }
 	html body.ellada-olive .ellada-notes:not(.ellada-notes--cta) .ellada-notes__h small, html body.ellada-olive .ellada-notes:not(.ellada-notes--cta) .ellada-notes__st { color: #1F2A28 !important; }
-	html body.ellada-olive .ellada-notes textarea { border-color: #9E9A72 !important; }
+	html body.ellada-olive .ellada-notes textarea { border-color: #8F945F !important; }
 	/* Παραλλαγές */
-	html body.ellada-olive .r6-box--vars { background: #BDBA96 !important; border-color: #BDBA96 !important; }
+	html body.ellada-olive .r6-box--vars { background: #A8AD78 !important; border-color: #A8AD78 !important; }
 	html body.ellada-olive .r6-box--vars .r6-eyebrow { color: #123C3B !important; }
-	html body.ellada-olive .r6-box--vars .r6-var, html body.ellada-olive .r6-box--vars .r6-var.is-fast { background: #EAE8D8 !important; border-color: #D3D0B4 !important; }
-	html body.ellada-olive .r6-box--vars .r6-var__i, html body.ellada-olive .r6-box--vars .r6-var.is-fast .r6-var__i { background: #F8F7F0 !important; border-color: #D3D0B4 !important; }
+	html body.ellada-olive .r6-box--vars .r6-var, html body.ellada-olive .r6-box--vars .r6-var.is-fast { background: #E4E6D2 !important; border-color: #C9CCA8 !important; }
+	html body.ellada-olive .r6-box--vars .r6-var__i, html body.ellada-olive .r6-box--vars .r6-var.is-fast .r6-var__i { background: #F6F7EE !important; border-color: #C9CCA8 !important; }
 	html body.ellada-olive .r6-box--vars .r6-var__t small { color: #4A524F !important; }
 }
