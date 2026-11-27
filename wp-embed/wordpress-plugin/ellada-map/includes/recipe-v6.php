@@ -406,3 +406,17 @@ add_action(
 	70
 );
 
+
+/* ═════════════════════ Χρώματα «λαδί» (λειτουργία «r6_olive»· προβολή ?ellada_demo=olive) ═════════════════════ */
+
+add_filter(
+	'body_class',
+	function ( $c ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$demo = isset( $_GET['ellada_demo'] ) && 'olive' === $_GET['ellada_demo'];
+		if ( is_singular( 'ellada_recipe' ) && ellada_rv6() && ( $demo || ( function_exists( 'ellada_feature' ) && ellada_feature( 'r6_olive' ) ) ) ) {
+			$c[] = 'ellada-olive';
+		}
+		return $c;
+	}
+);

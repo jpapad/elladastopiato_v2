@@ -65,7 +65,11 @@
   **Λογότυπο live: «ΣΤΟ ΠΙΑΤΟ» + Κρήτη σε #D97745** (κεραμιδί, μόνο στο λογότυπο): 667 `ellada-brand/ellada-logo-header-d977@2x.png`
   (στα e-image των 70/176/624), site icon 668, OG 669. Προηγούμενα: χρυσό 664/665/666, αρχικό πορτοκαλί 157/159/160
   (option `ellada_brand_backup_2026_11_21`). Ανακαλύφθηκε με ξαναχρωματισμό των PNG (PIL)· δεν υπάρχει SVG πηγή. Το ροζ border του «Βρείτε συνταγή» διορθώθηκε. Το `palette-preview.php` μένει (μόνο editors).
-- ellada-map **1.43.2** live (backups έως 1.43.1). 1.43.x: `includes/social.php` — **εφαρμογή «Social»** στο wp-admin (μενού Social, `edit_others_posts`· χωρίς flag,
+- ellada-map **1.44.0** live (backups έως 1.43.2). 1.44.0: **χρώματα «λαδί» στη συνταγή v6** πίσω από flag **`r6_olive`** (**ΑΝΟΙΧΤΟ** 27/11 για δοκιμή —
+  ο χρήστης θα αποφασίσει αν μένει· **επαναφορά = κλείσιμο του flag**· προβολή `?ellada_demo=olive`· `body.ellada-olive`, τέλος front.css): βήματα σε κάρτες #FFF9E9/#EBD9AE,
+  αριθμοί λευκοί (πετρόλ αριθμός, περίγραμμα #D7DFD8), τσεκαρισμένοι #A5A078 με ✓ #123C3B, «Τώρα» μένει κεραμιδί· «Οι σημειώσεις μου» (μόνο συνδεδεμένοι) φόντο #A5A078
+  (πριν #FFF9E9/#EBD9AE)· Παραλλαγές: πλαίσιο #A5A078, κουτάκια #E3E0CB/#C2BE9C, εικονίδιο #F4F2E8. Ίδια αλλαγή στον καμβά Γ (C-desktop/C-mobile).
+- ellada-map 1.43.2 (backups έως 1.43.1). 1.43.x: `includes/social.php` — **εφαρμογή «Social»** στο wp-admin (μενού Social, `edit_others_posts`· χωρίς flag,
   δεν αγγίζει το front): πακέτο ανά συνταγή (post meta `_ellada_social`: ig/story/fb → text, img, status ready|scheduled|sent|error, at, sent, link, err) που φτιάχνεται
   αυτόματα στη δημοσίευση (`transition_post_status` → shutdown → `ellada_social_build`· φουσκάκι «νέα», option `ellada_social_new`) ή με «Ετοίμασε αναρτήσεις».
   Κείμενα από πρότυπα (`ellada_social_texts`: τίτλος + «από <περιφέρεια>», short_description, 1η πρόταση ιστορίας, ⏱/🍽/δυσκολία, «link στο bio», hashtags ≤15 χωρίς τόνους·
