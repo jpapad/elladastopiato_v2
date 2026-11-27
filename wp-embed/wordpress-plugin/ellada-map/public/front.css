@@ -2526,4 +2526,7 @@ html body.ellada-ing2 .r6-allergens.ellada-algs { font-size: 13px; }
 	/* Σημειώσεις: φόντο όπως πριν, γράμματα πορτοκαλί #D97745 (στο πλαίσιο των επισκεπτών· στο λαδί των συνδεδεμένων δεν διαβάζεται) */
 	html body.ellada-ing2 [data-id="recipe-aside"] > .ellada-notes--cta, html body.ellada-ing2 [data-id="recipe-aside"] > .ellada-notes--cta span,
 	html body.ellada-ing2 [data-id="recipe-aside"] > .ellada-notes--cta a, html body.ellada-ing2 [data-id="recipe-aside"] > .ellada-notes--cta svg { color: #D97745 !important; }
+	/* Τίτλοι «Οι σημειώσεις μου» και «Παραλλαγές & συνοδευτικά» σε #D97745 */
+	html body.ellada-olive .ellada-notes:not(.ellada-notes--cta) .ellada-notes__h, html body.ellada-olive .ellada-notes:not(.ellada-notes--cta) .ellada-notes__h svg,
+	html body.ellada-r6 .r6-box--vars .r6-eyebrow, html body.ellada-olive .r6-box--vars .r6-eyebrow { color: #D97745 !important; }
 }

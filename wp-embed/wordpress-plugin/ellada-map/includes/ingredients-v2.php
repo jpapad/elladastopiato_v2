@@ -37,6 +37,11 @@ add_action(
 		?>
 		<script>
 		(function () {
+			// Οι τίτλοι «Παραλλαγές» και «Οι σημειώσεις μου» μένουν στο #D97745 που επέλεξε ο χρήστης (εξαίρεση από το script αντίθεσης).
+			function keep() { document.querySelectorAll('.r6-box--vars .r6-eyebrow, .ellada-notes__h').forEach(function (e) { e.dataset.a11yC = '1'; e.style.removeProperty('color'); }); }
+			keep(); document.addEventListener('DOMContentLoaded', keep); setTimeout(keep, 1600); setTimeout(keep, 4100);
+		})();
+		(function () {
 			var sec = document.querySelector('.ellada-ingredients.is-tools');
 			if (!sec) return;
 			var $ = function (s, r) { return (r || sec).querySelector(s); };
