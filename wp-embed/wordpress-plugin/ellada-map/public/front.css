@@ -2523,9 +2523,7 @@ html body.ellada-ing2 .r6-allergens.ellada-algs { font-size: 13px; }
 @media screen {
 	html body.ellada-ing2 .ing2-acts > .ellada-ingredients__shop { background: #D97745 !important; color: #174C4B !important; }
 	html body.ellada-ing2 .ing2-acts > .ellada-ingredients__shop:hover { background: #C2602F !important; color: #fff !important; }
-	html body.ellada-ing2 [data-id="recipe-aside"] > .ellada-notes, html body.ellada-olive [data-id="recipe-aside"] .ellada-notes:not(.ellada-notes--cta) { background: #D97745 !important; border: 0 !important; color: #174C4B !important; }
-	html body.ellada-ing2 [data-id="recipe-aside"] > .ellada-notes svg, html body.ellada-ing2 [data-id="recipe-aside"] > .ellada-notes a,
-	html body.ellada-ing2 [data-id="recipe-aside"] > .ellada-notes .ellada-notes__h, html body.ellada-ing2 [data-id="recipe-aside"] > .ellada-notes .ellada-notes__h svg { color: #174C4B !important; }
-	html body.ellada-ing2 [data-id="recipe-aside"] > .ellada-notes .ellada-notes__h small, html body.ellada-ing2 [data-id="recipe-aside"] > .ellada-notes .ellada-notes__st, html body.ellada-ing2 [data-id="recipe-aside"] > .ellada-notes--cta span { color: #123C3B !important; }
-	html body.ellada-ing2 [data-id="recipe-aside"] > .ellada-notes textarea { border-color: #B4582A !important; background: #fff !important; }
+	/* Σημειώσεις: φόντο όπως πριν, γράμματα πορτοκαλί #D97745 (στο πλαίσιο των επισκεπτών· στο λαδί των συνδεδεμένων δεν διαβάζεται) */
+	html body.ellada-ing2 [data-id="recipe-aside"] > .ellada-notes--cta, html body.ellada-ing2 [data-id="recipe-aside"] > .ellada-notes--cta span,
+	html body.ellada-ing2 [data-id="recipe-aside"] > .ellada-notes--cta a, html body.ellada-ing2 [data-id="recipe-aside"] > .ellada-notes--cta svg { color: #D97745 !important; }
 }
