@@ -65,7 +65,8 @@
   **Λογότυπο live: «ΣΤΟ ΠΙΑΤΟ» + Κρήτη σε #D97745** (κεραμιδί, μόνο στο λογότυπο): 667 `ellada-brand/ellada-logo-header-d977@2x.png`
   (στα e-image των 70/176/624), site icon 668, OG 669. Προηγούμενα: χρυσό 664/665/666, αρχικό πορτοκαλί 157/159/160
   (option `ellada_brand_backup_2026_11_21`). Ανακαλύφθηκε με ξαναχρωματισμό των PNG (PIL)· δεν υπάρχει SVG πηγή. Το ροζ border του «Βρείτε συνταγή» διορθώθηκε. Το `palette-preview.php` μένει (μόνο editors).
-- ellada-map **1.46.3** live (backups έως 1.46.2). 1.46.3: κάρτα υλικών (ing_v2, `recipe-aside`) φόντο **#FAF8F3** (πριν λευκό).
+- ellada-map **1.46.4** live (backups έως 1.46.3). 1.46.4: «Λίστα για ψώνια» και πλαίσιο σημειώσεων (και το «Συνδεθείτε» των επισκεπτών) σε **#D97745** με γράμματα πετρόλ (hover #C2602F/λευκά).
+- ellada-map 1.46.3 (backups έως 1.46.2). 1.46.3: κάρτα υλικών (ing_v2, `recipe-aside`) φόντο **#FAF8F3** (πριν λευκό).
 - ellada-map 1.46.2 (backups έως 1.46.1). 1.46.2: «Καλή όρεξη!» + «Μαγειρεύω τώρα» (και η μπάρα του κινητού) σε **#F0E5B9** (περίγραμμα #E0D196).
 - ellada-map 1.46.1 (backups έως 1.46.0). 1.46.x: `includes/allergens.php` — **αλλεργιογόνα με κλασικά εικονίδια** (14 της ΕΕ, χρωματιστός κύκλος + λευκό SVG, `ellada_allergens()`, `ellada_allergen_icon()`, `ellada_allergens_html()` → `.ellada-algs` στο τέλος των υλικών μέσω recipe-v6, χωρίς flag· σύντομες ετικέτες από τον κώδικα). ACF πεδίο `allergens`: προστέθηκαν soy, peanuts, celery, mustard, sulphites, lupin, molluscs (backup option `ellada_allergens_choices_backup_2026_11_27`).
 - ellada-map 1.45.3 (backups έως 1.45.2). 1.45.2–3 (με r6_olive): «Καλή όρεξη!» (`.r6-ask`), μπάρα «Μαγειρεύω τώρα» (`.r6-cookbar`) και η αιωρούμενη `.ellada-cookbar` του κινητού σε **#E7E8E5** με κείμενα/γράμματα κουμπιών πετρόλ #174C4B· τα κουμπιά κρατούν το φόντο τους (#D97745, #D29A48)· σε «μαγείρεμα» το κουμπί λευκό με πετρόλ περίγραμμα.
