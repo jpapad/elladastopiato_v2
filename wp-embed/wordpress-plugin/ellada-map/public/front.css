@@ -2440,7 +2440,7 @@ html body.ellada-sh2 .sh2__qr p { margin: 0; font-size: 13px; line-height: 1.45;
 
 /* ══════════════ Υλικά v2 — μοντέρνα κάρτα (body.ellada-ing2· flag ing_v2) ══════════════ */
 @media screen {
-	html body.ellada-ing2 [data-id="recipe-aside"] { background: #fff !important; border: 1px solid #E7E8D5 !important; border-radius: 28px !important; box-shadow: 0 30px 60px -40px rgba(18,60,59,.45) !important; }
+	html body.ellada-ing2 [data-id="recipe-aside"] { background: #FAF8F3 !important; border: 1px solid #E7E8D5 !important; border-radius: 28px !important; box-shadow: 0 30px 60px -40px rgba(18,60,59,.45) !important; }
 	html body.ellada-ing2 .ellada-ingredients.is-tools { display: grid; gap: 16px; padding: 26px 24px !important; border: 0 !important; background: none !important; }
 	html body.ellada-ing2 [data-id="recipe-aside"] { padding: 0 !important; overflow: hidden; }
 	html body.ellada-ing2 [data-id="recipe-aside"] > .ellada-notes { margin: 0 24px 24px !important; }
