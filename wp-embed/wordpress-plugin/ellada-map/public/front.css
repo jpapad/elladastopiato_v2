@@ -2526,7 +2526,9 @@ html body.ellada-ing2 .r6-allergens.ellada-algs { font-size: 13px; }
 	/* Σημειώσεις: φόντο όπως πριν, γράμματα πορτοκαλί #D97745 (στο πλαίσιο των επισκεπτών· στο λαδί των συνδεδεμένων δεν διαβάζεται) */
 	html body.ellada-ing2 [data-id="recipe-aside"] > .ellada-notes--cta, html body.ellada-ing2 [data-id="recipe-aside"] > .ellada-notes--cta span,
 	html body.ellada-ing2 [data-id="recipe-aside"] > .ellada-notes--cta a, html body.ellada-ing2 [data-id="recipe-aside"] > .ellada-notes--cta svg { color: #D97745 !important; }
-	/* Τίτλοι «Οι σημειώσεις μου» και «Παραλλαγές & συνοδευτικά» σε #D97745 */
-	html body.ellada-olive .ellada-notes:not(.ellada-notes--cta) .ellada-notes__h, html body.ellada-olive .ellada-notes:not(.ellada-notes--cta) .ellada-notes__h svg,
-	html body.ellada-r6 .r6-box--vars .r6-eyebrow, html body.ellada-olive .r6-box--vars .r6-eyebrow { color: #D97745 !important; }
+	/* Τίτλοι «Οι σημειώσεις μου» και «Παραλλαγές & συνοδευτικά»: καφέ #5B321D (διαβάζεται στο λαδί) με πορτοκαλί εικονίδιο #D97745 */
+	html body.ellada-olive .ellada-notes:not(.ellada-notes--cta) .ellada-notes__h, html body.ellada-olive .ellada-notes:not(.ellada-notes--cta) .ellada-notes__h span { color: #5B321D !important; }
+	html body.ellada-olive .ellada-notes:not(.ellada-notes--cta) .ellada-notes__h svg { color: #D97745 !important; }
+	html body.ellada-r6 .r6-box--vars .r6-eyebrow, html body.ellada-olive .r6-box--vars .r6-eyebrow { gap: 8px; font: 800 15px/1.2 "Commissioner", sans-serif !important; letter-spacing: 0 !important; text-transform: none !important; color: #5B321D !important; }
+	html body.ellada-r6 .r6-box--vars .r6-eyebrow::before { content: ""; flex: 0 0 20px; width: 20px; height: 20px; background: #D97745; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 7h13l-3-3M20 17H7l3 3'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 7h13l-3-3M20 17H7l3 3'/%3E%3C/svg%3E") center / contain no-repeat; }
 }
